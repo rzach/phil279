@@ -1,0 +1,357 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 10]{Logic I F13 Lecture 10}
+\date{October 10, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+
+\section{Conditionals}
+
+\subsec{Indicative Conditionals}{
+
+\bit
+\item Conditionals = ``if---then\dots'' sentences
+\item \emph{Indicative} conditionals: in indicative mood
+\item ``If P, then Q'' or ``Q, if P'' with P, Q indicative sentences
+\item P: \emph{antecedent}; Q: \emph{consequent}
+\eit
+}
+
+\subsec{Truth Conditions of Conditionals}{
+
+\[\text{If\ } \underbrace{\text{X is drinking alcohol}}_{P}, 
+\text{then\ }\underbrace{\text{X is over 18}}_{Q}\]
+
+\bit
+\item ``If P, then Q'' can only be \emph{false} if:
+\bit
+\item P is \emph{true}: we check age if X is drinking beer (P~true), not if
+ drinking pop; \emph{and}
+\item Q is \emph{false}: we check drink if X under age (Q false),\\ not 
+if over 18
+\eit
+\item ``If P, then Q'' is true if:
+\bit
+\item P is \emph{false:} we don't check people drinking pop; \emph{or}
+\item Q is \emph{true:} we don't card if X is over 18;
+\item (or both)
+\eit
+\eit }
+
+
+
+\subsec{The Material Conditional $\to$}{
+\[
+\begin{array}{cc|c}
+P & Q & (P \to Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \F\\
+\F & \T & \T\\
+\F & \F & \T
+\end{array}
+\]
+}
+
+\subsec{Other Indicative Conditionals}{
+
+\bit \item The following all get translated by $P \to Q$:
+\bit
+\item If P, then Q
+\item Q if P
+\item Q provided P
+\item P only if Q
+\eit
+\eit
+}
+
+\subsec{If and Only If}{
+
+\bit
+\item Sue drinks beer only if she is over 18
+\[
+\sf Drinks(sue, beer) \to Over18(sue)
+\]
+\item Sue drinks beer if she is over 18.
+\[
+\sf Over18(sue) \to Drinks(sue, beer)
+\]
+\eit
+}
+
+\subsec{Subjunctive Conditionals}{
+
+\bit
+\item Subjunctive conditionals = if---then statements in \emph{subjunctive} mood
+\item ``If P were true, then Q would be true.''
+\item Indicative conditional is \emph{truth-functional}: truth value of ``If P, then Q'' depends
+  \emph{only on truth values} of P and Q.
+\item Not truth functional, e.g., consider:
+\ben
+\item If the world were just, no evil deed would go unpunished.\\
+$P_1$ = the world is just\\
+$Q_1$ = no evil deed goes unpunished
+\item If the world were flat, no evil deed would go unpunished.\\
+$P_2$ = the world is flat\\
+$Q_2$ = no evil deed goes unpunished
+\een
+\item $P_1$, $Q_1$ both false; $P_2$, $Q_2$ both false, but
+\item (1) is true, but (2) is false
+\eit
+}
+
+\subsec{The Biconditional}{
+
+\bit
+\item ``P if and only if Q'' short for:\\
+``P if Q and P only if Q'' and\\
+``P just in case Q''
+\item Translated as: $P \iff Q$
+\item Truth table:
+\[
+\begin{array}{cc|c}
+P & Q & (P \iff Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}
+\]
+\eit
+
+}
+
+\subsec{Unless}{
+
+Which of these people do you have to check (age or drink) to ensure that:
+\begin{quote}
+People are drinking pop unless they are over 18.
+\end{quote}
+
+\begin{tabular}{cccc}
+\begin{beamerboxesrounded}[width=4em]{}
+\vskip 2ex
+\Large 22 years\\
+\end{beamerboxesrounded} &
+\begin{beamerboxesrounded}[width=4em]{}
+\vskip 2ex
+\Large 16 years\\
+\end{beamerboxesrounded} &
+\begin{beamerboxesrounded}[width=4em]{}
+\vskip 2ex
+\Large drinks pop\\
+\end{beamerboxesrounded} &
+\begin{beamerboxesrounded}[width=4em]{}
+\vskip 2ex
+\Large drinks beer\\
+\end{beamerboxesrounded} \\
+(1) & (2) & (3) & (4)
+\end{tabular}
+
+}
+
+
+\subsec{Unless}{
+
+\[\underbrace{\text{X is drinking pop}}_{P}, 
+\text{unless\ }\underbrace{\text{X is over 18}}_{Q}\]
+
+\bit
+\item ``P unless Q'' can only be \emph{false} if:
+\bit
+\item P is \emph{false}\\
+(we check age if person is drinking beer), \emph{and}
+\item Q is \emph{false}\\
+(we check drink if person not at least 18)
+\eit
+\item ``P unless Q'' is true (test ok) if:
+\bit
+\item P is false, and Q is true;
+\item Q is false, and P is true;
+\item P is true and Q is true
+\eit
+\item ``P unless Q'' is equivalent to
+\bit
+\item ``P if not Q'' ($\sf \lnot Q \to P$)
+\item ``P or Q'' ($\sf P \lor Q$)
+\eit
+\eit
+
+}
+
+\section{Proof Methods for Conditionals}
+
+
+\subsec{Modus Ponens}{
+\setlength{\fitchprfwidth}{1.2in}
+
+\fitchprf{\tline{If P, then Q}\\ \tline{P}}{\tline{Q}}
+}
+
+\subsec{Conditional Proof}{
+
+If on the assumption that P is true, you can prove Q, then you have
+given a proof of the conditional ``If P, then Q''
+
+
+}
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3.5cm}
+\fitchprf{
+\nline{Cube(a) \lor Small(a)}}{\nline{\lnot Cube(a) \to Small(a)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item Suppose a is not a cube.  
+\item We are told (premise) that a is a cube or a is small.
+\item By disjunctive syllogism, a is small.
+\item So by conditional proof, if a is not a cube, it is small. QED
+\een
+\end{column}
+\end{columns}
+}
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3.5cm}
+\fitchprf{
+\nline{\lnot Cube(a) \to Small(a)}}{\nline{Cube(a) \lor Small(a)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item We proceed indirectly: Assume $Cube(a) \lor Small(a)$ were false.
+\item Then a is not a cube, and a is also not small.
+\item In particular, a is not a cube.
+\item We are told (premise) that if a is not a cube, it is small.
+\item By modus ponens, a is small.
+\item Contradiction, since from (2) we have that a isn't small.
+\item So by indirect proof, a is either a cube or it is small. QED
+\een
+\end{column}
+\end{columns}
+}
+
+\section{Formal Proofs with $\to$}
+
+\subsec{Formal Rules for $\to$}{
+
+\noindent\setlength{\fitchprfwidth}{.9in}
+\begin{tabular}{@{}l@{}l@{}}
+\fitchctx{
+\subproof{\nline[$k.$]{P}}{\dots\\ \nline[$l.$]{Q}}
+\fpline[\quad]{P \to Q}[\lifi{$k$--$l$}]}
+&
+\fitchctx{
+\nline[$n.$]{P \to Q}\\
+\nline[$m.$]{P}\\
+\fpline[\quad]{Q}[\life{n}{m}]}
+\end{tabular}
+}
+
+\subsec{Formal Rules for $\iff$}{
+
+\noindent\setlength{\fitchprfwidth}{.9in}
+
+\fitchctx{
+\subproof{\nline[$k.$]{P}}{\dots\\ \nline[$l.$]{Q}}\\
+\subproof{\nline[$m.$]{Q}}{\dots\\ \nline[$n.$]{P}}\\
+\fpline[\quad]{P \iff Q}[\liffi{$k$--$l$}{$m$--$n$}]}}
+
+\subsec{Formal Rules for $\iff$}{
+
+\noindent\setlength{\fitchprfwidth}{.9in}
+
+\noindent\fitchctx{
+\nline[$n.$]{P \iff Q}\\
+\nline[$m.$]{P}\\
+\fpline[\quad]{Q}[\liffe{n}{m}]}\\[2ex]
+\fitchctx{
+\nline[$n.$]{P \iff Q}\\
+\nline[$m.$]{Q}\\
+\fpline[\quad]{P}[\liffe{n}{m}]}
+
+}
+
+\subsec{Strategies}{
+
+\bit
+\item If your goal sentence is of the form $P \to Q$:
+\bit
+\item Start subproof
+\item Put P in assumption line
+\item Put Q as last line
+\item Justify goal sentence with $\to$Intro
+\item Try to prove Q inside subproof
+\item This strategy usually works, so use it sooner rather than later
+\eit
+\item If you have $P \to Q$ available:
+\bit
+\item You can use it to get Q via $\to$Elim
+\item For that, you need to prove P first
+\item Wait with applying this strategy until you need Q
+\eit
+\eit
+
+}
+
+\subsec{Strategies}{
+
+\bit
+\item If your goal sentence is of the form $P \iff Q$:
+\bit
+\item Start 2 subproofs
+\item In one, put P in assumption line and Q as last line
+\item In one, put Q in assumption line and P as last line
+\item Justify goal sentence with $\iff$Intro
+\item Try to prove Q/P inside subproofs
+\item This strategy usually works, so use it sooner rather than later
+\eit
+\item If you have $P \iff Q$ available:
+\bit
+\item You can use it to get P or Q via $\to$Elim
+\item For that, you need to prove Q or P, resp., first
+\item Wait with applying this strategy until you need Q or P
+\eit
+\eit
+
+}
+
+\subsec{Example}{
+
+\fitchprf{\tline{\ }}{\nline{((A \lor B) \to C) \iff ((A \to C) \land (B \to C))}}
+
+}
+\subsec{Example}{
+
+\fitchprf{\tline{\ }}{\nline{(\lnot A \iff B) \to (A \iff \lnot B)}}
+
+}
+
+\subsec{Example}{
+
+\fitchprf{\tline{\ }}{\nline{(A\to B) \lor (B \to A)}}
+
+}
+
+
+\end{document}
+
+
+
+

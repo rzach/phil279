@@ -1,0 +1,308 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 14]{Logic I F13 Lecture 14}
+\date{October 29, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Review}
+
+\subsec{First-order Logical Notions}{
+
+\bit
+\item An argument is \emph{first-order valid}, and its conclusion is a \emph{first-order consequence} of its premises,
+if there is no \emph{first-order structure} in which the premises are true and the conclusion is false
+\item A sentence is a \emph{first-order validity} if it is true in every first-order stucture
+\item Two sentences are \emph{first-order equivalent} if there is no first-order structure in which they have different truth values.
+\item A (set of) sentence(s) is \emph{first-order satisfiable} if it is (all) true in at least on first-order structure
+\item NB: There is \emph{no mechanical test} for any of these (The Church-Turing Undecidability Theorem), by contrast to the truth-table case!
+\eit
+
+}
+
+
+\subsec{Skorupski Revisited}{
+
+\fitchprf{\pline[1.]{\text{If $\sf x$ is morally wrong, then}}\\
+\pline{\qquad \text{$\sf A$ is blameworthy for freely doing $\sf x$}}\\
+  \pline[2.]{\text{If $\sf x$ is
+  rationally optimal, then }}\\
+\pline{\qquad\text{A is not blameworthy for freely doing x.}}}
+{\pline[3.]{\text{If $\sf x$ is morally wrong, then $\sf x$ is not rationally
+      optimal.}}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x(Wrong(x) \lif BlameFreelyDoing(a, x))}\\
+  \pline[2.]{\forall x(ROpt(x) \lif \lnot BlameFreelyDoing(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+}
+
+\subsec{Skorupski Revisited}{
+
+\fitchprf{\pline[1.]{\text{If $\sf x$ is morally wrong and $\sf A$ freely does $\sf x$,
+    then}}\\
+\pline{\qquad\text{$\sf A$ is blameworthy for doing $\sf x$.}}\\ 
+  \pline[2.]{\text{If $\sf x$ is
+  rationally optimal, then}}\\
+\pline{\qquad\text{there is no reason to blame $\sf A$ for freely doing
+  $\sf x$.}}}
+{\pline[3.]{\text{If $\sf x$ is morally wrong, then $\sf x$ is not rationally
+      optimal.}}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x((Wrong(x) \land DoesF(a, x)) \lif Blame(a, x))}\\
+  \pline[2.]{\forall x((ROpt(x) \land DoesF(a, x)) \lif \lnot Blame(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+
+}
+
+\subsec{Skorupski Revisited}{
+
+\fitchprf{\pline[1.]{\forall x((Wrong(x) \land DoesF(a, x)) \lif Blame(a, x))}\\
+  \pline[2.]{\forall x((ROpt(x) \land DoesF(a, x)) \lif \lnot Blame(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x((Cube(x) \land LeftOf(a, x)) \lif SameRow(a, x))}\\
+  \pline[2.]{\forall x((Small(x) \land LeftOf(a, x)) \lif \lnot SameRow(a, x))}}
+{\pline[3.]{\forall x(Cube(x) \lif \lnot Small(x))}}
+}
+
+\section{Relations Between Logical Notions}
+
+\subsec{Relations Between Different Interpretations}{
+
+\bit
+\item Every TW-world is also a possible world
+\item Every possible world yields a FO structure
+\item Every FO structure determines a truth value for all
+  sub\textit{sentences}, i.e., a truth-value assignment for its
+  truth-functional form, and the sentence has the same truth value in
+  the FO structure as its truth-functional form does in the
+  corresponding truth-value assignment \eit }
+
+\subsec{Tautology $\Rightarrow$ FO Validity}{
+
+\bit
+\item If there were a FO structure which makes a sentence S false, the corresponding truth-value assignment would make its truth-functional form false
+\item If the truth-functional form of S is true in \emph{all} truth-value assignments, S must be true in all FO structures
+\item If S is a tautology, it is also a FO validity
+\item But not vice versa, e.g., $\sf a = a$, $\sf \forall x(Cube(x) \lor \lnot Cube(x))$
+\eit
+
+}
+
+\subsec{FO Validity $\Rightarrow$ Logical Truth}{
+
+\bit
+\item If there were a possible world which makes S false, this would also
+yield a FO structure which makes S false
+\item If S is true in all FO structures, it is true in all possible worlds
+\item If S is a FO validity, it is also a logical truth
+\item But not vice versa, e.g., $\sf SameSize(a, a)$, $\sf \forall
+  x(Larger(x, a) \to Smaller(a, x))$ \eit
+
+}
+
+\subsec{Relations Between Logical Notions}{
+
+\bit
+\item tautology $\Rightarrow$ FO validity $\Rightarrow$ logical truth $\Rightarrow$ TW necessity
+\item tautologically valid $\Rightarrow$ FO valid $\Rightarrow$\\ logically valid $\Rightarrow$ TW valid
+\item TT contradictory $\Rightarrow$ FO unsatisfiable $\Rightarrow$\\ logically contradictory $\Rightarrow$ TW contradictory
+\item TW-possible $\Rightarrow$ logically possible $\Rightarrow$\\ FO satisfiable $\Rightarrow$ TT possible
+\eit
+}
+
+
+
+
+\section{FO Equivalence}
+
+\subsec{FO Equivalence of WFFs}{
+
+\bit
+\item Two sentences $\sf A$ and $\sf B$ are \emph{FO equivalent} iff in
+  every FO structure they have the same truth value.
+\item Two wffs $A(x)$ and $B(x)$ are \emph{FO equivalent}
+iff in every FO structure, $A(x)$ is satisfied by the same objects
+as $B(x)$, i.e.,
+\item Two wffs $A(x)$ and $B(x)$ are \emph{FO equivalent}
+iff in every FO structure, $\sf A(x)$ and $\sf B(x)$ have the same extension
+\item More generally: $\sf A(x_1, \dots, x_n)$ is \emph{FO equivalent}
+  to $\sf B(x_1, \dots, x_n)$ iff they have the same extension in every
+  FO structure.  \eit }
+
+\subsec{Important FO Equivalences}{
+
+\let\IFF\Leftrightarrow
+
+\[
+\begin{array}{@{}rcl@{}}
+\lnot\forall x\,A(x) & \IFF & \exists x\, \lnot A(x)\\
+\lnot\exists x\,A(x) & \IFF & \forall x\, \lnot A(x)\\
+\forall x(A(x) \land B(x))& \IFF & \forall x\, A(x) \land \forall x\, B(x) \\
+\exists x(A(x) \lor B(x))& \IFF & \exists x\, A(x) \lor \exists x\, B(x) \\
+\forall x(A(x) \lor B)& \IFF & \forall x\, A(x) \lor B \\
+\multicolumn{3}{c}{\text{(provided $x$ not free in B)}} \\
+\exists x(A(x) \land B)& \IFF & \exists x\, A(x) \land B \\
+\multicolumn{3}{c}{\text{(provided $x$ not free in B)}} \\
+\forall x\,A & \IFF & A\\
+\multicolumn{3}{c}{\text{(provided $x$ not free in A)}} \\
+\exists x\,A & \IFF & \exists x\, A \\
+\multicolumn{3}{c}{\text{(provided $x$ not free in A)}} \\
+\forall x\,A(x) & \IFF & \forall y\, A(y)\\
+\exists x\,A(x) & \IFF & \exists y\, A(y)\\
+\end{array}\]
+}
+
+\subsec{Proof of a FO Equivalence}{
+
+\[
+\forall x(A(x) \land B(x)) \IFF \forall x\, A(x) \land \forall x\, B(x)
+\]
+
+\bit
+\item First suppose that $\forall x(A(x) \land B(x))$ is true in a FO structure.
+\item Then every object in the domain satisfies $A(x) \land B(x)$.
+\item So every object satisfies $A(x)$, i.e., $\forall x\, A(x)$ is true.
+\item Ditto for $B(x)$
+\item Now suppose an structure makes $\forall x\, A(x) \land \forall x\, B(x)$ true
+\item Then it makes $\forall x\, A(x)$ true, i.e., every object satisfies $A(x)$
+\item Ditto for $B(x)$, so every object satisfies $B(x)$.
+\item So every object satisfies $A(x) \land B(x)$, i.e., $\forall x(A(x) \land B(x))$ is true
+\eit
+}
+
+\subsec{Proof of a FO Non-Equivalence}{
+
+\[
+\exists x(A(x) \land B(x)) \IFF  \exists x\, A(x) \land \exists x\, B(x)
+\]
+
+\bit
+\item The $\Rightarrow$ part holds!
+\item Here's a FO interpretation which makes the RHS true but the LHS false:
+\bit
+\item Domain: $\{1, 2\}$
+\item $A(x)$ \dots $\{1\}$
+\item $B(x)$ \dots $\{2\}$
+\eit
+\eit
+}
+
+
+\section{Multiple Uses of a Single Quantifier}
+
+\subsec{Wffs Expressing Relations}{
+
+\bit
+\item A wff A(x) with one free variable expresses a \emph{property}
+\item A wff B(x, y) with two free variables expresses a \emph{relation}
+\item $\sf \forall x\forall y\, B(x, y)$ is a sentence; it's true iff\\
+any pair of objects $\alpha$, $\beta$ stand in the relation expressed by $B(x, y)$
+\item $\sf \exists x\exists y\, B(x, y)$ is a sentence; it's true iff\\
+at least one pair of objects $\alpha$, $\beta$ stand in the relation expressed by $B(x, y)$
+\eit
+}
+
+\subsec{Multiple Uses of Single Quantifier: Examples}{
+
+\bit
+\item SameSize(x, y) \dots x and y are the same size
+\item $\sf \forall x\forall y\, SameSize(x, y)$ \dots every pair $\langle \alpha,\beta\rangle$ stands in the relation ``is the same size as''
+\item in other words: any pair of objects are the same size
+\item NB: ``every pair'' includes pairs $\langle\alpha, \alpha\rangle$, i.e.,
+\item $\sf \forall x\forall y\, A(x, y)$ only true if all pairs $\langle \alpha, \alpha\rangle$ satisfy $\sf A(x, y)$
+\eit
+
+}
+
+\subsec{Multiple Uses of Single Quantifier: Examples}{
+
+\bit
+\item Larger(x, y) \dots x is larger than y
+\item $\sf \exists x\exists y\, Larger(x, y)$ \dots at least one pair $\langle \alpha,\beta\rangle$ stands in the relation ``is larger than''
+\item in other words: at least one objects is larger than at least one object
+\item NB: includes pairs $\langle\alpha, \alpha\rangle$, i.e.,
+\item $\sf \exists x\exists y\, A(x, y)$ is already true even if a single pair $\langle \alpha, \alpha\rangle$ satisfies $\sf A(x, y)$
+\eit 
+
+}
+
+\subsec{Different Variables $\neq$ Different Objects}{
+
+\bits
+\item Does $\sf\forall x\forall y\, Adjoins(x, y)$ mean ``any \emph{two} objects adjoin each other''?
+\item It does not!
+\item \dots true iff any pair $\langle\alpha, \beta\rangle$ satisfies $\sf Adjoins(x, y)$
+\item \emph{including pairs where $\alpha = \beta$}
+\item Hence, $\sf\forall x\forall y\, Adjoins(x, y)$ is \emph{always false} since no block adjoins itself!
+\item Correct: $\sf \forall x\forall y(x \neq y \to Adjoins(x, y))$
+\eit
+
+}
+
+\subsec{Different Variables $\neq$ Different Objects}{
+
+\bits
+\item Does $\sf\exists x\exists y\, SameRow(x, y)$ mean ``there are \emph{two} objects in the same row''?
+\item It does not!
+\item \dots true iff at least one pair $\langle\alpha, \beta\rangle$ satisfies $SameRow(x, y)$
+\item \emph{including pairs where $\alpha = \beta$}
+\item Hence, $\sf\exists x\exists y\, SameRow(x, y)$ is \emph{always true} since any block is in the same row as itself!
+\item Correct: $\sf \exists x\exists y(x \neq y \land SameRow(x, y))$
+\eit
+}
+
+\subsec{Restricted Quantification: All}{
+
+\bit 
+\item All cubes are left of all tetrahedra.
+\item Any pair $\langle \alpha, \beta\rangle$ where $\alpha$ is a cube and $\beta$ is a tetrahedron is so that $\alpha$ is left of $\beta$.\pause
+\[\sf
+\forall x\forall y((Cube(x) \land Tet(y)) \to LeftOf(x, y))
+\]
+\eit
+}
+
+\subsec{Restricted Quantification: Some}{
+
+\bit
+\item A cube is left of a tetrahedron.
+\item At least one pair $\langle \alpha, \beta\rangle$ where $\alpha$ is a cube and $\beta$ is a tetrahedron is so that x is left of y.\pause
+\[\sf
+\exists x\exists y(Cube(x) \land Tet(y) \land LeftOf(x, y))
+\]
+\eit
+}
+
+\subsec{Restricted Quantification: No}{
+
+\bit 
+\item No two cubes are the same size.
+\item Any pair $\langle \alpha, \beta\rangle$ where $\alpha$ and $\beta$ are different cubes is so that $\alpha$ is not the same size as $\beta$.\pause
+\[\sf
+\forall x\forall y((Cube(x) \land Cube(y) \land x \neq y) \to \lnot SameSize(x, y))
+\]
+\item There is no pair $\langle \alpha, \beta\rangle$ where $\alpha$ and $\beta$ are different cubes of the same size.\pause
+\[\sf
+\lnot \exists x\exists y(Cube(x) \land Cube(y) \land x \neq y \land SameSize(x, y)
+\]
+\eit
+}
+
+\end{document} 
+
+
+
+

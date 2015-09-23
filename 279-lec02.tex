@@ -1,0 +1,286 @@
+\documentclass[bigger]{beamer}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 2]{Logic I F13 Lecture 2}
+\date{September 12, 2013}
+
+% ====================
+
+\input{header}
+
+\section{First Order Languages}
+
+\subsec{Syntax of FOL}{
+
+\bit
+\item Individual constants
+
+\bit 
+\item Start lowercase
+\item $a$, $b$, $c$, $\sf max$, $\sf claire$, \dots
+\eit
+\item Predicate symbols
+\bit
+\item Start uppercase
+\item Have \emph{arity} (= number of argument places)
+\item $P$, $Q$, $R$, \dots, $\sf Cube$, $\sf Larger$, $\sf Between$,\dots
+\eit
+\eit
+}
+
+\subsec{Atomic Sentences}{
+
+\bit
+\item Predicate symbol $P$ or arity $n$ \dots
+\item \dots followed by $n$ constant symbols
+\item enclosed in parentheses, separated by commas
+\item e.g., $\sf Cube(a)$, $\sf Larger(c, d)$, $\sf SameSize(a, a)$,
+  $\sf Between(a, b, c)$.  
+\item $\sf Large(Cube(a))$ is \emph{not well formed} (ungrammatical)
+\eit
+}
+
+\subsec{Meaning of Individual Constants}{
+
+\bit 
+\item Individual constant in FOL = names in English
+\item Individual constants pick out exactly one object
+\bit
+\item No ``empty'' names, e.g., Santa Claus 
+\item No individual constant names more than one object
+\item But: an object can be named by more than one constant
+\eit
+\eit
+}
+
+\subsec{Meanings of Predicate Symbols}{
+
+\bit
+\item Predicate symols in FOL = verbs, adjectives, common nouns in English
+\item Predicate symbols mean \emph{determinate} properties (relations
+  if arity $\ge 2$)
+\item Determinate property: determinate matter of fact for every
+  object whether it has the property or not
+\item Order of argument places is important
+\eit
+
+}
+
+\subsec{Meanings of Atomic Sentences}{
+
+\bit
+\item Atomic sentences = simple subject--predicate sentences of English
+\item Atomic sentences describe a simple fact about the way the world could be
+\item Atomic sentences have truth values: true, false\\
+(provided all constant symbols name something)
+\item $P(a)$ is true iff object named by $a$ has the determinate
+  property corresponding to~$P$; false if it doesn't
+ \eit
+}
+
+
+
+\section{Possible Worlds and First-order Structures}
+
+\subsec{Possible Worlds}{
+
+\bit
+\item A \emph{possible world} is a way (part of) the world described by a FOL 
+could be
+\bit
+\item There is a collection (non-empty) of objects of a certain type:
+  \emph{domain}
+\item Individual constants each name one of these objects
+\item Each of the objects have or lack the properties we interpret the
+  1-place predicate symbols by
+\item Each pair of objects either stands or fails to stand in the
+  relations we interpret the 2-place objects by, \dots \eit
+\item Every atomic sentence is true or false in a possible world
+\eit
+}
+
+\subsec{Possible Worlds for the Blocks Language}{
+
+\bit
+\item The domain consists of solid blocks arranged spatially
+\item Some but not necessarily all of the blocks are named by
+  individual constants
+\item Every object either is or isn't a cube, a tetrahedron, a
+  dodecahedron
+\item Of any two objects, 
+\bit
+\item the first is larger than the second or it isn't, 
+\item it's left of the second or isn't, \dots
+\eit
+\eit
+
+}
+
+\subsec{First-order Structures}{
+
+\bit
+\item Specific characteristics of objects in domain not relevant
+for truth or falsity of atomic sentences
+\item More abstract: \emph{first-order structures}
+\bit
+\item Domain can be \emph{any} non-empty collection of objects
+\item Some of them named by individual constants
+\item Predicate symbols have \emph{extensions} assigned to them
+\bit
+\item Extensions of 1-place predicate symbols: collection of objects
+  of the domain (may be empty),
+\item Extension of 2-place predicate symbols: collection of
+  \emph{pairs} of objects, \dots 
+\eit \eit \eit }
+
+\subsec{Possible Worlds and FO Structures}{
+
+\bit
+\item Truth in a FO structure:
+\bit
+\item $P(a)$ is true iff the object named by $a$ is in the extension of $P$
+\item $Q(a, b)$ is true iff the pair of objects named by $a$, $b$ is
+  in the extension of $Q$ \eit
+\item Every possible world generates a first-order structure
+\bit
+\item Domain and referents of individual constants are the same
+\item Extension of $P$: the collection of all (pairs of) objects which
+  have the property (stand in the relation) assigned to $P$ 
+\eit 
+\eit
+
+}
+
+\subsec{TW World to FO Structure}{
+
+\hfill\pgfimage[height=2cm]{world.png}
+
+\vspace{-1cm}
+\bit
+\item Domain: $1$, $2$, $3$
+\item Constants: $a \mapsto 2$, $b \mapsto 3$
+\item Extensions:\\[.5ex]
+
+\begin{tabular}{@{}llll}
+Small: $1$ & Medium: $2$ & Large: $3$ \\
+Cube: $1$  & Tet: $3$ & Dodec: $2$\\
+\multicolumn{2}{@{}l}{Smaller: $\langle 1, 2\rangle$, $\langle 1, 3\rangle$, 
+$\langle 2, 3\rangle$} & 
+\multicolumn{2}{l}{Larger: $\langle 2, 1\rangle$, $\langle 3, 1\rangle$, 
+$\langle 3, 2\rangle$}\\
+\multicolumn{2}{@{}l}{LeftOf: $\langle 1, 2\rangle$, $\langle 1, 3\rangle$, $\langle 2, 3\rangle$} &
+\multicolumn{2}{l}{Adjoins: $\langle 1, 2\rangle$, $\langle 2, 1\rangle$}\\
+\multicolumn{3}{@{}l}{SameRow: $\langle 1, 1\rangle$, $\langle 1, 2\rangle$, $\langle 2, 1\rangle$, $\langle 2, 2\rangle$, $\langle 3, 3\rangle$} & Between: $\emptyset$
+\end{tabular}
+\eit
+}
+
+\subsec{Diagrams for First-order Structures}{
+
+\bit
+\item Represent domain as numbered dots
+\item Individual constants label on a dot
+\item Extensions of predicate symbols as areas containing dots
+\item Extension of 2-place predicate symbols: arrows
+\eit
+
+}
+
+\subsec{Diagrams for First-order Structures}{
+
+Representation of extensions of Cube, Large, SameRow, and Smaller
+
+\begin{center}
+\tikz {
+	%Set nodes and draw dots
+	\fill (-1.5,0) circle (2pt) node[label=below:1] (1) {};
+	\fill (1.5,0) circle (2pt) node[label=above:a, label=below:2] (2) {};
+	\fill (0, 1.5) circle (2pt) node[label=above:b, label=below:3] (3) {};
+	%Draw circles for Cube, Dodec, and Tet
+	\node [circle, draw, thick, label=180:Cube] at (-1.5,0) [minimum size=2cm] {};
+	\node [circle, draw, thick, label=0:Large] at (0,1.7) [minimum size=2cm] {};
+	%SameShape arrows
+	\draw[-latex, thick] (1) to[bend left] (2) ;
+	\draw[-latex, thick] (2) to[bend left] (1) ;
+	\path[-latex, thick, every loop/.style={min distance=10mm, looseness=10}] (1) edge [in=-180, out=-120, loop]  ();
+	\path[-latex, thick, every loop/.style={min distance=10mm, looseness=10}] (2) edge [in=-30, out=30, loop]  ();
+	\path[-latex, thick, every loop/.style={min distance=10mm, looseness=10}] (3) edge [in=180, out=120, loop]  ();
+	%Larger arrows
+	\draw[-latex, thick, dashed] (1) -> (2) ;
+	\draw[-latex, thick, dashed] (2) -> (3) ;
+	\draw[-latex, thick, dashed] (1) -> (3) ;
+        \draw[-latex, thick] (-1.5, -1.5) to (0, -1.5) node[label=0:SameRow] {};
+        \draw[-latex, thick, dashed] (-1.5, -2) to (0, -2) node[label=0:Smaller] {};
+}
+\end{center}
+
+}
+
+\section{Identity and Function Symbols}
+
+\subsec{Identity}{
+
+\bit
+\item Special predicate symbol included in every FO language: \[=\] 
+\item Arity 2, written between arguments: $a = b$
+\item $a = b$ is true iff $a$ and $b$ name the very same object
+\item $a = a$ is always true
+\eit
+}
+
+\subsec{Function Symbols}{
+
+\bit
+\item Important way of naming objects indirectly: functions (operations)
+\item e.g., ``the father of'',  $\sqrt{\phantom{X}}$, $\sf head(l)$
+\item Some FO languages include \emph{function symbols}
+\item Lowercase like constants, but have arity like predicates
+\item e.g., in blocks language, fm, bm, lm, rm
+\eit
+
+}
+
+\subsec{Terms and Atomic Sentences}{
+
+\bit
+\item Function symbols and constants combine to form \emph{terms}
+\item But, terms can themselves be arguments to function symbols,
+  i.e., function symbols can be nested in terms
+\item E.g.,
+\bit
+\item $\sf lm(a)$
+\item $\sf fm(lm(a))$
+\item $\sf Cube(fm(a))$ is an atomic sentence
+\item $\sf fm(Cube(a))$ is \emph{not well formed} (ungrammatical)
+\eit
+\item Precise definition:
+\bit
+\item Every constant symbol is a term
+\item If $f$ is a function symbol of arity $n$, and $t_1$, \dots, $t_n$ are terms, then $f(t_1, \dots, t_n)$ is a term
+\item If $P$ is a predicate symbol of arity $n$, and $t_1$, \dots, $t_n$ are terms, then $P(t_1, \dots, t_n)$ is an atomic sentence
+\eit\eit
+}
+
+\subsec{The Language of Arithmetic}{
+
+\bit 
+\item Predicate symbols: $<$, $=$ 
+\item Constant symbols: $0$, $1$
+\item Function symbols: $+$, $\times$ (arity 2, infix)
+\item Terms: $(((1 + 1) +1) + 1)$, $(1 + ((1 + 1) \times (1 + (1 + 1))))$\\
+Note: neither $1 + 1 + 1$ nor $(1 + 1 +1)$ are terms!
+\item Atomic sentences:
+\bit
+\item $0 = 1$, $0 < 1$
+\item $(1 + (1 + 1)) = ((1 + 1) + 1)$
+\eit
+\eit
+
+}
+
+
+\end{document}

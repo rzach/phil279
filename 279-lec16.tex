@@ -1,0 +1,383 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 16]{Logic I F13 Lecture 16}
+\date{November 5, 2013}
+% ====================
+
+\input{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Ambiguity}
+
+\subsec{Types of Ambiguity}{
+
+\bit
+\item Lexical ambiguity: same word, different meaning
+\item Structural ambiguity: different ways to read a phrase/sentence
+\item \emph{Scope ambiguity}: which connective or quantifier is in the
+  scope of which other connective or quantifier\\[2ex]
+
+a is left of b and large or left of c
+\begin{align*}
+\sf LeftOf(a, b) & \sf{} \land (Large(a) \lor RightOf(a, c)) \\
+\sf (LeftOf(a, b) & \sf{} \land Large(a)) \lor RightOf(a, c)
+\end{align*}
+\eit
+
+}
+
+\subsec{``Anything''}{
+
+\bit
+\item Anything {\color{blue}left of a cube} is large\pauses
+\[\sf
+\uncovers{3-}{\forall x(}{\color{blue}\exists y(Cube(y) \land LeftOf(x, y))} \uncovers{3-}{{}\to Large(x))}
+\]\pauses
+\item {\color{red}No cube is} left of anything large \pauses
+\[\sf
+{\color{red}\forall x(Cube(x) \to \lnot} \uncovers{5-}{\exists y(Large(y) \land LeftOf(x, y))}{\color{red})}
+\]\pauses
+\item {\color{red}No cube is} left of everything large \pauses
+\[\sf
+{\color{red}\forall x(Cube(x) \to \lnot} \forall y(Large(y) \to LeftOf(x, y)){\color{red})}
+\]
+\eit
+
+}
+
+\subsec{Negation and the Quantifiers}{
+
+\bit
+\item ``All cubes are not large''
+\bit
+\item Denial of ``all cubes are large''\\
+(``Are all cubes large? No, all cubes are not large'')\pauses
+\begin{align*}
+\sf\lnot\forall x(Cube(x) & \sf{} \to Large(x)) \\
+\sf\exists x(Cube(x) & \sf{} \land\lnot Large(x)) 
+\end{align*}
+\item All cubes are: not large, i.e.,\\
+No cubes are large\pauses
+\begin{align*}
+\sf\forall x(Cube(x) & \sf{} \to \lnot Large(x)) \\
+\sf\lnot\exists x(Cube(x) & \sf{}\land Large(x)) 
+\end{align*}
+\eit
+\eit
+}
+
+\subsec{Multiple Quantifiers and Ambiguity}{
+
+\bit
+\item ``All cubes adjoin a tetrahedron''
+\bit
+\item ``A tetrahedron'' in the scope of ``all cubes'', i.e.,\\
+``For every cube, there is a tetrahedron it adjoins''\pauses
+\[
+\sf\forall x(Cube(x) \to \exists y(Tet(y) \land Adjoins(x, y))
+\]
+\item ``All cubes'' in scope of ``a tetrahedron'', i.e.,\\
+``There is a tetrahedron which every cube adjoins''\pauses
+\[
+\sf\exists y(Tet(y) \land \forall x(Cube(x) \to Adjoins(x, y))
+\]
+\eit\eit
+}
+
+
+\section{Anaphora and Uniqueness}
+
+\subsec{Anaphora (Donkey Sentences)}{
+
+``Every farmer who owns a donkey is happy''
+
+\bits
+\item Step by step translation: ``All As are Bs''
+\item x is a farmer who owns a donkey \dots\[\sf
+Farmer(x) \land \exists y(Donkey(y) \land Owns(x, y))
+\] 
+\item {\color{blue}Every} farmer who owns a donkey {\color{blue}is happy}
+\[\sf
+{\color{blue}\forall x(}(Farmer(x) \land \exists y(Donkey(y) \land Owns(x, y))) {\color{blue}\to Happy(x))}
+\]
+\eit
+
+}
+
+\subsec{Anaphora (Donkey Sentences)}{
+
+``Every farmer who owns a donkey beats it''
+
+\bits
+\item Step by step translation: ``All As are Bs''
+\item x is a farmer who owns a donkey \dots\[\sf
+Farmer(x) \land \exists y(Donkey(y) \land Owns(x, y))
+\] 
+\item {\color{blue}Every} farmer who owns a donkey {\color{blue}beats it}
+\[\sf
+{\color{blue}\forall x(}(Farmer(x) \land \exists y(Donkey(y) \land Owns(x, y))) {\color{blue}\to Beats(x, {\color{red}y}))}
+\]
+\eit
+
+}
+
+\subsec{Anaphora (Donkey Sentences)}{
+
+``Every farmer who owns a donkey beats it''\pauses
+
+\bits
+\item When is it false that every farmer who owns a donkey beats it? \pauses 
+If there's a farmer who owns a donkey but doesn't beat it. Deny that! \pauses
+\[\sf
+\lnot\exists x(Farmer(x) \land \exists y(Donkey(y) \land Owns(x, y) \land \lnot Beats(x, y)))
+\]
+\item For every farmer and every donkey: if the farmer owns the
+  donkey, the farmer beats the donkey
+\[\sf
+\forall x\forall y((Farmer(x) \land Donkey(y)) \to (Owns(x, y) \to Beats(x, y)))
+\]
+\item Every farmer beats every donkey they own
+\[\sf
+\forall x(Farmer(x) \to \forall y((Donkey(y) \land Owns(x, y)) \to Beats(x, y)))
+\]
+\eit
+
+}
+
+\subsec{Uniqueness}{
+
+\bit
+\item There is at least one cube.
+\[
+\sf\exists x\, Cube(x)\]
+\item There is exactly one cube.
+\bit
+\item<2-> There's at least one cube, and
+\item<3-> There are no others
+\begin{align*}
+\uncover<2->{\sf\exists x\, (Cube(x)} & \uncover<4->{\sf\land \lnot \exists y\, (y \neq x \land Cube(y)))}\\
+\uncover<3->{\sf\exists x\,(Cube(x)} & \uncover<5->{\sf\land \forall y(Cube(y) \to x = y))}
+\end{align*}
+\eit
+\eit
+}
+
+\section{Rules for $\forall$}
+
+\subsec{Rules for Fitch}{
+
+\bit
+\item Need rules for $\forall$ and $\exists$ for formal proofs
+\item Formal proofs now more important, because no alternative (truth-table method)
+\item Intro and Elim rules should be
+\bit
+\item simple
+\item elegant (not involve other connectives or quantifiers)
+\item yield only valid arguments
+\eit 
+\eit
+
+}
+
+\subsec{Candidates for Rules}{
+\setlength{\fitchprfwidth}{6em}
+
+\bit
+\item Only simple sentence close to $\sf \forall x\, A(x)$ is $\sf A(c)$
+\item Gives simple, elegant $\forall$Elim rule:
+
+\fitchctx{
+\nline[$k.$]{\forall x\, A(x)}\\
+\fpline{\quad A(c)}[\lalle{}]
+}
+\item Problem: corresponding ``intro rule'' isn't valid:
+\fitchctx{
+\nline[$k.$]{A(c)}\\
+\fpline{\quad\forall x\,A(x)}[\emph{doesn't follow!}]
+}
+\eit
+
+}
+
+\subsec{Names for Arbitrary Objects}{
+
+\bit
+\item Diagnosis: the c in A(c) is a name for a \emph{specific object}
+We need a name for an \emph{arbitrary, unspecified object}
+\item If A(c) is true for whatever c could name, then A(x) is satisfied by \emph{every} object 
+\item In fact, this is what we do when we give proofs of general claims, e.g.,
+
+\setlength{\fitchargwidth}{15em}
+\fitcharg{\tline{All cubes adjoin a}\\
+\tline{Only small things adjoin a}}{
+\tline{All cubes are small}}
+
+\pauses
+Proof: Let Carl be any cube.  Since all cubes adjoin a, Carl adjoins
+a. Since only small things adjoin a, Carl is small. But ``Carl''
+stands for \emph{any} cube. So all cubes are small.
+  \eit
+
+}
+
+\subsec{Arbitrary Objects in Fitch}{
+
+\bit 
+\item Every special constant with stands for an arbitrary object is
+  introduced only pro tem
+\item In particular, they never appear in the premises or conclusion of an argument
+\item In Fitch, this is enforced by requiring that special constants only appear in subproofs
+\item To indicate that a constant names an arbitrary object, it is put in a box at the beginning of this subproof
+\eit
+
+}
+
+\subsec{General Conditional Proof}{
+\setlength{\fitchctxwidth}{11em}
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B(c)}}
+\fpline{\quad \forall x(A(x) \to B(x))}[\lalli{$m$--$n$}]}
+
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Universal Generalization}{
+\setlength{\fitchprfwidth}{11em}
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{}{\ellipsesline \\ \nline[$n.$]{A(c)}}
+\fpline{\quad \forall x\,A(x)}[\lalli{$m$--$n$}]}
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Example}{
+
+\setlength{\fitchargwidth}{15em}
+\fitcharg{\tline{All cubes adjoin a}\\
+\tline{Only small things adjoin a}}{
+\tline{All cubes are small}}
+
+\bigskip
+
+\fitchprf{\pline{\forall x\, (Cube(x) \to Adjoins(x, a))}\\
+\pline{\forall x(Adjoins(x, a) \to Small(x))}}{
+\pline{\forall x(Cube(x) \to Small(x))}}
+
+}
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{15em}
+
+\fitchprf{\pline[1.]{\forall x\, (Cube(x) \to Adjoins(x, a))}\\
+\pline[2.]{\forall x(Adjoins(x, a) \to Small(x))}}{
+\boxedsubproof[3.]{c}{Cube(c)}{\pline[4.]{Cube(c) \to Adjoins(c, a)}[\lalle{1}] \\
+\pline[5.]{Adjoins(c, a)}[\life{3}{4}]\\
+\pline[6.]{Adjoins(c, a) \to Small(c)}[\lalle{2}] \\
+\pline[7.]{Small(c)}[\life{5}{6}]}
+\pline[8.]{\forall x(Cube(x) \to Small(x))}[\lalli{3--7}]}
+
+}
+
+\section{Rules for $\exists$}
+
+\subsec{Intro Rule for $\exists$}{
+\setlength{\fitchprfwidth}{7em}
+\bit
+\item If we know of a specific object that it satisfies A(x), we know that at least one object satisfies A(x)
+\item So this rule is valid:
+
+\fitchctx{\pline[$m.$]{A(c)}\\
+\fpline{\quad \exists x\, A(x)}[\lexii{$m$}]}
+\item Problem: corresponding ``elim rule'' isn't valid:
+\fitchctx{
+\nline{\exists x\, A(x)}\\
+\fpline{\quad A(c)}[\emph{doesn't follow!}]
+}
+
+
+\eit
+
+}
+
+\subsec{Arbitrary Objects Again}{
+
+\bit
+\item If we know that $\sf\exists x\, A(x)$ is true, we know that \emph{some} object(s) satisfy A(x), but not which ones
+\item To use this information, we have to introduce a temporary name that stands for any one of the objects that satisfy A(x)
+\item This is what we'd do if we reason informally from existential information, e.g.,
+
+\setlength{\fitchprfwidth}{15em}
+\fitchprf{\tline{There are small cubes}\\
+\tline{Anything small adjoins a}}{
+\tline{Some cubes adjoin a}}
+
+\pauses
+Proof: We know there are small cubes. Let Cate be an arbitrary one of them.  So
+Cate is small. Since all small things adjoins a, Cate adjoins a. Since
+Cate is a cube adjoining a, some cubes adjoin a.
+\eit 
+
+}
+
+\subsec{Existential Instantiation}{
+\setlength{\fitchprfwidth}{7em}
+
+\bit
+\item If we know that some object satisfies A(x), we assume for the time being that c is one of them (i.e., assume A(c)), and we can prove that some claim B fololows from this assumption, then B follows already from $\sf\exists x\, A(x)$.
+\item Rule for existential elimination:
+\bigskip
+
+\fitchctx{
+\pline[$k$.]{\exists x\, A(x)}\\
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B}}
+\fpline{\quad B}[\lexie{k}{$m$--$n$}]}
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{15em}
+\fitchprf{\tline{There are small cubes}\\
+\tline{Anything small adjoins a}}{
+\tline{Some cubes adjoin a}}
+
+\bigskip
+
+\fitchprf{\pline{\exists x(Small(x) \land Cube(x))}\\
+\pline{\forall x(Small(x) \to Adjoins(x, a))}}{
+\pline{\exists x(Cube(x) \land Adjoins(x, a)}}
+}
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{15em}
+\fitchprf{\pline[1.]{\exists x(Small(x) \land Cube(x))}\\
+\pline[2.]{\forall x(Small(x) \to Adjoins(x, a))}}{
+\boxedsubproof[3.]{c}{Small(c) \land Cube(c)}{
+\pline[4.]{Small(c)}[\lande{3}] \\
+\pline[5.]{Small(c) \to Adjoins(c, a)}[\lalle{2}] \\
+\pline[6.]{Adjoins(c, a)}[\life{4}{5}]\\
+\pline[7.]{Cube(c)}[\lande{3}] \\
+\pline[8.]{Cube(c) \land Adjoins(c, a)}[\landi{6}{7}]\\
+\pline[9.]{\exists x(Cube(x) \land Adjoins(x, a)}[\lexii{8}]
+}
+\pline[10.]{\exists x(Cube(x) \land Adjoins(x, a)}[\lexie{1}{3--9}]
+}
+
+}
+\end{document} 
+
+
+
+

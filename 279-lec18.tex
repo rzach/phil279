@@ -1,0 +1,282 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 18]{Logic I F13 Lecture 18}
+\date{November 19, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{14em}
+
+\section{Review}
+
+\subsec{Rules for $\forall$}{
+
+\fitchctx{
+\nline[$k.$]{\forall x\, A(x)}\\
+\fpline{\quad A(b)}[\lalle{$k$}]
+}
+
+\bigskip 
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{}{\ellipsesline \\ \nline[$n.$]{A(c)}}
+\fpline{\quad \forall x\,A(x)}[\lalli{$m$--$n$}]}
+
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Rules for $\forall$}{
+\setlength{\fitchctxwidth}{13em}
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B(c)}}
+\fpline{\quad \forall x(A(x) \to B(x))}[\lalli{$m$--$n$}]}
+
+
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Rules for $\exists$}{
+
+\fitchctx{\pline[$m.$]{A(b)}\\
+\fpline{\quad \exists x\, A(x)}[\lexii{$m$}]}
+
+\bigskip
+
+\fitchctx{
+\pline[$k$.]{\exists x\, A(x)}\\
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B}}
+\fpline{\quad B}[\lexie{k}{$m$--$n$}]}
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Everybody Loves my Baby}{
+
+\setlength{\fitchprfwidth}{13em}
+
+\href{http://www.youtube.com/watch?v=cxS0FpTNir0}{Red Nichols (1935)}\\
+\href{http://www.youtube.com/watch?v=TyD9rZ2bOq4}{Doris Day (1955)}\\
+\href{http://www.youtube.com/watch?v=Y4wWpeGaNBw}{Brigitte Bardot (1968)}
+
+\pause
+\bigskip
+
+\fitchprf{\tline{Everybody loves my baby}\\
+\tline{My baby loves noone but me}}{
+\tline{My baby is me}}
+
+\bigskip
+
+\fitchprf{\pline{\forall x\, Loves(x, b)}\\
+\pline{\forall x(Loves(b, x) \lif x = i)}}{
+\pline{b = i}}
+}
+
+\section{Strategies for Proofs with Quantifiers}
+
+\setlength{\fitchprfwidth}{8em}
+
+\subsec{Strategy for Proving Universal Sentences}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline\\
+\pline[5.]{\forall x\, A(x)}[?]
+} &
+Suppose we want to prove $\sf\forall x\, A(x)$.  For this, we have to use $\forall$Intro.
+\end{tabular}
+}
+
+\subsec{Strategy for Proving Universal Sentences}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{}}{
+\boxedsubproof[2.]{c}{}{
+\ellipsesline\\
+\pline[4.]{A(c)}
+}
+\pline[5.]{\forall x\, A(x)}[\lalli{2--4}]
+} &
+For $\forall$Intro, we need a subproof that ends with a substitution instance of
+$\sf \forall x\, A(x)$ where we replace every free occurrence of x in
+A(x) by a \emph{new} constant c. c has to be boxed in the assumption
+line.  This always works, so do it earlier rather than later.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Proving Universal Sentences}{
+
+\setlength{\fitchprfwidth}{10em}
+
+\begin{tabular}{@{}l@{}p{10em}@{}}
+\fitchprf{\pline[1.]{}}{
+\boxedsubproof[2.]{c}{A(c)}{
+\ellipsesline\\
+\pline[4.]{B(c)}
+}
+\pline[5.]{\forall x(A(x) \to B(x))}[\lalli{2--4}]
+} &
+If the wff after the universal quantifier is a conditional, we can use the special form of $\forall$Intro instead of using a $\to$Intro inside the boxed subproof.
+\end{tabular}
+}
+
+
+\setlength{\fitchprfwidth}{8em}
+
+\subsec{Strategy for Proving Existential Sentences}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline\\
+\pline[3.]{\exists x\, A(x)}[?]
+} &
+We want to prove $\sf \exists x\, A(x)$.  For this, we can often use
+$\exists$Intro.
+\end{tabular}
+}
+
+\subsec{Strategy for Proving Existential Sentences}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline\\
+\pline[2.]{A(b)}\\
+\pline[3.]{\exists x\, A(x)}[\lexii{2}]
+} &
+For $\exists$Intro, we need a substitution instance A(b) of A(x).
+Any b will do. But save this strategy for last, just like $\lor$Intro. Often you can only  prove A(b) if
+you're in a subproof, and b is a boxed constant in a surrounding subproof.
+\end{tabular}
+}
+
+\subsec{Strategy for Proving Existential Sentences}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{}}{ \ellipsesline\\ \pline[2.]{A(b,
+    b)}\\ \pline[3.]{\exists x\, A(x,
+    b)}[\lexii{2}]\\ \pline[4.]{\exists x\, A(b,
+    x)}[\lexii{2}]\\ \pline[5.]{\exists y\exists x\, A(y,
+    x)}[\lexii{4}]\\ 
+\pline[6.]{\exists x\, A(x, x)}[\lexii{2}]} & If b occurs more than once in your sentence,
+you don't have to replace all occurrences of b by x.
+\end{tabular}
+}
+\subsec{Strategy for Using Existential Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\exists x\, A(x)}}{
+\ellipsesline\\
+\pline[4.]{B}[?]
+} &
+Suppose you want to prove some sentence B, and you are ready to use
+$\sf\exists x\, A(x)$. ($\sf\exists x\, A(x)$ might be something you've
+proved, or is a premise, or an assumption of a subproof).
+\end{tabular}
+}
+
+\subsec{Strategy for Using Existential Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\exists x\, A(x)}}{
+\boxedsubproof[2.]{c}{A(c)}{
+\ellipsesline\\
+\pline[3.]{B}
+}
+\pline[4.]{B}[\lexie{1}{2--3}]
+} &
+To get B from $\sf\exists x\, A(x)$, set up a subproof where you assume
+A(c). c has to be \emph{new} (in particular, it can't be in B), and boxed.
+In the subproof, look for a proof of B.  This always works, so do it earlier rather than later.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Using Universal Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\forall x\, A(x)}}{
+\ellipsesline} &
+To use a universal sentence which you've proved, assumed, or is one of
+your premises, use $\forall$Elim. 
+\end{tabular}
+}
+
+\subsec{Strategy for Using Universal Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\forall x\, A(x)}}{
+\ellipsesline \\
+\pline[$7$.]{A(b)}[\lalle{1}]
+} &
+To do that, you can write down any substitution instance of A(x), i.e.,
+A(b) where b is any constant. You can always do that, but it's best to wait until you know which A(b) you need.
+\end{tabular}
+}
+
+\subsec{Strategy for Using Universal Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\forall x\forall y\forall z\, A(x, y, z)}}{
+\ellipsesline \\
+\pline[$7$.]{A(a, b, c)}[\lalle{1}]
+}&
+\raggedright If there is more than one $\forall$ (they have to be
+together ``in a block''), you can replace all variables at once. Here
+we replaced x by a, y by b, and z by c.
+\end{tabular}
+}
+
+\subsec{Strategy for Using Universal Premises}{
+
+\begin{tabular}{lp{10em}}
+\fitchprf{\pline[1.]{\forall x\forall y\forall z\, A(x, y, z)}}{
+\ellipsesline \\
+\pline[$7$.]{A(c, a, c)}[\lalle{1}]
+} &
+You don't have to keep the alphabetical order, and the constants don't
+all have to be distinct.  E.g., here line 7 comes from line 1 by replacing
+x by c, y by a, and z by c.
+\end{tabular}
+}
+
+\subsec{Tips}{
+
+\bit
+\item Use the strategies for $\forall$Intro and $\exists$Elim as early as possible, and those for $\forall$Elim and $\exists$Intro as late as possible
+\item \emph{When you have a choice between a rule with a subproof and one without, pick the one with the subproof.} (Except indirect proof for a sentence without $\lnot$!)
+\item If you're thinking of looking for a proof of A(b) to get $\sf\exists x\, A(x)$ using $\exists$Intro, you can test if A(b) is a consequence of the premises and assumptions using \textbf{FO~Con}
+\item If you type ``$\sf: x > b$'', click on $\sf\forall x\,A(x)$, select $\forall$Elim, and check the step, Fitch will fill in A(b) in the line
+\item If you type ``$\sf: b > x$'', click on A(b), select $\exists$Intro, and check the step, Fitch will fill in $\sf\exists x\,A(x)$ in the line
+\eit
+}
+
+\subsec{Examples}{
+
+We'll now apply these strategies (and some strategies we remember from 
+propositional proofs) to give proofs of
+\begin{align*}\sf
+\sf\lnot \forall x\, A(x) & \sf\leftrightarrow \exists x\, \lnot A(x)\\
+\sf\exists x (A(x) \to B) & \sf\leftrightarrow (\forall x\, A(x) \to B)\\
+\end{align*}
+\fitchprf{\pline{\forall x\exists y\, R(x, y)}\\
+\pline{\forall x\forall y(R(x, y) \to R(y, x)}}{
+\pline{\forall x\, R(x, x)}}
+
+}
+\end{document} 
+
+
+
+
+

@@ -1,0 +1,365 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 6]{Logic I F13 Lecture 6}
+\date{September 26, 2013}
+% ====================
+
+
+%NOTE remember to do truth table example (and put one in these slides)
+%CUt last section/look at lec 7
+
+\include{header}
+
+\section[Tautological Validity]{Logical Validity and Tautological Validity}
+
+
+\subsec{Validity of Arguments}{
+
+\begin{block}{Valid Arguments}
+
+\fitcharg{
+$\left.\begin{array}{@{}c@{}}
+\formula{P}_1 \\
+\vdots\\
+\formula{P}_n
+\end{array}
+\right\} \quad \text{Premises}$}{
+\formula{C\qquad  \text{Conclusion}}}
+\end{block}
+
+\bit
+\item Argument is \emph{valid} if 
+\bit 
+\item every possible world in which $P_1$, \dots, $P_n$ are all true is also one which makes $C$ true, or:
+\item there is \emph{no} possible world in which $P_1$, \dots, $P_n$ are all true and $C$ is false.
+\eit
+\eit
+
+}
+
+\subsec{Types of Validity}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{tabular}{l@{\qquad}l}
+\fitchprf{\pline{Cube(a) \lor Tet(a)}\\
+\pline{\lnot Tet(a)}}{
+\pline{Cube(a)}}
+&
+\fitchprf{\pline{\lnot Larger(a, b)}\\
+\pline{\lnot Larger(b, a)}}{
+\pline{SameSize(a, b)}}
+\end{tabular}
+}
+
+\subsec{Logical Validity}{
+
+\bit
+\item Second argument is valid since there is no world in which premises
+are true and conclusion is false
+\item But this is (in part) a function of the meanings of the predicate symbols involved
+\item Could make a world in which the premises are true and conclusion is false if we changed meanings of predicate symbols
+\item (Or: A different argument, where we only change the predicate symbols
+in the old argument, is invalid)
+\eit
+}
+
+\subsec{Logic Validity}{
+
+\setlength{\fitchprfwidth}{1.2in}
+\begin{tabular}{ll}
+\fitchprf{\pline{\lnot Larger(a, b)}\\
+\pline{\lnot Larger(b, a)}}{
+\pline{SameSize(a, b)}}
+&
+\fitchprf{\pline{\lnot LeftOf(a, b)}\\
+\pline{\lnot LeftOf(b, a)}}{
+\pline{SameSize(a, b)}}\\[2ex]
+valid & invalid
+\end{tabular}
+}
+
+\subsec{Tautological Validity}{
+
+\bit
+\item First argument also valid since there is no world in which premises
+are true and conclusion is false
+\item This is \emph{only} a function of the meanings of the logical connectives
+\item If we change the predicate symbols
+in the old argument, it is still valid
+\eit
+}
+
+\subsec{Tautological Validity}{
+
+\setlength{\fitchprfwidth}{1.3in}
+
+\begin{tabular}{lll}
+\fitchprf{\pline{Cube(a) \lor Tet(a)}\\
+\pline{\lnot Tet(a)}}{
+\pline{Cube(a)}}
+&
+\fitchprf{\pline{Small(a) \lor Dodec(a)}\\
+\pline{\lnot Dodec(a)}}{
+\pline{Small(a)}}
+&
+\fitchprf{\pline{P \lor Q}\\
+\pline{\lnot Q}}{
+\pline{P}}
+\end{tabular}
+
+}
+
+\subsec{Definitions}{
+
+\bit
+\item Argument is \emph{logically valid} if 
+there is no \emph{possible world} in which the premises are all true and conclusion is false.
+\item Argument is \emph{tautologically valid} if there is no
+  \emph{truth-value assignment} in which the premises are all true and
+  conclusion is false.\\[2ex] (truth-value assignment = assignment of \T,
+  \F{} to atomic sentences in the argument)
+ \eit
+}
+
+\subsec{TV Assignments and Possible Worlds}{
+
+\bit
+\item To every possible world corresponds a TV assignment: 
+\bit
+\item Atomic sentence assigned $\displaystyle\left\{\begin{array}{c}\T \\ \F\end{array}\right\}$ if it is $\displaystyle\left\{\begin{array}{c}\text{true} \\ \text{false}\end{array}\right\}$ in the possible world
+\item Not every TV assignment so corresponds to a possible world
+\item E.g., a TV assignment may assign \F{} to $\sf a = a$, but no possible world makes $\sf a = a$ false!
+\eit
+\eit
+}
+
+\subsec{Types of Validity}{
+
+\bit
+\item If there is a possible world in which premises are true and conclusion false, then there is also a truth-value assignment in which the premises are true and the conclusion false
+\item Consequently, if an argument is logically \emph{in}valid, it is also tautologically \emph{in}valid
+\item This means that if an argument is tautologically valid, it is also logically valid.
+\item But not every logically valid argument is tautologically valid (see previous examples).
+\eit
+
+}
+
+
+
+
+\section{Tautologies and Equivalence}
+
+\subsec{Sentences Which are Always True}{
+
+\[
+\sf Cube(a) \lor \lnot Cube(a)\]\[
+\sf Smaller(a, b) \lor Larger(a, b) \lor SameSize(a, b)
+\]
+
+}
+
+\subsec{Tautologies, Logic Truths, TW Necessities}{
+
+\bit
+\item A sentence is a \emph{tautology} if it is true in every \emph{truth-value assignment}
+\item A sentence is a \emph{logical truth} if it is true in every \emph{logically possible world}
+\eit
+}
+
+\subsec{Tautological Equivalence}{
+
+\bit
+\item Two sentences are \emph{tautologically equivalent} if there is no \emph{truth-value assignment} where their truth-values differ.
+\item Two sentences are \emph{logically equivalent} if there is no \emph{possible world} where their truth-values differ.
+\bit
+\item $\sf Larger(a, b)$ and $\sf Smaller(b, a)$ are logically equivalent, but not tautologically equivalent
+\item $\sf\lnot(Cube(a) \lor Cube(b))$ and $\sf\lnot Cube(a) \land \lnot Cube(b)$ are tautologically equivalent
+\eit
+\eit
+
+}
+
+\subsec{Important Equivalences}{
+\[\begin{array}{rcl}
+\sf P \land Q & \IFF &\sf Q \land \sf P \\
+\sf P \lor Q & \IFF &\sf Q \lor P\\
+&& \text{(Commutativity)} \\
+\sf P \land (Q \land R) & \IFF &\sf (\sf P \land Q) \land R \\
+\sf P \lor (Q \lor R) & \IFF &\sf (\sf P \lor Q) \lor R \\
+&&\text{(Associativity)} \\
+\sf P \land (Q \lor R) & \IFF &\sf (\sf P \land Q) \lor (\sf P \land R) \\
+\sf P \lor (Q \land R) & \IFF &\sf (\sf P \lor Q) \land (\sf P \lor R) \\
+&& \text{(Distributivity)} \\
+\neg (\sf P \land Q) & \IFF &\sf (\neg \sf P \lor \neg Q) \\
+\neg (\sf P \lor Q) & \IFF &\sf (\neg \sf P \land \neg Q) \\
+&& \text{(De Morgan's Laws)}\\
+\neg\neg \sf P & \IFF & \sf P\\
+&&\text{(Double Negation)}
+\end{array}\]
+}
+
+\subsec{Truth Tables}{
+
+\bit
+\item List all possible TV assignments to the atomic sentences in an argument, sentence, or pair of sentences
+\item For each one, compute truth values of entire sentences
+\item Use it to test for tautological validity, being a tautology, or
+  tautological equivalence 
+\bit 
+\item If one TV assignment makes all premises true but conclusion false: not tautologically valid
+\item If one TV assignment makes sentence false: not tautology
+\item If one TV assignment results in different truth values: not
+  tautologically equivalent \eit\eit
+
+}
+
+\section{The Limits of Tarski's World}
+
+\subsec{Limitations of Tarski's World}{
+
+\bit
+\item Only $8 \times 8$ squares
+\item Only three shapes, three sizes
+\item Nothing can adjoin a large block
+\item No more than 12 blocks on the grid
+\eit
+
+}
+
+\subsec{Sentences Which are Always True}{
+
+\[
+\sf Cube(a) \lor \lnot Cube(a)\]\[
+\sf Smaller(a, b) \lor Larger(a, b) \lor SameSize(a, b)
+\]
+\[
+\sf Cube(a) \lor Tet(a) \lor Dodec(a)
+\]
+
+}
+
+\subsec{Tautologies, Logic Truths, TW Necessities}{
+
+\bit
+\item A sentence is a \emph{tautology} if it is true in every \emph{truth-value assignment}
+\item A sentence is a \emph{logical truth} if it is true in every \emph{logically possible world}
+\item A sentence is a \emph{TW necessity} if it is true in every \emph{TW world}
+\eit
+
+}
+
+\subsec{TW Validity, Possible Worlds, TV Assignments}{
+
+\bit
+\item Every TW-world is also a possible world
+\item Every possible world generates a truth-value assignment which makes the same sentences true/false.
+\item Not TW-necessity $\Rightarrow$ Not logical necessity $\Rightarrow$ not tautology
+\item tautology $\Rightarrow$ logical necessity $\Rightarrow$ TW-necessity
+\eit
+}
+
+
+\subsec{Types of Validity}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{tabular}{lll}
+\fitchprf{\pline{Cube(a) \lor Tet(a)}\\
+\pline{\lnot Tet(a)}}{
+\pline{Cube(a)}}
+&
+\fitchprf{\pline{\lnot Larger(a, b)}\\
+\pline{\lnot Larger(b, a)}}{
+\pline{SameSize(a, b)}}
+&
+\fitchprf{\pline{\lnot Cube(a)}\\
+\pline{\lnot Tet(a)}}{
+\pline{Dodec(a)}}
+\end{tabular}
+
+}
+
+\subsec{TW Validity}{
+
+\bit
+\item No TW-world in which premises of last argument
+are true and conclusion is false
+\item But this is (in part) a function of limitation of Tarski's World
+\item Could make a world in which the premises are true and conclusion is false if we changed Tarski's World (e.g., add shapes, sizes)
+\eit
+
+}
+
+\subsec{TW Validity}{
+
+
+\fitchprf{\pline{\lnot Cube(a)}\\
+\pline{\lnot Tet(a)}}{
+\pline{Dodec(a)}}
+
+\vspace{1ex}
+Premises true and conclusion false if a were a sphere.
+
+}
+
+\subsec{TW Validity, Possible Worlds, TV Assignments}{
+\bit
+\item A TW-counterexample is also a possible world counterexample
+\item A possible world counterexample is also TV assignment counterexample
+\item TW \emph{in}valid $\Rightarrow$ logically \emph{in}valid $\Rightarrow$ tautologically \emph{in}valid
+\item tautologically valid $\Rightarrow$ logically valid $\Rightarrow$ tautologically valid
+\eit
+}
+
+\subsec{Overview}{
+
+\small
+
+\begin{tabular}{l|lll}
+Concept & applies to & definition & based on \\\hline\hline
+\begin{tabular}{@{}l@{}}
+tautology $\Downarrow$ \\
+logical truth $\Downarrow$ \\
+TW-necessity
+\end{tabular} & sentences & never false &
+\begin{tabular}{@{}l@{}}
+TV-assignment \\
+possible world\\
+TW-world
+\end{tabular}\\
+\hline
+\begin{tabular}{@{}l@{}}
+tautologically valid $\Downarrow$ \\
+logically valid $\Downarrow$ \\
+TW-valid
+\end{tabular} & arguments & 
+\begin{tabular}{@{}l@{}}
+never true \\ premises and \\ false conclusion
+\end{tabular} & 
+\begin{tabular}{@{}l@{}}
+TV-assignment \\
+possible world\\
+TW-world
+\end{tabular}\\
+\hline
+\begin{tabular}{@{}l@{}}
+tautologically \\ \quad equivalent $\Downarrow$ \\
+logically \\ \quad equivalent
+\end{tabular} & 2 sentences & 
+\begin{tabular}{@{}l@{}}
+never different \\ truth values
+\end{tabular} & 
+\begin{tabular}{@{}l@{}}
+TV-assignment \\[2ex]
+possible world
+\end{tabular}
+\end{tabular}
+
+}
+
+
+\end{document}

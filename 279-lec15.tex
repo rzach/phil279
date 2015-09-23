@@ -1,0 +1,383 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 15]{Logic I F13 Lecture 15}
+\date{Hallowe'en 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Multiple Uses of $\forall$, $\exists$}
+
+\subsec{Multiple Uses of $\forall$}{
+
+\bits
+\item $\sf \forall x\forall y\, A(x, y)$ \dots every pair $\langle \alpha,\beta\rangle$ satisfies A(x, y)
+\item NB: $\sf \forall x\forall y\, A(x, y)$ true only if pairs $\langle \alpha, \alpha\rangle$ satisfy $\sf A(x, y)$
+\item Does $\sf\forall x\forall y\, Adjoins(x, y)$ mean ``any \emph{two} objects adjoin each other''?
+\item \dots true iff any pair $\langle\alpha, \beta\rangle$ satisfies $\sf Adjoins(x, y)$
+\item \emph{including pairs where $\alpha = \beta$}
+\item Hence, $\sf\forall x\forall y\, Adjoins(x, y)$ is \emph{always false} since no block adjoins itself!
+\item Correct: $\sf \forall x\forall y(x \neq y \to Adjoins(x, y))$
+\eit
+
+}
+
+\subsec{Multiple Uses of $\exists$}{
+
+\bits
+\item $\sf \exists x\exists y\, A(x, y)$ \dots at least one pair $\langle \alpha,\beta\rangle$ satisfies A(x, y)
+\item NB: $\sf \exists x\exists y\, A(x, y)$ is already true even if a single pair $\langle \alpha, \alpha\rangle$ satisfies $\sf A(x, y)$
+\item Does $\sf\exists x\exists y\, SameRow(x, y)$ mean ``there are \emph{two} objects in the same row''?
+\item \dots true iff at least one pair $\langle\alpha, \beta\rangle$ satisfies $\sf SameRow(x, y)$
+\item \emph{including pairs where $\alpha = \beta$}
+\item Hence, $\sf\exists x\exists y\, SameRow(x, y)$ is \emph{always true} since any block is in the same row as itself!
+\item Correct: $\sf \exists x\exists y(x \neq y \land SameRow(x, y))$
+\eit
+}
+
+\subsec{Restricted Quantification: All}{
+
+\bit 
+\item All cubes are left of all tetrahedra.
+\item Any pair $\langle \alpha, \beta\rangle$ where $\alpha$ is a cube and $\beta$ is a tetrahedron is so that $\alpha$ is left of $\beta$.\pauses
+\[\sf
+\forall x\forall y((Cube(x) \land Tet(y)) \to LeftOf(x, y))
+\]
+\eit
+}
+
+\subsec{Restricted Quantification: Some}{
+
+\bit
+\item A cube is left of a tetrahedron.
+\item At least one pair $\langle \alpha, \beta\rangle$ where $\alpha$ is a cube and $\beta$ is a tetrahedron is so that x is left of y.\pauses
+\[\sf
+\exists x\exists y(Cube(x) \land Tet(y) \land LeftOf(x, y))
+\]
+\eit
+}
+
+\subsec{Restricted Quantification: No}{
+
+\bit 
+\item No two cubes are the same size.
+\item Any pair $\langle \alpha, \beta\rangle$ where $\alpha$ and $\beta$ are different cubes is so that $\alpha$ is not the same size as $\beta$.\pauses
+\[\sf
+\forall x\forall y((Cube(x) \land Cube(y) \land x \neq y) \to \lnot SameSize(x, y))
+\]
+\item There is no pair $\langle \alpha, \beta\rangle$ where $\alpha$ and $\beta$ are different cubes of the same size.\pauses
+\[\sf
+\lnot \exists x\exists y(Cube(x) \land Cube(y) \land x \neq y \land SameSize(x, y))
+\]
+\eit
+}
+
+
+\section{Multiple Quantification}
+
+
+\subsec{Alternating Quantifiers}{
+
+\ben
+\item $\forall x \forall y \, Hates(x, y)$ 
+\bit\items{2-} Everyone hates everyone
+\eit
+\item $\exists y \exists x \, Hates(x, y)$ 
+\bit\items{3-} Someone hates someone
+\eit
+\item $\forall x \exists y \, Hates(x, y)$ 
+\bit\items{4-} Everyone hates someone
+\eit
+\item $\forall y \exists x \, Hates(x, y)$ 
+\bit\items{5-} Everyone is hated by someone
+\eit
+\item $\exists x \forall y \, Hates(x, y)$ 
+\bit\items{6-} Someone hates everyone
+\eit
+\item $\exists y \forall x \, Hates(x, y)$ 
+\bit\items{7-} Someone is hated by everyone
+\eit
+\een
+
+}
+
+\subsec{Something/Everything Else}{
+
+\bit
+\item Remember: different variables $\neq$ different objects
+\item Everyone hates someone \emph{else}:
+\[\sf
+\forall x\exists y(x \neq y \land Hates(x, y))
+\]
+\item Someone hates everyone \emph{else}:
+\[\sf
+\exists x\forall y(x \neq y \to Hates(x, y))
+\]
+\eit
+}
+
+
+\subsec{Convergence vs. Uniform Convergence}{
+
+\bit
+\item A function $f$ \emph{pointwise continuous} if
+\[
+\forall \epsilon\forall x\forall y\exists \delta(\left|x - y\right| < \delta \to \left|f(x) - f(y)\right| < \epsilon)
+\]
+\item A function $f$ \emph{uniformly continuous} if
+\[
+\forall \epsilon\exists \delta\forall x\forall y(\left|x - y\right| < \delta \to \left|f(x) - f(y)\right| < \epsilon)
+\]
+\eit
+
+}
+
+\subsec{Mary Astell, 1666--1731}{
+
+\begin{columns}
+\begin{column}{3cm}
+\pgfimage[height=4cm]{astell}
+\end{column}
+\begin{column}{7cm}
+\bit 
+\item British political philosopher
+\item \textit{Some Reflections upon Marriage, Occasion'd by the Duke and Duchess of Mazarine's Case; which is also considered} (1700)
+\item In preface to 3rd ed. 1706 reacts to William Nicholls' claim (in \textit{The Duty of Inferiors
+towards their Superiors, in Five Practical Discourses} (London 1701), Discourse IV: The Duty of Wives to their
+Husbands), that women are naturally inferior to men. 
+\eit
+\end{column}
+\end{columns}
+
+}
+
+
+
+\subsec{Astell Taking Down Nicholls}{
+
+'Tis true, thro' Want of Learning, and of that Superior Genius which
+Men as Men lay claim to, she [the author] was ignorant of the
+\textit{Natural Inferiority} of our Sex, which our Masters lay down as
+a Self-Evident and Fundamental Truth. She saw nothing in the Reason of
+Things, to make this either a Principle or a Conclusion, but much to
+the contrary; it being Sedition at least, if not Treason to assert it
+in this Reign. 
+
+}
+\subsec{Astell Taking Down Nicholls}{
+
+For if by the Natural Superiority of their Sex, they
+mean that \textit{every} Man is by Nature superior to \textit{every}
+Woman, which is the obvious meaning, and that which must be stuck to
+if they would speak Sense, it wou'd be a Sin in \textit{any} Woman to
+have Dominion over \textit{any} Man, and the greatest Queen ought not
+to command but to obey her Footman, because no Municipal Laws can
+supersede or change the Law of Nature; so that if the Dominion of the
+Men be such, the \textit{Salique Law,} as unjust as \textit{English
+  Men} have ever thought it, ought to take place over all the Earth,
+and the most glorious Reigns in the \textit{English, Danish,
+  Castilian}, and other Annals, were wicked Violations of the Law of
+Nature!
+}
+\subsec{Astell Taking Down Nicholls}{
+
+If they mean that \textit{some} Men are superior to \textit{some}
+Women this is no great Discovery; had they turn'd the Tables they
+might have seen that \textit{some} Women are Superior to \textit{some}
+Men. Or had they been pleased to remember their Oaths of Allegiance
+and Supremacy, they might have known that \textit{One} Women is
+superior to \textit{All} the Men in these Nations, or else they have
+sworn to very little purpose. And it must not be suppos'd, that their
+Reason and Religion wou'd suffer them to take Oaths, contrary to the
+Laws of Nature and Reason of things.
+
+\bigskip
+\begin{raggedleft}\small
+(Mary Astell, \textit{Reflections upon Marriage}, 1706 Preface,
+iii--iv, and Mary Astell, \textit{Political Writings}, ed. Patricia
+  Springborg, Cambridge University Press, 1996, 9--10)
+\end{raggedleft}
+}
+
+
+\section{Translating Step-by-Step}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bit
+\item What if your sentence contains more than one determiner phrase?
+\item Deal with each DP separately
+\item Think of DP as replaced with name or variable---result has one less DP
+\item When you're down to one DP, apply known methods for single quantifiers
+\item This results in wffs that express properties or relations, but themselves contain quantifiers
+\eit
+
+}
+
+\subsec{Example}{
+
+\bit
+\item {\color{red}All cubes} are left of {\color{blue}a tetrahedon}
+\item {\color{red}All cubes} satisfy ``x is left of {\color{blue}a tetrahedon}'' \[
+\sf {\color{red}\forall x(Cube(x) \to{}} \text{``x is left of {\color{blue}a tetrahedron}''})
+\]
+\item x is left of {\color{blue}a tetrahedron}\[
+\sf {\color{blue}\exists y(Tet(y) \land{}} LeftOf(x, y))
+\]
+\item Together:
+\[
+\sf{\color{red}\forall x(Cube(x) \to {}} {\color{blue}\exists y(Tet(y) \land{}} LeftOf(x, y)))
+\]
+\eit
+}
+
+\subsec{Determiner within Determiner Phrase}{
+
+\bit
+\item {\color{red}All cubes that adjoin {\color{blue} a tet}} are large  
+\item All blocks that satisfy ``x is a cube that adjoins {\color{blue}a tet}'' are large 
+\[
+\sf \forall x (\text{``x is a cube that adjoins a tet''} \to Large(x))
+\]
+\item x is a cube that adjoins {\color{blue}a tet}
+\[
+\sf Cube(x) \land \exists y(Tet(y) \land Adjoins(x, y))
+\]
+\item Together:
+\[
+\sf\forall x((Cube(x) \land \exists y(Tet(y) \land Adjoins(x, y))) \to Large(x))
+\]
+\eit
+}
+
+
+
+\subsec{Formalizing Astell}{
+
+\bit
+\item {\color{red} Some woman} is superior to {\color{blue} every man}
+\item {\color{red} Some woman} satisfies ``x is superior to every man''
+\[\sf{\color{red}\exists x(Woman(x) \land {}}\text{``x is superior to every man''})\]
+\item x is superior to {\color{blue} every man}
+\[\sf
+{\color{blue}\forall y(Man(y) \to {}}Superior(x, y))
+\]
+\item Together:
+\[\sf
+{\color{red}\exists x(Woman(x) \land{}} {\color{blue}\forall y(Man(y) \to {}}Superior(x, y))
+\]
+
+\eit
+
+}
+
+\subsec{Formalizing Astell}{
+
+
+\bits
+\item Some woman is superior to some man
+\item[] \(
+\sf
+\exists x(Woman(x) \land \exists y(Man(y) \land Superior(x, y)))
+\)
+\item Every woman is superior to every man
+\item[] \(
+\sf
+\forall x(Woman(x) \to \forall y(Man(y) \to Superior(x, y)))
+\)
+\item Every woman is superior to some man
+\item[]\(
+\sf
+\forall x(Woman(x) \to \exists y(Man(y) \land Superior(x, y)))
+\)
+\item Some woman is superior to every man
+\item[] \(
+\sf
+\exists x(Woman(x) \land \forall y(Man(y) \to Superior(x, y)))
+\)
+\eit
+}
+
+
+\section{Expressive Power of Quantifiers}
+
+\subsec{Expressing Complex Properties and Relations}{
+
+\bit
+\item Language for familial relations:
+\bit
+\item Parent(x, y) \dots x is a parent of y
+\item F(x) \dots x is female
+\eit
+\item Easy properties:
+\bit
+\item M(x) \dots x is male
+\bit\items{2-} $\sf\lnot F(x)$\eit
+\item Father(x, y) \dots x is father of y
+\bit\items{3-} $\sf Parent(x, y) \land \lnot F(x)$\eit
+\eit
+\eit
+
+}
+
+\subsec{Quantifiers and Expressive Power}{
+
+\bit
+\item Sibling(x, y) \dots x and y are siblings
+\bit\items{2-} $\sf x \neq y \land \exists z (Parent(z, x) \land Parent(z, y))$\eit
+\item OnlyChild(x) \dots x is an only child
+\bit\items{3-} $\sf \lnot \exists y\, Sibling(x, y)$, i.e.,
+\items{4-} $\sf \lnot\exists y(x \neq y \land \exists z (Parent(z, x) \land Parent(z, y)))$ \eit
+\item Aunt(x, y) \dots x is y's aunt
+\bit\items{5-} $\sf F(x) \land \exists z (Parent(z, y) \land Sibling(x, z))$, ie,
+\items{6-} $\sf F(x) \land \exists z (Parent(z, y) \land {}$\\$\sf\quad x \neq z \land \exists w(Parent(w, x) \land Parent(w, z))$\eit
+\eit}
+
+\subsec{Quantifiers and Expressive Power}{
+
+\bit
+\item x is even\dots\pauses
+\begin{align*}
+& \exists y\, (y \times (1 + 1)) = x\\
+& \exists y\, (y+ y) = x
+\end{align*}
+\item x evenly divides y ($x \mid y$)\pauses
+\[
+\exists z\, (x \times z) = y
+\]
+\eit
+}
+
+\subsec{Expressing ``Prime''}{
+
+
+\bit
+\item no numbers other than 1 and $x$ evenly divide $x$\\ (and $x$ is not 1)
+\begin{align*}
+\uncover<2->{\lnot\exists y&(y \neq 1 \land y \neq x \land y \mid x) \land x \neq 1} \\ 
+\uncover<4->{\lnot\exists y&(y \neq 1 \land y \neq x \land \exists z\,(y \times z) = x) \land x \neq 1} \\ 
+\uncover<3->{\forall y&(y \mid x \to (y = 1 \lor y = x)) \land x \neq 1}\\ 
+\uncover<4->{\forall y&(\exists z (y \times z) = x \to (y = 1 \lor y = x)) \land x \neq 1}
+\end{align*}
+\item if $x \mid (y \times z)$, then $x \mid y$ or $x \mid z$ (and $x$ is neither 0 nor 1)
+\begin{align*}
+\uncover<6->{\forall y\forall z(x \mid (y \times z) \to (x \mid y \lor x \mid z)) \land x \neq 0 \land x \neq 1}\\
+\uncover<7->{\forall y\forall z(\exists u\, (x \times u) = (y \times z) \to (\exists u\,(x \times u) = y \lor \\ \qquad \exists u\,(x \times u) = z)) \land x \neq 0 \land x \neq 1}
+\end{align*}
+\eit
+
+}
+
+
+
+\end{document} 
+
+
+
+
+

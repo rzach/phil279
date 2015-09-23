@@ -1,0 +1,262 @@
+\documentclass[bigger]{beamer}
+
+\usepackage{tikz}
+\usetikzlibrary{graphs, arrows, shapes}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 3]{Logic I F13 Lecture 3}
+\date{September 17, 2013}
+% ====================
+
+
+\input{header}
+
+\setlength{\fitchargwidth}{10cm}
+
+\section{Arguments and Validity}
+
+\subsec{What are Arguments?}{
+
+\begin{block}{Arguments in Logic}
+
+\fitcharg{
+$\left.\begin{array}{@{}c@{}}
+\formula{P}_1 \\
+\vdots\\
+\formula{P}_n
+\end{array}
+\right\} \quad \text{Premises}$}{
+\formula{C\qquad  \text{Conclusion}}}
+\end{block}
+\bit
+\item Argument is \emph{valid} if conclusion follows from (is a consequence of) the premises
+\item Otherwise it is \emph{invalid}
+\eit
+
+}
+
+
+\subsec{Logical Consequence}{
+
+\bit
+\item $C$ is a \emph{logical consequence} of $P_1$, \dots, $P_n$ iff $C$ is true in every possible world in which $P_1$, \dots, $P_n$ are all true together 
+\item NB: This does \emph{not} say that $P_1$, \dots, $P_n$ and $C$
+  have to be true in every possible world (or even one)! 
+\item $C$ is a logical consequence of $P_1$, \dots, $P_n$ iff there is no possible world in which $P_1$, \dots, $P_n$ are all true together while $C$ is false
+\item $C$ is \emph{not} a \emph{consequence} of $P_1$, \dots, $P_n$ iff there is a world in which $P_1$, \dots, $P_n$ are all true but $C$ is false.
+\eit
+}
+
+\subsec{Validity}{
+
+\bit
+\item An argument is \emph{logically valid} iff its conclusion is true in every possible world in which the premises are all true 
+\item An argument is \emph{logically invalid} iff there is a world in which its premises all true but its conclusion is false.\\[2ex]
+\item Determine invalidity by finding a possible world in which premises are true and conclusion is false.
+\item No such world can be found: argument is (probably) valid
+\item To establish validity, give a proof 
+\eit
+}
+
+\subsec{Soundness}{
+
+\bit
+\item An argument is \emph{sound} (with respect to a given world) iff it is valid \emph{and} its premises are true in the world
+\item An argument is \emph{unsound} (with respect to a given world) iff it is invalid \emph{or} at least one premise is false in the world (or both)
+\eit
+
+}
+
+\subsec{Examples}{
+
+\fitcharg{
+  \formula{LeftOf(a, b)} \\
+  \formula{RightOf(c, b)}}{\formula{Between(b, a, c)}}
+
+}
+
+\subsec{Examples}{
+
+\fitcharg{
+\formula{LeftOf(a, b)} \\
+\formula{RightOf(d, c)}\\
+\formula{b = d}}{
+\formula{LeftOf(a, c)}}
+
+}
+
+\subsec{Examples}{
+
+\fitcharg{
+\formula{LeftOf(a, b)} \\
+\formula{RightOf(c, d)} \\
+\formula{b = d}}{
+\formula{LeftOf(a, c)}}
+
+}
+
+\subsec{First-order Consequence}{
+
+\bit
+\item $C$ is a logical consequence of $P_1$, \dots, $P_n$ iff there is no possible world in which $P_1$, \dots, $P_n$ are all true together while $C$ is false
+\item $C$ is a \emph{first-order consequence} of $P_1$, \dots, $P_n$ iff there is no \emph{first-order structure} in which $P_1$, \dots, $P_n$ are all true together while $C$ is false
+\eit
+\begin{columns}
+\begin{column}{5cm}\fitcharg{\formula{LeftOf(a, b)} \\
+\formula{RightOf(c, b)}}{\formula{LeftOf(a, c)}}
+\end{column}
+\begin{column}{5cm}
+\tikz [x=2cm] \graph {
+        "$\bullet_a$" ->[label=LeftOf] "$\bullet_b$" ;
+        "$\bullet_b$" <-[dashed] "$\bullet_c$";
+};
+\end{column}
+\end{columns}
+
+}
+
+
+
+\section{Properties of Predicates}
+
+\subsec{Reflexive Predicates}{
+
+\bits
+\item $P(\_,\_)$ is \emph{reflexive} iff $P(a, a)$ is always true
+\item $=$, SameSize, SameShape, SameCol, SameRow
+\item Extensions of reflexive predicates:
+\[
+\tikz [x=2cm] \graph {
+        "$\bullet_1$" ->[in=60, out=120, loop] "$\bullet_1$" -!-
+        "$\bullet_2$" ->[in=60, out=120, loop] "$\bullet_2$";
+};
+\]
+\eit
+}
+
+\subsec{Symmetric Predicates}{
+
+\bits
+\item $P(\_,\_)$ is \emph{symmetric} iff: whenever $P(a, b)$ is true, $P(b, a)$ is also true, and vice versa
+\item $=$, SameSize, SameShape, SameCol, SameRow
+\item Adjoins
+\item Extensions of symmetric predicates:
+\[\tikz [x=2cm] \graph {
+        "$\bullet_1$" ->[bend left] "$\bullet_2$";
+        "$\bullet_1$" <-[bend right] "$\bullet_2$";
+};
+\]
+\eit
+}
+
+\subsec{Transitive Predicates}{
+
+\bits
+\item $P(\_,\_)$ is \emph{transitive} iff: whenever $P(a, b)$ and $P(b, c)$ are true, $P(a, c)$ is also true
+\item $=$, SameSize, SameShape, SameCol, SameRow
+\item Larger, Smaller, LeftOf, RightOf, FrontOf, BackOf
+\item \emph{not} Adjoins
+\item Extensions of transitive predicates:
+\[\tikz [x=2cm] \graph {
+        "$\bullet_1$" ->[bend left] "$\bullet_2$" ->[bend left] "$\bullet_3$";
+        "$\bullet_1$" ->[bend right] "$\bullet_3$";
+};
+\]
+\eit
+}
+
+\subsec{Inverse Predicates}{
+
+\bits
+\item $P(\_,\_)$ and $Q(\_, \_)$ are \emph{inverses} iff: whenever $P(a, b)$ is true, $Q(b, a)$ is also true, and vice versa
+\item $=$, SameSize, SameShape, SameCol, SameRow, Adjoins are inverses of themselves
+\item Larger---Smaller, LeftOf---RightOf, FrontOf---BackOf
+\item Extensions of inverse predicates:
+\[
+\tikz [x=2cm] \graph {
+        "$\bullet_1$" ->[bend left] "$\bullet_2$";
+        "$\bullet_1$" <-[bend right,
+         dashed] "$\bullet_2$";
+};
+\]
+\eit
+}
+
+\subsec{Indiscernibility of Identicals}{
+
+If $P(a)$ is true, and $a = b$ is also true, then $P(b)$ is true
+
+}
+
+\section{Informal Proofs}
+
+\subsec{Proofs}{
+
+\begin{block}{Definition}
+
+A \emph{proof} of conclusion $C$ from premises $P_1$, \dots, $P_n$ is
+a demonstration that $C$ is a consequence of $P_1$, \dots, $P_n$ which
+\bit
+\item proceeds \emph{step-by-step}
+\item each step is \emph{justified}
+\item is \emph{rigorous} (no gaps)
+\eit 
+\end{block}
+}
+
+\subsec{Informal vs Formal Proof}{
+
+\bit
+\item Informal proofs in English
+\item Formal proofs 
+\bit
+\item in first-order logic, 
+\item using system Fitch, 
+\item steps justified by \emph{inference rules}
+\eit
+\eit
+
+}
+
+\subsec{Example}{
+
+\begin{columns}
+\begin{column}{3cm}
+\fitcharg{\formula{LeftOf(a, b)} \\
+\formula{RightOf(c, d)}\\
+\formula{b = d}}{\formula{LeftOf(a, c)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item We are told that $c$ is right of $d$ (premise 2)
+\item We are told that $b$ is identical to $d$ (premise 3)
+\item Thus, $c$ is right of $b$ (from 1, 2, by the
+  indiscernibility of identicals)
+\item So $b$ is left of $c$ (from 3, as ``left of'' and ``right of'' are inverses) 
+\item We are told that $a$ is left of $b$ (premise 1)
+\item So $a$ is left of $c$ (from 5, 4 as ``left of'' is transitive)\\
+\qquad QED
+\een
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Example: Formal Proof}{
+
+\setlength{\fitchprfwidth}{10em}
+
+\fitchprf{\pline[1.]{LeftOf(a, b)}\\
+\pline[2.]{RightOf(c, d)}\\
+\pline[3.]{b = d}}{
+\pline[4.]{RightOf(c, b)}{\eqe{2}{3}}\\
+\pline[5.]{LeftOf(b, c)}{{\bf AnaCon:} 4}\\
+\pline[6.]{LeftOf(a, c)}{{\bf AnaCon:} 1, 5}
+}
+
+}
+
+
+\end{document}

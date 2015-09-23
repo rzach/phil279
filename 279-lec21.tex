@@ -1,0 +1,496 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 21]{Logic I F13 Lecture 21}
+\date{November 28, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{14em}
+
+\section{What is Logical Metatheory?}
+
+\subsec{What is Logical Metatheory?}{
+
+\bit
+\item Most of Logic I is logical \emph{theory}: working \emph{in} a logical language, \emph{in} a logical proof system (Fitch), \emph{using} logical concepts like ``tautology'' and ``FO interpretation''
+\item Logical \emph{meta}theory investigates language, proof system, logical concepts, and proves theorems about them
+\eit
+
+}
+
+\subsec{Provability and Consequence}{
+
+\bit
+\item We write 
+\bit
+\item $A_1$, \dots, $A_n \models B$ if $B$ is a conseqence of $A_1$, \dots, $A_n$ and
+\item $A_1$, \dots, $A_n \vdash B$ if $B$ has a formal proof from premises $A_1$, \dots, $A_n$. 
+\eit
+\item What is the relation between $\models$ and $\vdash$?
+\eit
+
+}
+
+\subsec{Soundness}{
+
+\bit
+\item A proof system is \emph{sound} relative to a semantics if
+\[
+A_1, \dots, A_n \vdash B \Rightarrow A_1, \dots, A_n \models B
+\]
+\item This guarantees the proof system is \emph{safe}: you \emph{can't} prove anything that doesn't follow from the premises
+\item In particular you can't prove anything that's not a tautology/FO validity from no premises 
+\eit
+
+\textbf{Soundness Theorem.} Fitch is a sound proof system
+
+}
+
+\subsec{Completeness}{
+
+\bit
+\item A proof system is \emph{complete} relative to a semantics if
+\[
+A_1, \dots, A_n \models B \Rightarrow A_1, \dots, A_n \vdash B
+\]
+\item This guarantees the proof system is \emph{as powerful as possible}: you \emph{can} prove anything that follows from the premises
+\item In particular, you can prove all tautologies/FO validities from no premises
+\eit
+
+\textbf{Completeness Theorem (G\"odel 1930).}\\ Fitch is a complete proof system
+
+}
+
+\subsec{Satisfiability}{
+
+\bit
+\item A set of sentences $A_1$, \dots, $A_n$ is \emph{satisfiable} if there is a FO structure that makes all of the sentences true. (Cf. TT-possible)
+\item A FO structue that makes a set of sentences true is called a \emph{model} of it
+\item If a set is satisfiable, what kinds of models does it have?
+\bit
+\item Does it have (only) finite models?
+\item Does it have (only) infinite models?
+\item Does it have models with a specific domain (e.g., the natural numbers)?
+\eit
+\eit
+
+\textbf{L\"owenheim-Skolem Theorem.} If a set has an infinite model, it has a model with domain the natural numbers.
+
+}
+
+\subsec{Decidability and Complexity}{
+
+\bit
+\item A \emph{decision problem} is a yes/no question, asked about a specific (syntactic) object, e.g.,
+\bit
+\item Given a sequence of symbols:\\
+Is it awell-formed formula?
+\item Given a sentence containing only $\land$, $\lor$, $\lnot$:\\
+Is it TT-possible?
+\item Given a sentence of the blocks language:\\
+Is it a FO validity?
+\item Given a sentence of an arbitrary FO language:\\
+ Does it only have infinite models?
+\eit 
+\item A problem is \emph{decidable} if there is a computer program that will always find the correct answer to it, \emph{undecidable} otherwise.
+\item Complexity of a problem: \emph{how fast} can a computer find the answer?
+\eit
+
+}
+
+\section{Soundness}
+
+\subsec{Soundness}{
+
+\bit
+\item Remember: Fitch is \emph{sound} if whenever there's a proof of $B$ from premises $A_1$, \dots, $A_n$, then it's guaranteed that $B$ is a conseqence of $A_1$, \dots, $A_n$
+\item Fitch is, in fact, sound
+\item How do you prove it?
+\bit
+\item We have to show this for all infinitely many possible proofs!
+\item But: each proof uses only finitely many rules
+\item Idea: use \emph{induction} on the number of rules used, i.e.,
+\item Show that any proof that uses no rules at all is correct, and
+\item Show that any proof correct to line $n$ is also correct to line $n+1$
+\eit
+\eit
+
+}
+
+\subsec{Correct Proof}{
+
+\bit
+\item A proof is \emph{correct down to line $n$} if every line which isn't a premise or an assumption of a subproof down to and including $n$ is a consequence of
+\ben
+\item the premises of the proof
+\item all assumptions which are open at line~$n$, i.e., all assumptions of subproofs that line~$n$ is contained in
+\een
+\item E.g., the proof \qquad
+\fitchprf{\pline[1.]{A}\\ \pline[2.]{B}}{
+\pline[3.]{C}\\
+\subproof{\pline[4.]{D}}{\pline[5.]{E}}}\\
+is correct to line 5 if $\sf A, B \models C$ and $\sf A, B, D \models E$.
+\eit
+
+}
+
+\subsec{Induction on Numbers of Steps in Proofs}{
+
+\bit
+\item The \emph{induction basis} is: any proof correct down to line~1\\
+(trivially true, since line1 is a premise!)
+\item The \emph{induction step} is:\\
+If every proof is correct down to line $n$, then every proof is correct down to line $n+1$
+\item In other words, if proofs are correct down to line $n$, the next step, if it is a correct application of a rule, does not break things
+\eit
+}
+
+\subsec{One More Line: Reit}{
+
+\begin{columns}
+\begin{column}{3.5cm}
+\hskip-2em\setlength{\fitchprfwidth}{8em}
+\fitchprf{\pline[1.]{P}\\ \pline[2.]{Q}}{
+\subproof{\pline[3.]{R}}{
+\ellipsesline\\
+\pline[$k$.]{A}\\
+\ellipsesline\\
+\subproof{\pline[$l$.]{S}}{
+\ellipsesline\\
+\pline[$(n+1)$.]{A}[\reit{$k$}]}}}
+\end{column}
+\begin{column}{7cm}
+\vskip-2cm
+\bits
+\item Can only click on line $k$ if the innermost subproof that line $k$ is in has not ended before line $n+1$!
+\item So: all assumptions open at line $k$ still open at line $n+1$
+\item All proofs correct down to line $n$, so:
+\bit
+\item $\sf P, Q, R \models A$
+\eit
+\item But then also:
+\bit
+\item $\sf P, Q, R, S \models A$
+\eit
+\eit
+\end{column}\end{columns}
+
+}
+
+\subsec{One More Line: $\land$Intro}{
+
+\bit
+\item Suppose we have a proof correct down to line $n$, and line $n+1$ is justified by $\land$Intro
+\item If that step checks out, we know:
+\bit
+\item Line $n+1$ contains a conjunction, $A \land B$
+\item There are exactly two support steps cited, $k$ and $l$
+\item Line $k$ contains A, line $l$ contains B (or vice versa)
+\item All assumptions open at line $k$ and $l$ are still open at line $n+1$ (there may be more) 
+\eit
+\item Since the proof is correct down to line $n$, in particular
+\bit
+\item A is a consequence of the premises and assumptions open at line $k$
+\item B is a consequence of the premises and assumptions open at line $l$
+\eit
+\eit
+
+}
+
+
+\subsec{One More Line: $\land$Intro}{
+
+\begin{columns}
+\begin{column}{3.5cm}
+\hskip-2em\setlength{\fitchprfwidth}{8em}
+\fitchprf{\pline[1.]{P}\\ \pline[2.]{Q}}{
+\subproof{\pline[3.]{R}}{
+\ellipsesline\\[-.5ex]
+\pline[$k$.]{A}\\
+\subproof{\pline[$k+1$.]{S}}{
+\ellipsesline\\[-.5ex]
+\pline[$l$.]{B}\\
+\subproof{\pline[$l+1$.]{T}}{
+\ellipsesline\\[-.5ex]
+\pline[$(n+1)$.]{}\\
+\pline[\quad]{A\land B}[\landi{$k, l$}]}}}}
+\end{column}
+\begin{column}{7cm}
+\vskip-2cm
+\bits
+\item Correct to line $k$ and line $l$:
+\bit
+\item $\sf P, Q, R \models A$
+\item $\sf P, Q, R, S \models B$
+\eit
+\item Then also:
+\bit
+\item $\sf P, Q, R, S, T \models A$
+\item $\sf P, Q, R, S, T \models B$
+\eit
+\item Show: $\sf P, Q, R, S, T \models A \land B$
+\item Suppose not: then there is an interpretation that makes
+\bit
+\item $\sf P, Q, R, S, T$ true and 
+\item $A \land B$ false
+\eit
+\item This would make either
+\bit
+\item $\sf P, Q, R, S, T$ true, A false, or
+\item $\sf P, Q, R, S, T$ true, B false!
+\eit
+\eit
+\end{column}\end{columns}
+
+}
+
+\subsec{One More Line: $\lnot$Intro}{
+
+\begin{columns}
+\begin{column}{3.5cm}
+\hskip-2em\setlength{\fitchprfwidth}{8em}
+\fitchprf{\pline[1.]{P}\\ \pline[2.]{Q}}{
+\subproof{\pline[3.]{R}}{
+\ellipsesline\\
+\subproof{\pline[$k$.]{A}}{
+\ellipsesline\\
+\pline[$k'$.]{\bot}}
+\ellipsesline\\
+\pline[$(n+1).$]{\lnot A}[\lnoti{$k$--$k'$}]}}
+\end{column}
+\begin{column}{7cm}
+\vskip-2cm
+\bits
+\item Correct to line $k'$:
+\bit
+\item $\sf P, Q, R, A \models \bot$
+\eit
+\item Show: $\sf P, Q, R \models \lnot A$
+\item Suppose not: then there is an interpretation that makes
+\bit
+\item $\sf P, Q, R$ true and 
+\item $\sf\lnot A$ false
+\eit
+\item This would make
+\bit
+\item $\sf P, Q, R, A$ true, $\bot$ false
+\eit
+\eit
+\end{column}\end{columns}
+
+}
+
+\subsec{One More Line: $\exists$Elim}{
+
+\begin{columns}
+\begin{column}{3.5cm}
+\hskip-2em\setlength{\fitchprfwidth}{8em}
+\fitchprf{\pline[1.]{P}\\ \pline[2.]{Q}}{
+\subproof{\pline[3.]{R}}{
+\ellipsesline\\
+\pline[$m$.]{\exists x\, A(x)}\\
+\ellipsesline\\
+\boxedsubproof[$k$.]{c}{A(c)}{
+\ellipsesline\\
+\pline[$k'$.]{B}}
+\ellipsesline\\
+\pline[$(n+1).$]{B}[\lexie{$m$}{$k$--$k'$}]}}
+\end{column}
+\begin{column}{7cm}
+\vskip-1.5cm
+
+\bits
+\item Correct to $m$: $\sf P, Q, R \models \exists x\, A(x)$
+\item<.-> Correct to $k'$: $\sf P, Q, R, A(c) \models B$
+\item Suppose not $\sf P, Q, R \models B$: 
+then there is a FO interpretation $I$ that makes
+$\sf P, Q, R$ true and $B$ false
+\item $\sf P, Q, R \models \exists x\,A(x)$, so at least one object $\alpha$ 
+satisfies A(x)
+\item $I^*$: just like $I$, except $c : \alpha$
+\bit
+\item makes A(c) true
+\item makes P, Q, R true, \emph{B false} (don't contain c!)
+\eit
+\item Since $\sf P, Q, R, A(c) \models B$, $I^*$ also makes \emph{B true}: contradiction.
+\eit
+\end{column}\end{columns}
+
+}
+
+\section{Completeness}
+
+\subsec{Completeness}{
+
+\bit
+\item Remember: (Completeness 1)\\
+Fitch is \emph{complete} if:
+
+\medskip
+ whenever $B$ is a consequence of $A_1$, \dots, $A_n$, there's guaranteed to be a proof of $B$ from premises $A_1$, \dots, $A_n$
+\medskip
+
+\item Much harder to prove than soundness
+\item Equivalent to: (Completeness 2)
+
+\medskip
+If a set of sentences is consistent, it is satisfiable
+
+\medskip
+(\emph{Consistent} means: there is no proof of $\bot$ from those sentences as premises)
+\eit
+
+}
+
+\subsec{Completeness 2 Implies Completeness 1}{
+
+\bit
+\item Suppose any consistent set of sentences is satisfiable (Completeness 2)
+\item Show: if $\sf A_1, \dots, A_n \models B$ then $\sf A_1, \dots, A_n \vdash B$ (Completeness 1)
+\item Or show contrapositive:\\
+if \emph{not} $\sf A_1, \dots, A_n \vdash B$ then \emph{not} $\sf A_1, \dots, A_n \models B$
+\item Observe:
+\bens
+\item $\sf \sf A_1, \dots, A_n, \lnot B$ is satisfiable $\Rightarrow$ not: $\sf \sf A_1, \dots, A_n \models B$
+\item $\sf A_1, \dots, A_n, \lnot B \vdash \bot$ $\Rightarrow$ $\sf A_1, \dots, A_n \vdash B$, so
+\item not $\sf A_1, \dots, A_n \vdash B$ $\Rightarrow$ not $\sf A_1, \dots, A_n, \lnot B \vdash \bot$
+\een
+\eit
+
+}
+
+\subsec{Proof of (2)}{
+
+\begin{columns}[t]
+\begin{column}{2.5cm}
+\fitchprf{\pline[1.]{A_1}\\
+\ellipsesline\\
+\pline[$n$.]{A_n}\\
+\pline[$(n+1)$.]{\lnot B}}{
+\ellipsesline\\
+\pline[$m$.]{\bot}}
+\end{column}
+\begin{column}{7cm}\setlength{\fitchprfwidth}{8em}
+$\Rightarrow$\fitchprf{\pline[1.]{A_1}\\
+\ellipsesline\\
+\pline[$n$.]{A_n}}{
+\subproof{\pline[$(n+1)$.]{\lnot B}}{
+\ellipsesline\\
+\pline[$m$.]{\bot}}
+\pline[$m+1$.]{\lnot\lnot B}[\lnoti{$(n+1)$--$m$}]\\
+\pline[$m+2$.]{B}[\lnote{$(m+1)$}]}
+\end{column}\end{columns}
+}
+
+\subsec{Completing the Proof}{
+
+\bit
+\item We're proving:\\
+not $\sf A_1, \dots, A_n \vdash B$ $\Rightarrow$ not $\sf A_1, \dots, A_n \models B$
+\item Assume: not $\sf A_1, \dots, A_n \vdash B$
+\item We had (3), contrapositive of (2):\\
+ not $\sf A_1, \dots, A_n \vdash B$ $\Rightarrow$ not $\sf A_1, \dots, A_n, \lnot B \vdash \bot$
+\item So:  not $\sf A_1, \dots, A_n, \lnot B \vdash \bot$ (by MP), i.e.,\\
+ $\sf A_1, \dots, A_n, \lnot B$ is consistent
+\item So: $\sf A_1, \dots, A_n, \lnot B$ is satisfiable (Completeness 2)
+\item We also had (1):\\
+$\sf \sf A_1, \dots, A_n, \lnot B$ is satisfiable $\Rightarrow$ not $\sf \sf A_1, \dots, A_n \models B$
+\item So not $\sf \sf A_1, \dots, A_n \models B$ (by MP). QED
+\eit
+
+}
+
+\section{Decision Problems}
+
+
+\subsec{Decision Problems}{
+
+\bit
+\item Given a sentence containing only $\land$, $\lor$, $\lnot$:\\
+Is it true in the first line of its truth table?
+\item Given a sentence containing only $\land$, $\lor$, $\lnot$:\\
+Is it TT-possible?
+\item Given a sentence of the blocks language:\\
+Is it a FO validity?
+\item Given a sentence of an arbitrary FO language:\\
+ Does it only have infinite models?
+\eit 
+}
+
+\subsec{An Easy Decision Problem}{
+
+\begin{block}{Instance: Sentence A containing only $\land$, $\lor$, $\lnot$\\
+Problem: Is A true when all atomic sentences are true?}
+
+\bit
+\item Decidable
+\item Complexity is \emph{linear}, i.e.,
+\item There are programs that compute the answer after $c\cdot n$
+steps, where 
+\bit 
+\item $n$ is the number of symbols in A
+\item $c$ is a constant number
+\eit
+\eit
+\end{block}
+
+}
+
+\subsec{SAT: An Hard Decision Problem}{
+
+\begin{block}{Instance: Sentence A containing only $\land$, $\lor$, $\lnot$\\
+Problem: Is A TT-possible?}
+
+\bit
+\item Decidable
+\item Complexity is \emph{unknown}
+\item There are programs that compute the answer after $c\cdot 2^n$
+steps (SAT is in EXPTIME)
+\item For instance: search through all lines of truth table
+\item Noone has proved yet that there aren't faster programs
+\item SAT is \emph{NP-complete}
+\item Finding complexity of SAT would settle \emph{P vs NP} problem
+\eit
+\end{block}
+
+}
+
+\subsec{2SAT: Another Easy Decision Problem}{
+
+\begin{block}{Instance: Sentence A: conjunction of disjunctions of at most 2 atmic or negated atomic sentences\\
+Problem: Is A TT-possible?}
+
+\bit
+\item Decidable
+\item Complexity is \emph{linear}
+\item Non-trivial algorithm!
+\item Applications in VLSI circuit design, graph theory, tomography, planning turnaments (optimal home/away games) 
+\eit
+\end{block}
+
+}
+
+\subsec{Church-Turing Theorem}{
+
+\begin{block}{Instance: Sentence A of any FO language\\
+Problem: Is A a FO validity?}
+
+\bit
+\item Undecidable
+\item Proved independently by Alonzo Church and Alan Turing in 1935
+\item Reason we have Turing machines
+\eit
+\end{block}
+}
+
+
+\end{document} 
+
+
+
+
+

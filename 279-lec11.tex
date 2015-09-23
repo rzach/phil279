@@ -1,0 +1,337 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 11]{Logic I F13 Lecture 11}
+\date{October 15, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Quantifiers}
+
+\subsec{Determiners in English}{
+
+\bit
+\item Articles: a, the
+\item Cardinal numbers: zero, one, two, \dots
+\item Quantifiers: all, few, many, several, some, every, each, any, no
+\item either, neither, both
+\item \dots
+\eit
+
+}
+
+
+\subsec{Quantifiers in FOL}{
+
+\bit
+\item $\forall$: \emph{universal} quantifier, ``for all''
+\[
+\sf \forall x\, Cube(x)
+\]
+(Everything is a cube)
+\item $\exists$: \emph{existential} quantifier, ``exists''
+\[
+\sf \exists y\, Large(y)
+\]
+(Something is large)
+\eit
+
+}
+
+\subsec{Variables and Terms}{
+
+\bit
+\item Variables: $x$, $y$, $z$, $x_1$, $x_2$, \dots
+\item Terms:
+\bit
+\item Constant symbols and variables are terms
+\item If $f$ is an $n$-place function symbol, and $t_1$, \dots, $t_n$
+are terms, then $f(t_1, \dots, t_n)$ is a term
+\eit
+\item Eg, in the language of arithmetic:
+\[
+1 \qquad x \qquad (1 + (x + y))
+\]
+\eit
+}
+
+\subsec{Well-Formed Formulas (wff's)}{
+
+\bit
+\item If $P$ is an $n$-place predicate symbol, and $t_1$, \dots, $t_n$
+are terms, then $P(t_1, \dots, t_n)$ is an atomic wff
+\item Every atomic wffs is a wff
+\item If $P$ is a wff, so is $\lnot P$
+\item If $P_1$, \dots, $P_n$ are wffs, so are
+\[
+(P_1 \land {} \dots \land P_n) \text{ and }
+(P_1 \lor {} \dots \lor P_n) 
+\]
+\item If $P$ and $Q$ are wffs, then so are
+\[
+(P \to Q) \text{ and } (P \iff Q)
+\]
+\item If $P$ is a wff and $x$ is a variable, then
+\[
+\forall x\, P \text{ and } \exists x\, P
+\]
+are wffs
+\eit
+
+}
+
+\subsec{Examples}{
+
+\bit
+\item Atomic wffs: $\sf Cube(x)$, $\sf Larger(x, x)$, $\sf Larger(x, y)$, $\sf Larger(z, a)$, $\sf a = y$
+\item $\sf Large(x) \land Cube(x)$
+\item $\sf Large(x) \to (Cube(x) \land Larger(x, b))$ 
+\item $\sf \forall x\, Cube(x)$
+\item $\sf \exists x\, (Large(x) \land Cube(x))$ 
+\item $\sf \exists y\, Cube(x)$
+\item $\sf \forall x\, Cube(x) \land \forall x\, Large(x)$
+\item $\sf \forall x\, (Cube(x) \land \forall x\, Large(x))$
+\item $\sf \forall x\, Cube(x) \land Large(x)$
+\eit 
+
+}
+
+\subsec{Scope and Binding}{
+
+\[
+\underline{\forall {\color{red}x}(Cube({\color{red}x}) \to (\underline{\exists {\color{blue}x}\, Smaller({\color{blue}x}, y)} \land \underline{\exists {\color{green}y}(Tet({\color{green}y}) \land Larger({\color{green}y}, {\color{red}x}))}))}
+\]
+\bits
+\item The \emph{scope} of a quantifier extends till end of wff it precedes
+\item Variables are \emph{bound} by the nearest matching quantifier to the left in whose scope they are
+\item Variables not bound are \emph{free}
+\item A \emph{sentence} is a wff with no free variables
+\eit
+}
+
+\section{Semantics of Quantifiers and Variables}
+
+\subsec{Possible Worlds and First-order Structure}{
+
+\bit
+\item Collection of objects (\emph{domain}, not empty)
+\item Referents for each individual constant (which object it names)
+\item Properties of each object (shape, size, position on board)
+  \bit\item Extension of each 1-place predicate symbol: collection of
+  objects it applies to\eit
+\item Relations of each pair of objects (larger, same row,
+  etc)\bit\item Extension of each $n$-place predicate symbol: tuple of
+  objects standing in the relation
+ \eit\eit
+
+}
+
+% Redo this -- motivate by ``\forall x Cube(x)'' should say ``everything is a cube'' -- but what if it's more complicated than just''Cube(x)''?  Less abstract at the beginning!
+
+\subsec{Truth of Sentences}{
+
+\bit
+\item Suppose $P(x)$ contains only $x$ free 
+\item Suppose $n$ is a new constant symbol not occurring in $P(x)$
+\item Let $P(n)$ be $P(x)$ with all free occurrences of $x$ replaced by $n$
+\item $\forall x\, P(x)$ is true in a world $W$ iff for every $\alpha$ among the objects in $W$, $P(n)$ is true in the world $W_\alpha$ which is just like $W$ except $n$ names $\alpha$
+\item $\exists x\, P(x)$ is true in a world $W$ iff for at least one $\alpha$ among the objects in $W$, $P(n)$ is true in the world $W_\alpha$ which is just like $W$ except $n$ names $\alpha$
+\eit
+
+}
+
+
+\subsec{Satisfaction}{
+
+\bit 
+\item Define relation of \emph{satisfaction} between an object $\alpha$,
+a wff with one free variable $P(x)$, and a world~$W$\\
+``$\alpha$ satisfies $P(x)$''
+\item  \emph{$\alpha$ satisfies $P(x)$ in~$W$} iff $P(n)$ is true in the world~$W'$ which is just like $W$ except $n$ names $\alpha$
+\item $P(x)$ defines a property in the world~$W$: the collection of all the objects $\alpha$ that satisfy $P(x)$
+\item{} [More general: \emph{$\langle\alpha_1, \dots, \alpha_k\rangle$
+  satisfies $P(x_1, \dots, x_k)$ in $W$} iff $P(n_1, \dots, n_k)$ is
+  true in $W'$ which is like $W$ except $n_i$ names $\alpha_i$ ($i =
+  1, \dots, k$)]
+\item $P(x_1, \dots, x_k)$ defines a $k$-place relation
+\eit
+
+}
+
+
+
+\subsec{Satisfaction and Expressing Properties and Relations}{
+
+\bit
+\item $\sf Large(x) \land Cube(x)$ \dots ``$x$ is a large cube''
+\item $\sf LeftOf(x, a) \lor RightOf(x, a)$ \dots ``$x$ is left of or right of a''; ``$x$ is to the side of a''
+\item More than one way to express a property:
+\bit
+\item $\sf LeftOf(a, x) \lor RightOf(a, x)$
+\item $\sf LeftOf(x, a) \lor LeftOf(a, x)$
+\item $\sf \lnot SameCol(x, a)$
+\eit
+\eit
+}
+
+\section{Combining Quantifiers with WFFs}
+
+\subsec{Quantifiers and Properties: $\forall$}{
+
+\bit
+\item The sentence
+\[\sf
+\forall x\, P(x)
+\]
+says (is true iff) 
+\bit
+\item $P(n)$ is true for \emph{whatever} object is named by~$n$
+\item every object in the domain (= world) satisfies $P(x)$
+\item every object in the domain has the property expressed by $P(x)$,
+\eit
+\eit
+}
+
+\subsec{Quantifiers and Properties: $\exists$}{
+
+\bit
+\item The sentence
+\[\sf
+\exists x\, P(x)
+\]
+says (is true iff) 
+\bit
+\item $P(n)$ is true for \emph{at least one} object named by~$n$
+\item at least one object in the domain satisfies $P(x)$
+\item at least one object in the domain has the property expressed by $P(x)$,
+\eit
+\eit
+
+}
+
+\subsec{Expressing ``Everything''}{
+
+\bits
+\item ``Everything is a cube''\pause
+\bits
+\item $\sf \forall x\, Cube(x)$
+\item True iff every object in the domain is a cube.
+\eit
+\item ``Everything is a large cube''
+\bits
+\item $\sf \forall x(Large(x) \land Cube(x))$
+\item True iff every object in the domain is large and a cube
+\eit
+\item ``Everything is either left of or right of b''
+\bits
+\item $\sf \forall x(LeftOf(x, b) \lor RightOf(x, b))$
+\item True iff every object in the domain is: either left of b or right of b
+\eit
+\eit
+}
+
+\subsec{Expressing ``Something''}{
+
+\bits
+\item ``Something is a cube''\pause
+\bits
+\item $\sf \exists x\, Cube(x)$
+\item True iff at least one object in the domain is a cube.
+\item ``There is a cube'', ``A cube exists''
+\item ``There are cubes'', ``Cubes exist''
+\eit
+\item ``Something is a large cube''
+\bits
+\item $\sf \exists x(Large(x) \land Cube(x))$
+\item True iff at least one object in the domain is large and a cube
+\eit
+\item ``Something is either left of or right of b''
+\bits
+\item $\sf \exists x(LeftOf(x, b) \lor RightOf(x, b))$
+\item True iff at least one object in the domain is: either left of b or right of b
+\item ``There are things left of or right of b''
+\eit
+\eit
+}
+
+\subsec{Expressing ``Nothing''}{
+
+\bit
+\item ``Nothing is a cube''
+\bits
+\item $\sf \forall x\, \lnot Cube(x)$
+\item True iff every object in the domain is \emph{something other than} a cube
+\item $\sf \lnot \exists x\, Cube(x)$
+\item True iff it \emph{isn't} the case that at least one object is a cube
+\eit
+\item ``Nothing is a large cube'' 
+\bits
+\item $\sf \forall x\,\lnot(Large(x) \land Cube(x))$
+\item $\sf \lnot\exists x(Large(x) \land Cube(x))$
+\eit
+\item ``Nothing is either left of or right of b''
+\bits
+\item $\sf \forall x\lnot(LeftOf(x, b) \lor RightOf(x, b))$
+\item $\sf \lnot\exists x (LeftOf(x, b) \lor RightOf(x, b))$
+\eit
+\eit
+}
+
+\subsec{Expressing ``Something Isn't''}{
+
+\bit
+\item ``Something isn't a cube''
+\bit
+\item $\sf \exists x\, \lnot Cube(x)$
+\eit
+\item ``Something isn't a large cube''
+\bit
+\item $\sf \exists x\, \lnot(Large(x) \land Cube(x))$
+\eit
+\item ``Something isn't either left of or right of b''
+\bit
+\item $\sf \exists x\,\lnot(LeftOf(x, b) \lor RightOf(x, b))$
+\eit
+\eit
+}
+
+
+\subsec{Determiner Phrases}{
+
+\bit
+\item Determiners combine with noun phrases to make determiner phrases (DP):
+\bit
+\item ``\emph{A} large terahedron''
+\item ``\emph{Three} cubes which are to the left of b''
+\item ``\emph{Every} even number''
+\item ``\emph{Some} cube(s) between d and e''
+\item ``\emph{Most} philosophy majors''
+\item ``\emph{Both} small cubes''
+\eit
+\eit
+}
+
+\subsec{Determiner Phrases in Sentences}{
+
+\bit
+\item DPs make subjects of sentence, just like names/constants and coordination constructions of them do
+\bit
+\item ``\emph{Claire and Alex} study logic''---``\emph{Most philosophy majors} study logic''
+\item ``\emph{2} is prime''---``\emph{Some even number} is prime''
+\item ``\emph{a} is between b and c''---``\emph{Every large cube} is between b and c''
+\eit
+\item We know how to translate the former---how do we deal with the latter?
+\eit
+}
+
+
+\end{document}
+
+
+
+

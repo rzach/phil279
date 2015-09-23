@@ -1,0 +1,553 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 13]{Logic I F13 Lecture 13}
+\date{October 24, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+\setlength{\fitchargwidth}{25em}
+
+\section{Review}
+
+\subsec{Properties and Quantifiers}{
+
+\bit
+\item Wff $A(x)$ expresses a \emph{property}
+\item The sentence
+\[
+\forall x\, A(x)
+\]
+is true iff 
+\emph{every object} in the domain has the property expressed by A(x),
+\item The sentence
+\[\sf
+\exists x\, A(x)
+\]
+is true iff
+\emph{at least one object} in the domain has the property expressed by A(x),
+\eit
+
+}
+
+\subsec{The Aristotelian Forms}{
+
+\bit
+\item ``Some A is B''
+\[
+\sf \exists x(A(x) \land B(x)
+\]
+\item ``Every A is B'' (``All A are B'')
+\[\sf \forall x(A(x) \to B(x))\]
+\item ``No A is B''
+\begin{align*}
+\sf \forall x(A(x) & \to \sf\lnot B(x))\\
+\sf \lnot\exists x(A(x) & \sf\land B(x))
+\end{align*}
+\item ``Some A is not B'' (``Not all A are B'')
+\begin{align*}
+\sf \exists x(A(x) & \land \sf\lnot B(x)) \\
+\sf \lnot\forall x(A(x) & \to \sf B(x))
+\end{align*}
+
+\eit
+
+}
+
+\subsec{Only, Except}{
+
+\bit
+\item ``Only A are B''
+\begin{align*}
+\sf \forall x(B(x) & \sf\to A(x))\\
+\sf \lnot\exists x(\lnot A(x) & \sf\land B(x))
+\end{align*}
+\item ``Only a is large''
+\[
+\sf \forall x(Large(x) \iff x = a)
+\]
+\eit
+}
+
+\subsec{Existential Import and Implicature}{
+
+\bit
+\item ``All A are B'' does not imply ``There are A''
+\item $\sf \forall x(A(x) \impl B(x))$ is true if nothing satisfies $A(x)$\\
+(vacuous quantification)
+\item ``Some A are B'' does not imply ``Not all A are B''
+\item \dots but they do implicate it
+\eit
+
+}
+
+\subsec{Quantifiers and Function Symbols}{
+
+\bits
+\item ``The leftmost block in the same row as any cube is small''
+\bits
+\item ``For every cube, the leftmost block in the same row as it is small''
+\item
+\[
+\sf \forall x(Cube(x) \to Small(lm(x)))
+\]
+\eit
+\item ``Some multiples of 3 are even, and some aren't''
+\bits
+\item Note: every multiple of 3 is the multiple of 3 \emph{by some number}
+\item ``There is a number such that the multiple of 3 by it is even''
+\item 
+$
+\sf \exists x\,Even(x \times (1 + (1+1)))
+$
+\item
+$
+\sf \exists x\, Even(x \times (1 + (1+1))) \land \exists x\, \lnot Even(x \times (1 + (1+1)))
+$
+\eit
+\eit
+}
+
+
+
+
+
+\section{Arguments involving Quantifiers}
+
+\subsec{Example}{
+
+\ben
+\item If an action x is morally wrong then 
+A is blameworthy for freely doing x. 
+\item If x is rationally optimal (there is no action which A has
+  reason to think there is more reason for A to do), then A is not
+  blameworthy for freely doing x.
+\item Therefore, if x is morally wrong, then 
+x is not rationally optimal. 
+(Principle of moral categoricity.)
+\een
+
+\begin{raggedleft}
+\small(John Skorupski, \textit{Ethical Explorations}, 2000 (\href{http://books.google.ca/books?id=bxIzZYqRZdwC&lpg=PP1&pg=PA170\#v=onepage&q&f=false}{link} \href{http://peasoup.typepad.com/peasoup/2008/07/logic-help.html}{link}))
+ \end{raggedleft}
+
+}
+
+\subsec{Example}{
+
+\fitcharg{
+\nline{\forall x(Wrong(x) \to BlameFreelyDoing(A, x))}\\
+\nline{\forall x(ROpt(x) \to \lnot BlameFreelyDoing(A, x))}}{
+\nline{\forall x(Wrong(x) \to \lnot ROpt(x))}\\
+}
+
+\bigskip
+
+\fitcharg{\tline{All A are B}\\
+\tline{No C are B \qquad ($\Leftrightarrow$ No B are C)}}{
+\tline{No A are C}}
+}
+
+
+
+\subsec{FOL and the Truth Table Method}{
+
+\bit
+\item Some arguments valid only in virtue of the meanings of quantifiers
+\item Some arguments valid independently of the meanings of quantifiers, e.g.,
+\fitcharg{\tline{If there are cubes, then there are also tetrahedra}\\
+\tline{There are no tetrahedra}}{\tline{There are no cubes}}
+\item Challenge: how does the truth-table method apply?  When should we say an argument is \emph{tautologically} valid even though it contains quantifiers?
+
+\eit
+
+}
+
+\subsec{The Truth-Functional Form Algorithm}{
+
+\bit
+\item Underline every quantifier and its entire scope (unless it is in the scope of another quantifier)
+\item Label every underlined bit with a schematic sentence letter (A, B, C, \dots), use the same letter if the underlined parts are \emph{identical}
+\item Replace underlined parts by sentence letters
+\item Result is the \emph{truth-functional form} of the argument
+\item An argument (with quantifiers) is \emph{tautologically valid} if its truthfunctional form is tautologically valid
+\eit
+
+}
+
+\subsec{The Truth-Functional Form Algorithm}{
+
+\fitcharg{
+\nline{\underline{\exists x\, Cube(x)}_A \to \underline{\exists x\, Tet(x)}_B}\\
+\nline{\lnot\underline{\exists x\, Tet(x)}_B}}{
+\nline{\lnot\underline{\exists x\, Cube(x)}_A}}
+
+\bigskip
+
+\fitcharg{
+\nline{A \to B}\\
+\nline{\lnot B}}{\nline{\lnot A}}
+
+}
+
+\subsec{The Truth-Functional Form Algorithm}{
+
+\fitcharg{
+\nline{\underline{\exists x\, Cube(x)}_A \to \underline{\exists x\, Tet(x)}_B}\\
+\nline{\underline{\forall x\, \lnot Tet(x)}_C}}{
+\nline{\underline{\forall x\, \lnot Cube(x)}_D}}
+
+\bigskip
+
+\fitcharg{
+\nline{A \to B}\\
+\nline{C}}{\nline{D}}
+
+}
+
+\subsec{First-order Validity}{
+
+\bit
+\item Want to capture validity \emph{in virtue of the meanings of the
+  connectives and the quantifiers} (but ignoring meanings of predicate
+  symbols other than =)
+\item So we want to ignore any restrictions the predicate symbols place on their extensions
+\item Hence: allow \emph{any} extension in a potential counterexample
+\item An argument is \emph{first-order valid} if there is no \emph{first-order structure} in which the premises are true and the conclusion false
+
+\item Variant interpretation: \emph{first-order structure}
+\eit
+
+}
+
+\subsec{The Replacement Method}{
+
+\bit
+\item Existing meanings of predicate symbols may confuse you, so:
+\item Replace each predicate symbol (other than =) with a ``nonsense predicate'': A, B, C, \dots
+\item Arity the same as original predicate
+\eit
+}
+
+\subsec{First-order Structure}{
+
+\bit
+\item Specify domain (e.g., ``Canadian cities'', ``the natural numbers'', graphically using a collection of dots, \dots)
+\item Specify extension of A(x), B(x, y), C(x, y, z), \dots{} by
+\bit
+\item a diagram (as usual)
+\item enumeration of elements, pairs of elements, triples of elements of the domain, e.g., ``Calgary, Edmonton, Lethbridge'', ``(0, 1), (0, 2), (0, 3), \dots''
+\item determinate predicate (expression involving x, y, z), e.g., ``x is entirely located in Alberta'', ``x evenly divides y'', \dots
+\eit
+\item Specify referents of constant symbols, e.g., ``c: Calgary'', ``d: 5'', graphically by writing the constant next to the dot named by it
+\eit
+}
+
+\section{FO Consequence and FO Structures}
+
+\subsec{First-order Logical Notions}{
+
+\bit
+\item An argument is \emph{first-order valid}, and its conclusion is a \emph{first-order consequence} of its premises,
+if there is no \emph{first-order structure} in which the premises are true and the conclusion is false
+\item A sentence is a \emph{first-order validity} if it is true in every first-order stucture
+\item Two sentences are \emph{first-order equivalent} if there is no first-order structure in which they have different truth values.
+\item A (set of) sentence(s) is \emph{first-order satisfiable} if it is (all) true in at least one first-order structure
+\item NB: There is \emph{no mechanical test} for any of these (The Church-Turing Undecidability Theorem), by contrast to the truth-table case!
+\eit
+
+}
+
+\subsec{First-order Structure}{
+
+\bit
+\item $\sf \forall x\,(P(x) \impl R(x, b))$
+\item We need:
+\begin{itemize}
+\item A domain: objects which can take the value of \textsf x. 
+\item Extension of $\sf P(x)$ (or a determinate property of the objects in that domain as an
+interpretation for $\sf P(x)$). 
+\item Extension of $\sf R(x, y)$ (or a determinate 2-place relation as an interpretation of the
+predicate $\sf R(x, y)$). 
+\item An object to be named by \textsf a.
+\end{itemize}
+\eit
+}
+
+
+\subsec{FO Validity of Arguments}{
+
+\fitcharg{
+\nline{\forall x\, Cube(x) \lor \forall x\, Tet(x)}\\
+\nline{\exists x\, \lnot Cube(x) \land \forall y(Tet(y) \to Small(y))}}{
+\nline{\lnot \exists x\, Large(x)}}
+}
+
+\subsec{FO (In)Validity of Arguments}{
+
+\fitcharg{
+\nline{\forall x\, A(x) \lor \forall x\, B(x)}\\
+\nline{\exists x\, \lnot A(x) \land \forall y(B(y) \to C(y))}}{
+\nline{\lnot \exists x D(x)}}
+
+\begin{itemize}
+\item Domain: the planets
+\item $\sf A(x)$ \dots \textsf x is inhabited
+\item $\sf B(x)$ \dots \textsf x is smaller than the Sun
+\item $\sf C(x)$ \dots \textsf x orbits the Sun
+\item $\sf D(x)$ \dots \textsf x has a moon 
+\end{itemize}
+Another FO counterexample given by an Euler diagram: 
+\[
+\begin{array}{|lc|}
+\hline
+\sf B = C = D & \\
+& \begin{array}{|lc|}
+\hline
+\sf A & \cdot 1\\
+\hline
+\end{array}\quad \\
+\cdot 2 & \\ \hline
+\end{array}
+\]
+
+}
+
+\subsec{Making ``All As are Bs'' True}{
+
+\begin{align*} 
+\sf \forall x\, (A(x) & \impl \sf B(x)) \\
+\sf \lnot\exists x(A(x) & \land \sf\lnot B(x))
+\end{align*}
+
+\[
+\begin{array}{|lc|}
+\hline 
+\sf B & \cdots \\
+& \begin{array}{|c|}
+\hline 
+\sf A \cdots \\
+\hline
+\end{array} \quad \\[1ex]
+\hline
+\end{array}
+\qquad\qquad
+\begin{array}{|lc|}
+\hline 
+\sf B = A & \\
+& \cdots \\
+\hline
+\end{array}
+\qquad\qquad
+\begin{array}{c}
+\begin{array}{|lc|}
+\hline 
+\sf B & \\
+& \cdots \\
+\hline 
+\end{array} \\[2ex]
+\sf A = \emptyset
+\end{array}
+\]
+
+
+Makes ``Some As are not Bs'' \emph{false}
+}
+
+\subsec{Making ``All As are Bs'' False}{
+
+\begin{align*}
+\sf \lnot\forall x\, (A(x) & \impl \sf B(x)) \\
+\sf \exists x(A(x) & \land \sf\lnot B(x))
+\end{align*}
+
+\[
+\begin{array}{lcr|}
+  \cline{1-2}
+  \multicolumn{2}{|c|}{\sf A \quad \cdots}\\
+  \cline{2-3}
+  \multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\cdots} & 
+  \multicolumn{1}{|c|}{} \\  
+  \cline{1-2} 
+  & \multicolumn{2}{|c|}{\sf B \quad \cdots}\\
+  \cline{2-3}
+\end{array}
+\qquad\qquad
+\begin{array}{|lc|c|lc|}
+\cline{1-2}\cline{4-5}
+\sf A  & & & \sf B & \\
+& \cdots & & & \cdots\\
+\cline{1-2}\cline{4-5} 
+\end{array}
+\qquad\qquad
+\begin{array}{c}
+\begin{array}{|lc|}
+\hline 
+\sf A & \\
+& \cdots \\
+\hline 
+\end{array} \\[1ex]
+\sf B = \emptyset
+\end{array}
+\]
+
+Makes ``Some As are not Bs'' \emph{true}
+
+}
+
+\subsec{Making ``Some As are Bs'' True}{
+
+\begin{align*}
+\sf \exists x (A(x) & \sf\land B(x)) \\
+\sf \lnot\forall x(A(x) & \impl\sf \lnot B(x))
+\end{align*}
+
+\[
+\begin{array}{lcr|}
+  \cline{1-2}
+  \multicolumn{2}{|c|}{\sf A \quad \cdots}\\
+  \cline{2-3}
+  \multicolumn{1}{|c|}{} & \multicolumn{1}{|c|}{\cdots} & 
+  \multicolumn{1}{|c|}{} \\  
+  \cline{1-2} 
+  & \multicolumn{2}{|c|}{\sf B \quad \cdots}\\
+  \cline{2-3}
+\end{array}
+\qquad\qquad
+\begin{array}{|lc|}
+\hline 
+\sf A & \cdots \\
+& \begin{array}{|c|}
+\hline 
+\sf B \cdots \\
+\hline
+\end{array} \quad \\[1ex]
+\hline
+\end{array}
+\qquad\qquad
+\begin{array}{|lc|}
+\hline 
+\sf B & \cdots \\
+& \begin{array}{|c|}
+\hline 
+\sf A \cdots \\
+\hline
+\end{array} \quad \\[1ex]
+\hline
+\end{array}
+\qquad\qquad
+\begin{array}{|lc|}
+\hline 
+\sf B = A & \\
+& \cdots \\
+\hline
+\end{array}
+\]
+
+Makes ``No As are Bs'' \emph{false}
+
+}
+
+\subsec{Making ``Some As are Bs'' False}{
+
+\begin{align*}
+\sf \lnot\exists x (A(x) & \sf\land B(x)) \\
+\sf \forall x(A(x) & \impl\sf \lnot B(x))
+\end{align*}
+
+\[
+\begin{array}{|lc|c|lc|}
+\cline{1-2}\cline{4-5}
+\sf A  & & & \sf B & \\
+& \cdots & & & \cdots\\
+\cline{1-2}\cline{4-5} 
+\end{array}
+\qquad\qquad
+\begin{array}{c}
+\begin{array}{|lc|}
+\hline 
+\sf A & \\
+& \cdots \\
+\hline
+\end{array}\\[2ex]
+\sf B = \emptyset
+\end{array}
+\qquad\qquad
+\begin{array}{c}
+\begin{array}{|lc|}
+\hline 
+\sf B & \\
+& \cdots \\
+\hline
+\end{array} \\[2ex]
+\sf A = \emptyset
+\end{array}
+\]
+
+Makes ``No As are Bs'' \emph{true}
+}
+
+
+\subsec{Skorupski Revisited}{
+
+\fitchprf{\pline[1.]{\text{If $\sf x$ is morally wrong, then}}\\
+\pline{\qquad \text{$\sf A$ is blameworthy for freely doing $\sf x$}}\\
+  \pline[2.]{\text{If $\sf x$ is
+  rationally optimal, then }}\\
+\pline{\qquad\text{A is not blameworthy for freely doing x.}}}
+{\pline[3.]{\text{If $\sf x$ is morally wrong, then $\sf x$ is not rationally
+      optimal.}}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x(Wrong(x) \lif BlameFreelyDoing(a, x))}\\
+  \pline[2.]{\forall x(ROpt(x) \lif \lnot BlameFreelyDoing(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+}
+
+\subsec{Skorupski Revisited}{
+
+\href{http://books.google.ca/books?id=bxIzZYqRZdwC&lpg=PP1&pg=PA170\#v=onepage&q&f=false}{Actual argument} from Skurupski's book:
+
+\fitchprf{\pline[1.]{\text{If $\sf x$ is morally wrong and $\sf A$ freely does $\sf x$,
+    then}}\\
+\pline{\qquad\text{$\sf A$ is blameworthy for doing $\sf x$.}}\\ 
+  \pline[2.]{\text{If doing $\sf x$ is
+  rationally optimal, then}}\\
+\pline{\qquad\text{there is no reason to blame $\sf A$ for freely doing
+  $\sf x$.}}}
+{\pline[3.]{\text{If $\sf x$ is morally wrong, then $\sf x$ is not rationally
+      optimal.}}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x((Wrong(x) \land DoesF(a, x)) \lif Blame(a, x))}\\
+  \pline[2.]{\forall x((ROpt(x) \land DoesF(a, x)) \lif \lnot Blame(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+
+}
+
+\subsec{Skorupski Revisited}{
+
+\fitchprf{\pline[1.]{\forall x((Wrong(x) \land DoesF(a, x)) \lif Blame(a, x))}\\
+  \pline[2.]{\forall x((ROpt(x) \land DoesF(a, x)) \lif \lnot Blame(a, x))}}
+{\pline[3.]{\forall x(Wrong(x) \lif \lnot ROpt(x))}}
+
+\bigskip
+
+\fitchprf{\pline[1.]{\forall x((Cube(x) \land LeftOf(a, x)) \lif SameRow(a, x))}\\
+  \pline[2.]{\forall x((Small(x) \land LeftOf(a, x)) \lif \lnot SameRow(a, x))}}
+{\pline[3.]{\forall x(Cube(x) \lif \lnot Small(x))}}
+}
+
+
+
+\end{document}
+
+
+
+

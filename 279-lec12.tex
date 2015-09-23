@@ -1,0 +1,329 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 12]{Logic I F13 Lecture 12}
+\date{October 22, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Review}
+
+\subsec{Satisfaction}{
+
+\bit 
+\item Atomic wffs like $\sf Cube(x)$ express the properties we've
+  assigned to the predicate symbol
+\item More general: any wff $\sf P(x)$ expresses a property
+\item Which one? The property of \emph{satisfying $\sf P(x)$}.
+\item \emph{$\alpha$ satisfies $\sf P(x)$ in~$W$} iff $\sf P(n)$ is true in
+  the world~$W'$ which is just like $W$ except $n$ names $\alpha$
+\item Extension of $\sf P(x)$ in $W$: set of all objects that satisfy
+  $\sf P(x)$ in $W$.
+\item Examples:
+\bit
+\item $x$ is a small tetrahedron to the left of $b$:\[
+\sf Small(x) \land Tet(x) \land LeftOf(x, b)
+\]
+\item $x$ adjoins  c or d, but not both
+\[
+\sf \lnot(Adjoins(x, c) \iff Adjoins(x, d))
+\]
+\eit
+\eit
+
+}
+
+\subsec{Quantifiers and Satisfaction: $\forall$}{
+
+\bit
+\item The sentence
+\[\sf
+\forall x\, P(x)
+\]
+says (is true iff) 
+\bit
+\item every object in the domain (= world) satisfies P(x)
+\item P(n) is true for \emph{whatever} object is named by~n
+\item extension of P(x) in $W$ is the entire domain
+\eit
+\eit
+}
+
+\subsec{Quantifiers and Satisfaction: $\exists$}{
+
+\bit
+\item The sentence
+\[\sf
+\exists x\, P(x)
+\]
+says (is true iff) 
+\bit
+\item at least one object in the domain satisfies P(x)
+\item P(n) is true for \emph{at least one} object named by~n
+\item extension of P(x) in $W$ is not empty
+\eit
+\eit
+
+}
+
+\subsec{Expressing ``Everything'', ``Something''}{
+
+
+\bit
+\item ``Everything is a large cube''
+\[ \sf \forall x(Large(x) \land Cube(x)) \]
+\item ``Something is a large cube''
+\[ \sf \exists x(Large(x) \land Cube(x)) \]
+\eit
+}
+
+\subsec{Expressing ``Nothing'', ``Not Everything''}{
+
+\bit\item ``Nothing is a large cube'' \pause
+\begin{align*}
+& \sf \forall x\,\lnot(Large(x) \land Cube(x)) \\
+& \sf \lnot\exists x(Large(x) \land Cube(x))
+\end{align*}
+Also: ``Everything is: not a large cube''
+\item ``Something isn't a large cube'' \pause
+\begin{align*}
+& \sf \exists x\,\lnot(Large(x) \land Cube(x)) \\
+& \sf \lnot\forall x(Large(x) \land Cube(x))
+\end{align*}
+Also: ``Not everything is a large cube''
+\eit
+}
+
+\section{Restricted Quantification}
+
+\subsec{Determiner Phrases}{
+
+\bit
+\item Determiners combine with noun phrases to make determiner phrases (DP):
+\bit
+\item ``\emph{A} large terahedron''
+\item ``\emph{Three} cubes which are to the left of b''
+\item ``\emph{Every} even number''
+\item ``\emph{Some} cube(s) between d and e''
+\item ``\emph{Most} philosophy majors''
+\item ``\emph{Both} small cubes''
+\eit
+\eit
+}
+
+\subsec{Determiner Phrases in Sentences}{
+
+\bit
+\item DPs make subjects of sentence, just like names/constants and coordination constructions of them do
+\bit
+\item ``\emph{Claire and Alex} study logic''---``\emph{Most philosophy majors} study logic''
+\item ``\emph{2} is prime''---``\emph{Some even number} is prime''
+\item ``\emph{a} is between b and c''---``\emph{Every large cube} is between b and c''
+\eit
+\item We know how to translate the former---how do we deal with the latter?
+\eit
+}
+
+\subsec{Restricted Quantification}{
+
+\bit
+\item ``Det A is/are B''
+\item A is a noun (phrase), B an adjective or article + noun (phrase)
+\item Translate ``x is an A'' into a wff of FOL: A(x)
+\item Translate ``x is B''  into a wff of FOL: B(x)
+\item Combine A(x), B(x) in the right way
+\eit
+
+}
+
+\subsec{Some A is B}{
+
+\bit
+\item ``Some cube is large''
+\item ``x is a cube'': $\sf Cube(x)$
+\item ``x is large'': $\sf Large(x)$
+\item Combine:
+\[\sf
+\uncovers{2-4}{\exists x}\uncovers{2-4}{(}Cube(x) \uncovers{3-4}{{}\land{}} Large(x)\uncovers{2-4}{)}
+\]
+\items{4} Also:
+\bit
+\item ``Some cubes are large''
+\item ``There are large cubes''
+\item ``Something large is a cube''
+\item ``A cube is large''
+\eit
+\eit
+
+}
+
+
+\subsec{Every A is B}{
+
+\bits
+\item ``Every cube is large''
+\item Options:
+\bens
+\item[] $\sf \forall x(Cube(x) \phantom{{}\land{}} Large(x))$
+\item $\sf \forall x(Cube(x) \land Large(x))$ \uncovers{7-}{\color{red}NO}
+\item $\sf \forall x(Cube(x) \lor Large(x))$ \uncovers{7-}{\color{red}NO}
+\item $\sf \forall x(Cube(x) \to Large(x))$ \uncovers{7-}{\color{green}YES}
+\een
+\item Also:
+\bit
+\item ``All cubes are large''
+\item ``Any cube is large''
+\item ``Cubes are large''
+\item ``If something is a cube, it is large''
+\eit
+\eit
+
+}
+
+\subsec{The Indefinite Article}{
+
+\bits
+\item ``A small cube adjoins a''
+\item[]
+$\sf \exists x((Small(x) \land Cube(x)) \land Adjoins(x, a))$
+\item ``a is left of a large tetrahedron''
+\item[]$
+\sf \exists x((Large(x) \land Tet(x)) \land LeftOf(a, x))
+$
+\item ``An even number is a multiple of 2''
+\item[]
+$\sf \forall x(Even(x) \to MultipleOf(x, (1+1)))$
+\item ``If a cube adjoins a, it is large''
+\item[]$\sf \forall x((Cube(x) \land Adjoins(x, a)) \to Large(x))$
+\eit
+
+}
+
+
+\subsec{No A is B}{
+
+\bits
+\item ``No cube is large''
+\item Options:
+\bens
+\item[] $\sf \phantom{lnot\forall} x(Cube(x) \phantom{{}\land{}} Large(x))$
+\item $\sf \forall x(Cube(x) \to \lnot Large(x))$
+\item $\sf \lnot\exists x(Cube(x) \land Large(x))$
+\een
+\item Also: 
+\bit
+\item ``No cubes are large''
+\item ``There are no large cubes''
+\item ``Nothing large is a cube''
+\eit
+\eit
+}
+
+\subsec{Only As are Bs}{
+
+\bits
+\item ``Only cubes are large''
+\bits
+\item ``All non-cubes are non-large''
+\item $\sf \forall x(\lnot Cube(x) \to \lnot Large(x))$
+\item $\sf \forall x(Large(x) \to Cube(x))$
+\eit
+\item ``Only a is large''
+\bits
+\item ``a is large, and nothing other than a is large''
+\item $\sf Large(a) \land \forall x(x \neq a \to \lnot Large(x))$
+\item $\sf \forall x(Large(x) \iff x = a)$
+\eit
+\eit
+}
+
+\subsec{Existential Import}{
+
+\bit
+\item Does ``all cubes are small'' have ``there are cubes'' as a consequence?
+\item Not according to our translations!
+\[
+\sf\forall x(Cube(x) \to Small(x))
+\]
+is true if there are no cubes at all.
+\item (1) ``Everyone who took the exam passed''\\
+(2) ``Noone who took the exam failed''
+\bit
+\item (1) and (2) are equivalent
+\item If noone took the exam, then (2) is true 
+\eit
+\eit
+}
+
+\subsec{Existential Import and Implicature}{
+
+\bit
+\item P \emph{implies} Q iff Q is a consequence of P 
+\item If P implies Q, then the denial of Q contradicts P
+\bit
+\item ``Some A are B'' implies ``There are As''
+\item ``Some cubes are small'' implies ``There are cubes''
+\item ``Some cubes are small. There are no cubes'': contradictory
+\eit
+\item Does ``All cubes are small'' imply ``There are cubes?''
+\eit
+}
+
+\subsec{Existential Import and Implicature}{
+
+\bit
+\item P \emph{implicates} Q if in asserting P, it is (strongly) suggested that Q is true 
+\item Existential import is only \emph{implicated}, not \emph{implied}
+\item Test: No contradiction if implicature is denied:
+\bit
+
+\item ``Noone who took the exam failed.\\
+In fact, noone took the exam at all''
+
+\item ``Some students passed the exam.\\
+In fact, all students passed.''
+
+\item ``All unicorns are white.\\
+All zero of them.''
+\eit\eit
+
+}
+
+\subsec{Quantifiers and Function Symbols}{
+
+\bits
+\item ``The leftmost block in the same row as any cube is small''
+\bits
+\item ``For every cube, the leftmost block in the same column as it is small''
+\item
+\[
+\sf \forall x(Cube(x) \to Small(lm(x)))
+\]
+\eit
+\item ``Some multiples of 3 are even, and some aren't''
+\bits
+\item Note: every multiple of 3 is the multiple of 3 \emph{by some number}
+\item ``There is a number such that the multiple of 3 by it is even''
+\item 
+$
+\sf \exists x\,Even(x \times (1 + (1+1)))
+$
+\item
+$
+\sf \exists x\, Even(x \times (1 + (1+1))) \land \exists x\, \lnot Even(x \times (1 + (1+1)))
+$
+\eit
+\eit
+}
+
+
+\end{document}
+
+
+
+

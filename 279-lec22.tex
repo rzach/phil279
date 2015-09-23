@@ -1,0 +1,434 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 22]{Logic I F13 Lecture 22}
+\date{December 3, 2013}
+% ====================
+
+\input{header}
+
+\setlength{\fitchprfwidth}{14em}
+
+\section{Logical Metatheory}
+
+\subsec{Truth-functional Completeness}{
+
+\bit
+\item Every truth function can be expressed by a sentence containing only
+\ben
+\item $\{\land, \lnot\}$,
+\item $\{\lor, \lnot\}$, 
+\item $\{\to, \lnot\}$,
+\item $\{\to, \bot\}$, 
+\item $\{\mid\}$: not-both, truth table: \F\T\T\T 
+\item $\{\downarrow\}$: neither-nor, truth table: \F\F\F\T
+\een
+
+\item Others, e.g., $\{\land, \lor\}$, $\{\liff, \lnot\}$ are not
+  truth-functionally complete
+
+\eit
+
+}
+
+\subsec{Semantics}{
+
+\bit
+\item A \emph{truth-value assignment} is an assignment of \T{} or \F{} to the atomic sentences (schematic letters in the truth-functional form)
+\item A \emph{FO structure} is a non-empty domain together with
+\bit
+\item extensions for each predicate symbol
+\item objects in the domain for each constant symbol
+\item functions for each function symbol
+\eit
+\item A tautology is a sentence (the truth-functional form of) which is true in all truth-value assignments
+\item A FO validity is a sentence that's true in all FO interpretations 
+\eit
+
+}
+
+
+\subsec{Soundness and Completeness}{
+
+\bit
+\item Soundness
+
+Arguments have formal proofs only if they are valid\\
+If there is a proof of B from premises $\sf A_1, \dots A_n$, then B is a consequence of $\sf A_1, \dots A_n$
+
+\item Completeness
+
+Arguments have formal proofs if they are valid\\
+If B is a FO consequence of $\sf A_1, \dots A_n$, then there is a proof of B from premises $\sf A_1, \dots A_n$\\[2ex]
+Proved by Kurt G\"odel (1929)
+\eit
+}
+
+\subsec{Other Proof Systems: Resolution}{
+
+\bit
+\item Fitch is a proof system for \emph{validity/tautologies}
+\item Also possible to design proof systems for dual notion: \emph{unsatisfiability}\\
+(A is a tautology $\Leftrightarrow$ $\sf\lnot A$ is unsatisfiable) 
+\item A \emph{clause} is a disjunction $\sf A_1 \lor \ldots \lor A_n$
+where each $\sf A_i$ is atomic or negated atomic.
+\item The resolution rule:
+\[
+\fitchctx{\pline{A_1 \lor \ldots \lor A_n \lor C}\\
+\pline{B_1 \lor \ldots \lor B_m \lor \lnot C}\\
+\fpline{A_1 \lor \ldots \lor A_n \lor B_1 \lor \ldots \lor B_m}}
+\]
+\item Preserves \emph{joint satisfiability}
+\item If you can prove the empty clause $\bot$ from a set of clauses, they can't be
+  jointly satisfiable.
+\eit
+
+}
+
+\section{Theories and Decidability}
+
+\subsec{Church-Turing Theorem}{
+
+\begin{block}{Instance: Sentence A of any FO language\\
+Problem: Is A a FO validity?}
+
+\bit
+\item Undecidable
+\item Proved independently by Alonzo Church and Alan Turing in 1935
+\eit
+\end{block}
+}
+
+\subsec{Decidable Classes}{
+
+\bit
+\item The decision problem \emph{in general} is undecidable
+\item But special cases \emph{can} be decided, e.g.:
+\eit
+\begin{block}{Instance: Sentence A with only 1-place predicate symbols\\
+Problem: Is A a FO validity?}
+
+\bit
+\item Decidable
+\item Proved by Leopold L\"owenheim (1915)
+\eit
+\end{block}
+}
+
+\subsec{Theories}{
+
+\bit
+\item A set of sentences of FOL also called a \emph{theory}, and the sentences in it \emph{axioms}
+\item Some (types of) FO structures can be characterized 
+as the models of a theory
+\item Examples:
+\bit
+\item Mathematical theories (theory of orders, group theory, arithmetic)
+\item KR classification systems, e.g., SNOMED-CT
+\item Mereology, theories of truth, scientific theories
+\eit
+\eit
+
+}
+
+\subsec{The Axiomatic Method}{
+
+\bit
+\item Theories + logic: what follows from axioms?
+\item Axiomatic method: do science by investigating what follows from
+  the axioms of a theory 
+\item Logic can also determine:
+\bit
+\item Are axioms (in)consistent?
+\item Are axioms independent, or is one superfluous?
+\eit
+\item Paradigm of axiomatic method: geometry (Euclid)
+\eit
+}
+
+\subsec{Examples of Theories: Linear Orders}{
+
+A relation $\preceq$ on set $O$ is a \emph{linear order} if
+it is a model of the theory LO with axioms:
+\begin{align*}
+& \forall x\forall y((x \preceq y \land y \preceq x) \to x = y) & \text{Antisymmetry}\\
+& \forall x\forall y\forall z((x \preceq y \land y \preceq z) \to x \preceq z) &\text{Transitivity}\\
+& \forall x\forall y(x \preceq y \lor y \preceq x) & \text{Totality}
+\end{align*}
+Every total relation is reflexive: 
+\[
+{\sf LO} \models \forall x\, x \preceq x
+\]
+}
+
+\subsec{Examples of Theories: Robinson's Q}{
+
+Theories of arithmetic, such as Robinson's theory Q:
+\begin{align*}
+ \lnot\exists x\, (x + 1) & = 0\\
+ \forall x(x \neq 0  \to \exists y\, (y+1) & = x)\\
+ \forall x\forall y((x + 1) = (y + 1)  \to x & = y)\\
+ \forall x\,(x + 0) & = x\\
+ \forall x\forall y\, (x + (y+1)) & = ((x + y) +1) \\
+ \forall x\,(x \times 0) & = 0\\
+ \forall x\forall y\, (x \times (y + 1)) & = ((x \times y) + x)
+\end{align*}
+}
+
+
+
+\subsec{Examples of Theories: SNOMED-CT}{
+
+\begin{align*}
+\texttt{bacterial } & \texttt{pneumonia} = \\
+& \texttt{is-a|bacterial infectious disease}\\
+& \texttt{is-a|infective pneumonia}\\
+& \texttt{causative agent|bacteria}\\
+& \texttt{finding site|lung structure}\\[2ex]
+%\begin{align*}
+\forall x(& BacterialPneumonia(x) \liff  \\
+& BacterialInfectiousDisease(x) \land\\
+& InfectivePneumonia(x) \land \\
+& \exists y(HasCausativeAgent(x, y) \land Bacteria(y)) \land\\
+&\exists y(HasFindingSite(x, y) \land LungStructure(y)))
+\end{align*}
+}
+
+\subsec{Examples of Theories: SNOMED-CT}{
+
+\bit
+\item Over 300,000 concepts (predicate symbols), e.g.,\\
+\bit 
+\item 1-place predicates:\\
+parts of body, findings, organisms, physical objects, procedures, substances, diseases, \dots
+\item 2-place predicates:\\
+has finding site, has causative agent, with method, has active ingredient, laterality is, using device, \dots
+\eit
+\item About 1,000,000 descriptions (axioms)
+\item SNOMED-CT is decidable
+\eit
+
+}
+
+\subsec{Examples of Theories: Mereology}{
+
+\bit
+\item Mereology: the theory of the part-whole relation (\emph{metaphysics})
+\item Primitive relation: Pt(x, y), ``x is a part of y''
+\item Some axioms:
+\begin{align*}
+& \forall x\, Pt(x, x) & \text{Reflexivity}\\
+& \forall x\forall y\forall z((Pt(x,y) \land Pt(y, z)) \to Pt(x,z)) & \text{Transitivity}\\
+& \forall x\forall y((Pt(x, y) \land Pt(y, x)) \to x = y) & \text{Antisymmetry}
+\end{align*}
+\item Defined properties and relations
+\[
+PP(x, y) \dots Pt(x, y) \land x \neq y \qquad At(x) \dots \lnot\exists y\,PP(y, x)
+\]
+\item Different theories settle questions differently, e.g.,
+\bit
+\item Are there atoms?
+\item Does everything comprise at least one atom?
+\item Is everything made of atomless ``gunk''?
+\eit
+\eit
+
+}
+
+\subsec{Property Theories and Grelling's Paradox}{
+
+\bit
+\item Primitive relation: App(x ,y), ``x applies to y''
+\item Proposed axiom (``comprehension''): For any wff P(y),
+\[\sf
+\exists x\forall y(App(x, y) \liff P(y))
+\]
+\item Axiom is \emph{inconsistent} (contradictory)
+\item A property is \emph{heterological} if it does not apply to itself, i.e., $
+\sf \lnot Ap(x, x)$
+\item Is the property of being heterological itself heterological?
+\eit
+\fitchprf{\pline{\forall y(Ap(h, y) \liff \lnot Ap(y, y))}}{
+\pline{Ap(h, h) \land \lnot Ap(h, h)}}
+}
+
+\subsec{Completeness of Theories}{
+
+\bit 
+\item A theory T is \emph{complete} if for every sentence A in its language,
+either $\sf T \models A$ or $\sf T \models \lnot A$
+\item Every complete theory is decidable!
+\item Some incomplete theories are still decidable (e.g., LO)
+\item Some incomplete theories are incomplete\emph{able}: no consistent extension is complete
+\item Philosophical upshot of this: truth in the intended model(s) of the theory outstrips provability from the theory
+\eit
+\textbf{G\"odel's Incompleteness Theorem (1930)}\\
+Arithmetic, set theory, mereology are incompleteable
+
+}
+
+
+
+\section{Philosophy and Nonstandard Logics}
+
+\subsec{Logical Consequence and FO Consequence}{
+
+\bit
+\item Philosophers interested in \emph{valid arguments}, i.e.,
+those where the conclusion is a \emph{logical consequence} of the premises
+\item Definition: There is no logically possible circumstance where the 
+premises are true and the conclusion is false
+\bit
+\item \emph{Important:} It does not say ``it \emph{isn't the case} that the premises
+are true and the conclusion is false''
+\item That would make every argument with 
+\bit
+\item true premises, true conclusion
+\item false premises, true conclusion
+\item false premises, false conclusion
+\eit 
+logically valid.  But that's not the case.
+\item It says ``it is \emph{impossible} that the premises could be true and the conclusion false!''
+\eit
+\item Difficulty: What logically possible circumstances are there?
+\eit
+
+}
+
+\subsec{What Logic Does For Logical Validity}{
+
+\bit
+\item Truth-tables, FO interpretations, Fitch give \emph{sufficient conditions}
+for validity, i.e.,
+\bit
+\item Every tautologically valid argument is logically valid
+\item Every FO valid argument is logically valid
+\item Every argument with a formal proof in Fitch is logically valid (soundness!)
+\eit
+\item Also provide tools to do more:
+\bit
+\item FO interpretations show why consequence fails
+\item Show which relations between predicate symbols would suffice for logical validity
+\item Provide ways to symbolize these relations
+\item Formal theories about informal concepts can capture these relations, or elucidate consequences of assumptions about them (axiomatic method)
+\eit
+\eit
+
+}
+
+\subsec{Nonstandard Logics}{
+
+\bit
+\item Formal models of logical consequence make a number of simplifying assumptions:
+\bit
+\item Only \emph{determinate} properties allowed, e.g, no vague properties
+\item Every (atomic) sentence either \T{} or \F; not both and nothing in between 
+\item Every constant must refer, i.e., no empty names
+\item Only truth-functional connectives, e.g., no subjunctive contionals, ``because'', or tenses
+\eit
+\item Non-standard logics: expand FO logic to deal with these
+\eit
+
+}
+
+\subsec{Many-valued Logic}{
+\def\I{{\color{blue}\mathsf{U}}}
+\bit
+\item Add to the truth-values \T{} and \F, e.g.,
+\bit
+\item ``Undetermined'': neither true nor false
+\[
+\begin{array}{c|c}
+P & \lnot P\\
+\hline
+\T & \F \\
+\I & \I\\
+\F & \T
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \land Q)\\
+\hline
+\T & \T & \T\\
+\T & \I & \I\\
+\T & \F & \F\\
+\I & \T & \I\\
+\I & \I & \I\\
+\I & \F & \F\\
+\F & \T & \F\\
+\F & \I & \F\\
+\F & \F & \F
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \lor Q)\\
+\hline
+\T & \T & \T\\
+\T & \I & \T\\
+\T & \F & \T\\
+\I & \T & \T\\
+\I & \I & \I\\
+\I & \F & \I\\
+\F & \T & \T\\
+\F & \I & \I\\
+\F & \F & \F
+\end{array}
+\]
+\item ``Inconsistent'': both true and false
+\item Fuzzy truth values: any number between 0 and 1
+\eit
+\eit
+
+}
+
+\subsec{Modal Logic}{
+
+\bit
+\item Alethic logic\\
+``It is possible that'' ($\Diamond$), ``it is necessary that'' ($\Box$)
+\[
+\Box A \to A \qquad \Diamond\Box A \to \Box A
+\]
+\item Epistemic logic: 
+``It is known that'' (K)
+\[
+KK A \to K A
+\]
+\item Conditional logic\\
+Subjunctive conditionals, ``if it were true that \dots, then\\ \quad it would be true that --- ---'' ($\strictif$)
+\[
+(A \strictif B) \to (A \to B)
+\]
+\item Temporal logic\\
+``It was true that'' (P), ``It will be true that'' (F)
+\[
+F\,P\, A \to (P\, A \lor A \lor F\, A)
+\]
+\eit
+
+}
+
+\subsec{Christmas Trick}{
+
+If the first sentence on this slide is true, \\\qquad then Santa Claus exists.
+
+Proof that Santa Claus exists:
+\bens
+\item The first sentence on this slide is true\\\qquad (Assumption for
+  conditional proof).
+\item If the first sentence on this slide is true, then Santa Claus exists (from 1, since if S is true, then S).  
+\item Santa Claus exists (from (1) and (2), by modus ponens)
+\item If the first sentence on this slide is true, Santa Claus exists\\\qquad(from (1)--(3), by conditional proof).
+\item We've just proved (4) [= the first sentence on this slide], so the first sentence on this slide is true.
+\item Santa Claus exists (from (4) and (5), by modus ponens)
+\een
+}
+
+\end{document} 
+
+
+
+
+

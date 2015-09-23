@@ -1,0 +1,360 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 7]{Logic I F13 Lecture 7}
+\date{October 1, 2013}
+% ====================
+
+\include{header}
+
+\section{The Limits of Tarski's World}
+
+\subsec{Limitations of Tarski's World}{
+
+\bit
+\item Only $8 \times 8$ squares
+\item Only three shapes, three sizes
+\item Nothing can adjoin a large block
+\item No more than 12 blocks on the grid
+\eit
+
+}
+
+\subsec{Sentences Which are Always True}{
+
+\[
+\sf Cube(a) \lor \lnot Cube(a)\]\[
+\sf Smaller(a, b) \lor Larger(a, b) \lor SameSize(a, b)
+\]
+\[
+\color{red}\sf Cube(a) \lor Tet(a) \lor Dodec(a)
+\]
+
+}
+
+\subsec{Tautologies, Logic Truths, TW Necessities}{
+
+\bit
+\item A sentence is a \emph{tautology} if it is true in every \emph{truth-value assignment}
+\item A sentence is a \emph{logical truth} if it is true in every \emph{logically possible world}
+\item A sentence is a \emph{TW necessity} if it is true in every \emph{TW world}
+\eit
+
+}
+
+\subsec{TW Validity, Possible Worlds, TV Assignments}{
+
+\bit
+\item Every TW-world is also a possible world
+\item Every possible world generates a truth-value assignment which makes the same sentences true/false.
+\item Not TW-necessity $\Rightarrow$ Not logical necessity $\Rightarrow$ not tautology
+\item tautology $\Rightarrow$ logical necessity $\Rightarrow$ TW-necessity
+\eit
+}
+
+\subsec{Overview}{
+
+\small
+
+\begin{tabular}{l|lll}
+Concept & applies to & definition & based on \\\hline\hline
+\begin{tabular}{@{}l@{}}
+tautology $\Downarrow$ \\
+logical truth $\Downarrow$ \\
+TW-necessity
+\end{tabular} & sentences & never false &
+\begin{tabular}{@{}l@{}}
+TV-assignment \\
+possible world\\
+TW-world
+\end{tabular}\\
+\hline
+\begin{tabular}{@{}l@{}}
+tautologically valid $\Downarrow$ \\
+logically valid
+\end{tabular} & arguments & 
+\begin{tabular}{@{}l@{}}
+never true \\ premises and \\ false conclusion
+\end{tabular} & 
+\begin{tabular}{@{}l@{}}
+TV-assignment \\
+possible world
+\end{tabular}\\
+\hline
+\begin{tabular}{@{}l@{}}
+tautologically \\ \quad equivalent $\Downarrow$ \\
+logically \\ \quad equivalent
+\end{tabular} & 2 sentences & 
+\begin{tabular}{@{}l@{}}
+never different \\ truth values
+\end{tabular} & 
+\begin{tabular}{@{}l@{}}
+TV-assignment \\[2ex]
+possible world
+\end{tabular}
+\end{tabular}
+
+}
+
+
+\section{Informal Proofs involving the Boolean Connectives}
+
+\subsec{Proof}{
+
+\bit
+\item Demonstration of conclusion from premises
+\item Proceeds step-by-step
+\item Each step justified
+\item Rigorous (without gaps)
+\item Informal vs. formal
+\eit
+}
+
+
+\subsec{Justification in Informal Proofs}{
+
+\bit
+\item Basic properties of predicate symbols
+\item Appeal to truth tables
+\item Use special patterns of inference that are justified by truth tables
+\item Type of consequence:
+\bit
+\item If proof needs first: logical consequence
+\item If proof only needs last two: tautological consequence
+\eit
+\eit
+
+}
+
+\subsec{Appealing to Truth Tables}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3cm}
+\fitchprf{
+\nline{A \lor B}\\
+\nline{\lnot A}}{\nline{B}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item We are told that $\sf \lnot A$ is true (premise 2).  \item $\sf \lnot
+A$ is true iff $\sf A$ is false (by the truth table for $\sf \lnot $),
+so $\sf A$ is false.  \item By premise 1, $\sf A \lor B$ is true.  \item The only
+line in the truth table for $\sf \lor$ where $\sf A$ is false and $\sf
+A \lor B$ is true is where $\sf B$ is true, so $\sf B$ must be
+true. 
+\een
+\end{column}
+\end{columns}
+}
+
+\subsec{Basic Properties of $\land$, $\lor$, $\lor$}{
+
+\bit
+\item If $A \land B$ is true, then both $A$ and $B$ are true
+\item If $A$ and $B$ are both true, then $A \land B$ is true
+\item If $A$ is true, then $A \lor B$ is true
+\item If $B$ is true, then $A \lor B$ is true
+\item If $A$ is false, then $A \land B$ is false
+\item If $B$ is false, then $A \land B$ is false
+\item If $A \lor B$ is false, then both $A$ and $B$ are false
+\item $A$ is true iff $\lnot A$ is false
+\item $A$ is false iff $\lnot A$ is true
+\item If $A \lor B$ is true and $A$ is false, then $B$ is true (Disjunctive Syllogism)
+\eit
+
+}
+
+\subsec{Basic Patterns of Inference}{
+
+\begin{itemize}
+\item $\sf \land $--Elimination: If you know that $\sf A \land B$ is
+  true, you may conclude that $\sf A$ is true. You may of course also
+  conclude that $\sf B$ is true.
+\item $\sf \land $--Introduction: If you know that $\sf A$ is true and
+  that $\sf B$ is true, then you may conclude that $\sf A \land B$ is
+  true.
+\item $\sf \lor$--Introduction: If you know that $\sf A$ is true, then
+  you may conclude that $\sf A \lor B$ is true (for whatever $\sf B$
+  you like).
+\item $\sf \lnot $--Elimination: If you know that $\sf \lnot \lnot A$
+  is true (or that $\sf \lnot A$ is false), you may conclude that $\sf
+  A$ is true.
+\end{itemize}
+}
+
+
+\subsec{Example}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3cm}
+\fitchprf{
+\nline{Large(a) \land Cube(a)}\\
+\nline{Small(b) \land Cube(b)}}{\nline{Cube(a) \land Cube(b)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item We are told that a is a large cube (premise 1).  \item By $\land$Elim, a is a cube. \item We are also told that b is a small cube (premise 2). \item So, b is a cube (by $\land$Elim).  \item By $\land$Intro, a and b are cubes.
+\een
+\end{column}
+\end{columns}
+}
+
+\section{Formal Rules}
+
+\subsec{$\land$Intro}{
+
+If $A$ and $B$ are both true, then $A \land B$ is true
+\bigskip
+\setlength{\fitchprfwidth}{1.2in}
+\fitchctx{
+\nline[$n.$]{A}\\
+\nline[$m.$]{B}\\
+\fpline[\quad]{A \land B}[\landi{n}{m}]}
+
+}
+
+\subsec{$\land$Elim}{
+
+If $A \land B$ is true, then $A$ ($B$) is true
+\bigskip
+\begin{tabular}{@{}ll@{}}
+\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A \land B}\\
+\fpline[\quad]{A}[\lande{n}]}
+&\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A \land B}\\
+\fpline[\quad]{B}[\lande{n}]}
+\end{tabular}
+}
+
+\subsec{$\lor$Intro}{
+
+If $A$ ($B$) is true, then $A \lor B$ is true
+\bigskip
+\begin{tabular}{@{}ll@{}}
+\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A}\\
+\fpline[\quad]{A \lor B}[\lori{n}]}
+&\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{B}\\
+\fpline[\quad]{A \lor B}[\lori{n}]}
+\end{tabular}
+}
+
+\subsec{Example}{
+\setlength{\fitchprfwidth}{2in}
+\fitchprf{\pline[1.]{Large(a) \land Cube(a)}\\
+\pline[2.]{Small(b) \land Cube(b)}}{
+\pline[3.]{Cube(a)}[\lande{1}]\\
+\pline[4.]{Cube(b)}[\lande{2}]\\
+\pline[5.]{Cube(a) \land Cube(b)}[\landi{3}{4}]}
+
+}
+
+\section{Proof by Cases}
+
+\subsec{Proof by Cases}{
+\begin{quote}
+  Proof by cases: If you know that $\sf A \lor B$ is true, and you can
+  prove that $\sf C$ is true if you assume that $\sf A$ is true, and
+  you can also prove that $\sf C$ is true assuming that $\sf B$ is
+  true, then you can conclude $\sf C$.
+\end{quote}
+}
+
+\subsec{Example}{
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3.2cm}
+\fitchprf{\pline{Cube(a) \lor {}}\\
+\pline{\quad (Small(a) \land  Tet(a))}\\
+\pline{\lnot Cube(a) \lor Large(a)}}{
+\pline{Small(a) \lor Large(a)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item We are told that either $\sf Cube(a)$ or $\sf Small(a) \land
+Tet(a)$.  
+\item Case 1. Suppose $\sf Cube(a)$ is true.  
+\bit \item By the second
+premise, either $\sf \lnot Cube(a)$ or $\sf Large(a)$.  
+\item By Disjunctive
+Syllogism, $\sf Large(a)$.  
+\item By $\sf \lor$--Introduction, $\sf Small(a)
+\lor Large(a)$\eit  
+\een
+\end{column}
+\end{columns}
+}
+
+\subsec{Example}{
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3.2cm}
+\fitchprf{\pline{Cube(a) \lor {}}\\
+\pline{\quad (Small(a) \land  Tet(a))}\\
+\pline{\lnot Cube(a) \lor Large(a)}}{
+\pline{Small(a) \lor Large(a)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item<1-> We are told that either $\sf Cube(a)$ or $\sf Small(a) \land
+Tet(a)$.  
+\item<1-> Case 1. Suppose $\sf Cube(a)$ is true.  
+\bit \item<1-> \dots $\sf Small(a)
+\lor Large(a)$\eit  
+\item Case 2. Suppose $\sf Small(a) \land Tet(a)$ is
+true. 
+\bit 
+\item Then by $\sf \land $--Elimination, $\sf Small(a)$ is true. 
+\item By
+$\sf \lor$--Introduction, $\sf Small(a) \lor Large(a)$
+\eit
+\item By proof by
+cases, it follows that $\sf Small(a) \lor Large(a)$.
+\een
+\end{column}
+\end{columns}
+}
+
+\subsec{$\lor$Elim}{
+
+Formal version of proof by cases
+\bigskip
+\bigskip
+\setlength{\fitchprfwidth}{1.2in}
+\fitchctx{
+\nline[$j.$]{A \lor B}\\
+\subproof{\nline[$k.$]{A}}{\dots\\ \nline[$l.$]{C}}
+\subproof{\nline[$m.$]{B}}{\dots\\ \nline[$n.$]{C}}
+\fpline[\quad]{C}[\lore{$j$}{$k$--$l$}{$m$--$n$}]}
+
+
+}
+
+\subsec{Example}{
+
+\fitchprf{\pline[1.]{A \lor (B \land C)}}{
+\subproof{\pline[2.]{A}}{\pline[3.]{A \lor B}[\lori{2}]}
+\subproof{\pline[4.]{B \land C}}{
+\pline[5.]{B}[\lande{4}]\\
+\pline[6.]{A \lor B}[\lori{5}]}
+\pline[7.]{A \lor B}[\lore{1}{2--3}{4--6}]
+}}
+
+
+\end{document}
+
+

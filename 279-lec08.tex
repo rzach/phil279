@@ -1,0 +1,964 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 8]{Logic I F13 Lecture 8}
+\date{October 3, 2013}
+% ====================
+
+\include{header}
+
+\section{Review of Rules}
+
+\subsec{$\land$Intro}{
+
+If $A$ and $B$ are both true, then $A \land B$ is true
+\bigskip
+\setlength{\fitchprfwidth}{1.2in}
+\fitchctx{
+\nline[$n.$]{A}\\
+\nline[$m.$]{B}\\
+\fpline[\quad]{A \land B}[\landi{n}{m}]}
+
+}
+
+\subsec{$\land$Elim}{
+
+If $A \land B$ is true, then $A$ ($B$) is true
+\bigskip
+\begin{tabular}{@{}ll@{}}
+\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A \land B}\\
+\fpline[\quad]{A}[\lande{n}]}
+&\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A \land B}\\
+\fpline[\quad]{B}[\lande{n}]}
+\end{tabular}
+}
+
+\subsec{$\lor$Intro}{
+
+If $A$ ($B$) is true, then $A \lor B$ is true
+\bigskip
+\begin{tabular}{@{}ll@{}}
+\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{A}\\
+\fpline[\quad]{A \lor B}[\lori{n}]}
+&\setlength{\fitchprfwidth}{1in}
+\fitchctx{
+\nline[$n.$]{B}\\
+\fpline[\quad]{A \lor B}[\lori{n}]}
+\end{tabular}
+}
+
+\subsec{$\lor$Elim}{
+
+Formal version of proof by cases
+\bigskip
+\bigskip
+\setlength{\fitchprfwidth}{1.2in}
+\fitchctx{
+\nline[$j.$]{A \lor B}\\
+\subproof{\nline[$k.$]{A}}{\dots\\ \nline[$l.$]{C}}
+\subproof{\nline[$m.$]{B}}{\dots\\ \nline[$n.$]{C}}
+\fpline[\quad]{C}[\lore{$j$}{$k$--$l$}{$m$--$n$}]}
+
+
+}
+
+\subsec{Example}{
+
+\fitchprf{\pline[1.]{A \lor (B \land C)}}{
+\subproof{\pline[2.]{A}}{\pline[3.]{A \lor B}[\lori{2}]}
+\subproof{\pline[4.]{B \land C}}{
+\pline[5.]{B}[\lande{4}]\\
+\pline[6.]{A \lor B}[\lori{5}]}
+\pline[7.]{A \lor B}[\lore{1}{2--3}{4--6}]
+}}
+
+
+\section{Indirect Proof}
+
+
+\subsec{Indirect Proof}{
+
+\begin{quote}
+To prove that $A$ is true (false), you may proceed by pretending that
+$A$ is false (true), and showing that that's impossible.
+\end{quote}
+
+\bit
+\item ``show that's impossible'': prove something known to be false,
+  e.g., proving a claim that is in conflict with the premises, or
+  outright contradictory
+\item ``proof by contradiction'' = ``reductio (ad absurdum)'' =
+  indirect proof \eit
+
+}
+
+\subsec{Galileo on Falling Bodies}{ 
+
+From Galileo Galilei's, \textit{Discourses and Mathematical
+  Demonstrations Relating to Two New Sciences}, 1638.
+\medskip
+
+\emph{Simplicio.}  There can be no doubt but
+  that one and the same body moving in a single medium has a fixed
+  velocity which is determined by nature and which cannot be increased
+  except by the addition of momentum or diminished except by some
+  resistance which retards it.
+\medskip
+
+\emph{Salviati.}  If then we take two bodies whose natural speeds are
+different, it is clear that on uniting the two, the more rapid one
+will be partly retarded by the slower, and the slower will be somewhat
+hastened by the swifter. Do you not agree with me in this opinion?
+\medskip 
+
+\emph{Simp.}  You are unquestionably right.}
+\subsec{Galileo on Falling Bodies}{ 
+ 
+\emph{Salv.}  But if this is true, and if a large stone moves with a speed
+of, say, eight while a smaller moves with a speed of four, then when
+they are united, the system will move with a speed less than eight;
+but the two stones when tied together make a stone larger than that
+which before moved with a speed of eight.  Hence the heavier body
+moves with less speed than the lighter; an effect which is contrary to
+your supposition.  Thus you see how, from your assumption that the
+heavier body moves more rapidly than the lighter one, I infer that the
+heavier body moves more slowly.
+}
+
+
+\subsec{Disjunctive Syllogism}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\begin{columns}
+\begin{column}{3cm}
+\fitchprf{
+\nline{A \lor B}\\
+\nline{\lnot A}}{\nline{B}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item Suppose $\sf B$
+were not true.  
+\item By premise 1, $\sf A \lor B$ is true. 
+\item Case 1.  $\sf A$ is
+true. By premise 2, $\sf \lnot A$ is true, so we have a contradiction.
+\item Case 2. $\sf B$ is true. This contradicts the assumption that $\sf B$ is false, so again we have a contradiction. 
+\item So by proof by
+cases, we have proved a contradiction from the assumption that $\sf 
+B$ is not true. 
+\item So $\sf B$ must be true, by indirect proof. QED.
+\een
+\end{column}
+\end{columns}
+}
+
+
+\subsec{Rules for $\lnot$}{
+
+\setlength{\fitchprfwidth}{.9in}
+\fitchctx{
+\subproof{\nline[$k.$]{A}}{\dots\\ \nline[$l.$]{\bot}}
+\fpline[\quad]{\lnot A}[\lnoti{$k$--$l$}]}
+\fitchctx{
+\subproof{\nline[$k.$]{\lnot A}}{\dots\\ \nline[$l.$]{\bot}}
+\fpline[\quad]{A}[\lnoti{$k$--$l$}]}
+
+\bigskip
+\fitchctx{
+\nline[$k.$]{\lnot\lnot A}\\
+\fpline[\quad]{A}[\lnote{k}]}
+
+}
+
+\subsec{Rules for $\bot$}{
+
+\fitchctx{
+\nline[$k.$]{A}\\
+\nline[$l.$]{\lnot A}\\
+\fpline[\quad]{\bot}[\lfalsei{k}{l}]}
+\bigskip
+\setlength{\fitchprfwidth}{.9in}
+\fitchctx{
+\nline[$k.$]{\bot}\\
+\fpline[\quad]{A}[\lfalsee{k}]}
+
+}
+
+\subsec{Disjunctive Syllogism}{
+
+\setlength{\fitchprfwidth}{1.2in}
+
+\fitchprf{
+\nline{A \lor B}\\
+\nline{\lnot A}}{\nline{B}}
+}
+
+\subsec{De Morgan's Law}{
+\setlength{\fitchprfwidth}{1.2in}
+
+\fitchprf{
+\nline{A \lor B}}{\nline{\lnot(\lnot A \land \lnot B)}}
+}
+
+\section{Proofs from Contradictory Premises}
+
+\subsec{Proofs from Contradictory Premises}{
+
+\begin{quote}
+Any argument with TT-contradictory premises is tautologically valid.
+\end{quote}
+
+}
+
+\subsec{Proofs from Contradictory Premises}{
+
+\begin{columns}
+\begin{column}{3cm}
+\fitchprf{
+\pline{Small(b)}\\
+\pline{\lnot Small(b)}}{
+\pline{Tet(a)}}
+\end{column}
+\begin{column}{7cm}
+\bens
+\item Suppose, by way of contradiction, that $\sf \lnot Tet(a)$. 
+\item We are told (premise 1) that $\sf
+Small(b)$. 
+\item We are also told (premise 2) that $\sf \lnot
+Small(b)$. 
+\item That's a contradiction. 
+\item So $Tet(a)$ by indirect proof. QED.
+\een
+\end{column}
+\end{columns}
+}
+
+\end{document}
+
+\section{Proof Strategies}
+
+\subsec{Strategy for Proving Conjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{}
+}{
+ \ellipsesline \\
+ \pline[2.]{} \\
+ \ellipsesline \\
+ \pline[3.]{} \\
+ \pline[4.]{P \land Q}[\hphantom{\landi{2}{3}}]
+} 
+  &
+If we want to prove $\sf P \land Q$, we have to use $\land$Intro.
+\end{tabular}
+
+}
+
+\subsec{Strategy for Proving Conjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+  \fitchprf{\pline[1.]{}}{
+    \ellipsesline \\
+    \pline[2.]{P} \\
+    \ellipsesline \\
+    \pline[3.]{Q} \\
+    \pline[4.]{P \land Q}[\landi{2}{3}]
+  } 
+  &
+  For $\land$Intro, we need to prove $\sf P$ first, then prove $\sf Q$. For the last line,
+  we'll cite the lines where we proved $\sf P$ and  $\sf Q$, and use $\land$Intro.
+\end{tabular}
+}
+
+
+
+\subsec{Strategy for Using Conjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{P \land Q}
+}{
+ \pline{}[\hphantom{\lande{1}}] \\
+ \pline{} \\
+ \ellipsesline \\
+ \pline{R}
+} 
+  &
+If we want to use a sentence of the form $\sf P \land Q$ which is one
+of our premises, or a sentence we've already proved, use $\land$Elim.
+\end{tabular}
+}
+
+\subsec{Strategy for Using Conjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{P \land Q}
+}{
+ \pline[2.]{P}[\lande{1}]\\
+ \pline[3.]{Q}[\lande{1}]\\
+ \ellipsesline \\
+ \pline{R}
+} 
+& Use $\land$Elim to ``split up'' $\sf P \land Q$, proving both $\sf
+P$ and $\sf Q$.  We'll probably need them further down in the proof.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Proving Disjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{}
+}{
+ \ellipsesline \\
+ \pline[2.]{} \\
+ \pline[3.]{P \lor Q}[\hphantom{\lori{2}}]
+} 
+  &
+We want to prove $\sf P \lor Q$. We could do this using  $\lor$Intro.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Proving Disjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline \\
+\pline[2.]{P} \\
+\pline[3.]{P \lor Q}[\lori{2}]
+} 
+&
+For $\lor$Intro, we need to prove one of the disjuncts.
+We'll try $\sf P$ first. For the last line,
+we'll cite the line where we proved $\sf P$, and use $\lor$Intro.
+\end{tabular}
+}
+
+\subsec{Strategy for Proving Disjunctions}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline \\
+\pline[2.]{Q} \\
+\pline[3.]{P \lor Q}[\lori{2}]
+} 
+&
+If we can't prove $\sf P$, we may have to backtrack and try to prove $\sf Q$
+instead.  Again, we'll cite the line where we proved $\sf Q$, and use
+$\lor$Intro.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Using Disjunctions}{
+
+\setlength{\fitchprfwidth}{.9in}
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{P \lor Q}
+}{
+ \pline{}\\
+\pline{} \\
+\pline{}\\
+\pline{} \\
+\pline{} \\
+\pline{} \\
+\ellipsesline \\[.7em]
+  \pline[6.]{R}[\hphantom{\lore{1}{2--3}{4--5}}]
+} 
+  &
+Suppose we want to prove R, and we have $\sf P \lor Q$ as a premise,
+as the assumption of a subproof, or as something proved before.
+We'll try to use it by applying $\lor$Elim.
+\end{tabular}
+
+}
+
+\subsec{Strategy for Using Disjunctions}{
+
+\setlength{\fitchprfwidth}{.9in}
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{P \lor Q} }{ \subproof{\pline[2.]{P}}{ \ellipsesline \\
+\pline[3.]{R}} \subproof{\pline[4.]{Q}}{ \ellipsesline \\
+\pline[5.]{R}} \pline[6.]{R}[\lore{1}{2--3}{4--5}] } 
+& To prove $\sf R$ using $\lor$Elim from $\sf P \lor Q$, we'll have to
+look for two subproofs: one in which we prove $\sf R$ from $\sf P$,
+another where we prove $\sf R$ from $\sf Q$. Once we have both, we
+can justify $\sf R$ by using $\lor$Elim, citing the line with $\sf P
+\lor Q$ and the two subproofs.
+\end{tabular}
+}
+
+\subsec{Strategy for Proving Negations}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{}
+}{
+ \pline{}\\
+\pline{} \\
+\pline{}\\
+\ellipsesline \\[.7em]
+  \pline[4.]{\neg P}[\hphantom{\lnoti{2}}]
+} 
+  &
+If we want to prove $\neg\sf P$, we'll have to use  $\neg$Intro.
+\end{tabular}
+
+}
+
+\subsec{Strategy for Proving Negations}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{P}}{
+\ellipsesline \\
+\pline[3.]{\bot}}
+\pline[4.]{\neg P}[\lnoti{2--3}]
+} 
+& For $\neg$Intro, we have to start a subproof with assumption $\sf
+P$; the last line of the subproof has to be $\bot$.  We'll cite the
+subproof, and use $\lnot$Intro.
+\end{tabular}
+}
+
+
+\subsec{Strategy for Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{}
+}{
+ \pline{}\\
+\pline{} \\
+\pline{}\\
+\ellipsesline \\[.7em]
+  \pline[4.]{P}[\hphantom{\lnoti{2}}]
+} 
+& Sometimes, we want to prove a sentence $\sf P$, but our other
+strategies didn't get us far. This is often the case, e.g., when we
+want to prove disjunctions but don't have any premises (for example:
+$\sf A \lor \neg A$).  Then we can also use $\neg$Intro.
+\end{tabular}
+
+}
+
+\subsec{Strategy for Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg P}}{
+\ellipsesline \\
+\pline[3.]{\bot}}
+\pline[4.]{P}[\lnoti{2--3}]} 
+&
+Here, we have to start a subproof with assumption $\sf \neg P$;
+the last line of the subproof has to be $\bot$.
+We'll cite the subproof, and use $\lnot$Intro.  In the subproof, we now
+have an additional assumption (on line 2) to work with.
+\end{tabular}
+
+}
+
+\subsec{How to Find a Contradiction}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg P}}{
+\pline{}\\
+\ellipsesline \\
+\pline[4.]{\bot}}
+\pline[5.]{P}[\lnoti{2--3}]
+} 
+&
+Suppose we used the indirect proof strategy, or we're in some other situation
+where we're looking for a proof of $\bot$.  What's a good candidate?
+\end{tabular}
+
+}
+
+\subsec{How to Find a Contradiction}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg P}}{
+\ellipsesline \\
+\pline[3.]{P}\\
+\pline[4.]{\bot}[\lfalsei{2}{3}]}
+\pline[5.]{P}[\lnoti{2--4}]
+} 
+& One good candidate is $\sf P$ itself!  This may look weird but
+remember that inside the subproof, we have an additional assumption
+$\sf \lnot P$ to work with.
+\end{tabular}
+
+}
+
+\subsec{How to Use a Negated Sentence}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{
+   \pline[1.]{\neg P}
+}{
+ \pline{}\\
+\pline{} \\
+\pline{}\\
+\ellipsesline \\[.7em]
+  \pline[4.]{R}[\hphantom{\lnoti{2}}]
+} 
+  &
+Suppose $\sf\neg P$ is one of your premises, or something else you've
+already proved, and the sentence you're shooting for doesn't contain
+$\sf \neg P$. How are you going to make use of  $\sf\neg P$?
+\end{tabular}
+
+}
+
+\subsec{How to Use a Negated Sentence}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{\neg P}}{
+\subproof{\pline[2.]{\neg R}}{
+\ellipsesline \\
+\pline[3.]{P}\\
+\pline[4.]{\bot}[\lfalsei{1}{3}]}
+\pline[5.]{R}[\lnoti{2--4}]
+} 
+&
+The only way to make use of $\sf\neg P$ in such a situation is as part
+of a contradiction. For instance, apply the indirect proof strategy,
+and then look for $\sf P$ inside the subproof.
+\end{tabular}
+
+}
+
+\subsec{Summary}{
+
+\bits
+\item Trying to prove $\sf P \land Q$? Look for a proof of $\sf P$,
+  then for a proof of $\sf Q$ ($\land$Intro).
+\item Split up conjunctions ($\land$Elim) whenever you can.
+\item Next, use the disjunctions you have ($\lor$Elim).
+\item Trying to prove $\sf\neg P$? Look for a subproof of $\bot$ from
+  $\sf P$ ($\neg$Intro).
+\item Trying to prove $\sf P \lor Q$?  Look for a proof of $\sf P$, if
+  that doesn't work, look for a proof of $\sf Q$ ($\lor$Intro). If
+  that doesn't work either, use indirect proof.  (Note: $\lor$Intro
+  rarely works unless you're in a subproof.)
+\item Apply the strategies at each step in the construction of your
+  proof. You may not be able to prove $\sf P \lor Q$ using $\lor$Intro
+  at one point, but then you might find yourself in a subproof where
+  it is possible.
+\eit
+}
+
+\subsec{Summary}{
+\bits
+\item It's good to know where you're going: So use the strategies
+  based on $\land$Intro, $\lor$Elim, $\neg$Intro before those based on
+  $\land$Elim and $\lor$Intro.
+\item Picking a disjunct to prove for $\lor$Intro or a candidate for a
+  contradiction doesn't always work. If it doesn't, you have to
+  backtrack and try something else.
+\item If you're looking for a proof of $\sf P$ and you're not getting
+  anywhere, make sure you're on the right track: is $\sf P$ even a
+  tautological consequence of the premises and assumptions? If not,
+  you'll have to backtrack.
+\end{itemize}
+
+}
+
+\section{Examples}
+
+\setlength{\fitchprfwidth}{1.5in}
+
+\subsec{An Example}{
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{(A \land B) \lor (A \land C)}
+}{
+ \pline{}\\
+\pline{} \\
+\pline{}\\
+\ellipsesline \\[.7em]
+  \pline{A \land (B \lor C)}[\hphantom{\lore{1}{2--5}{6--9}}]
+} 
+  &
+First, we use the disjunction on line 1, and set up the subproofs we
+need for $\lor$Elim.
+\end{tabular}
+
+}
+\subsec{An Example}{
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{(A \land B) \lor (A \land C)}
+}{
+\subproof{\pline[2.]{A \land B}}{
+\ellipsesline \\
+  \pline[6.]{A \land (B \lor C)}}\\[.5ex]
+\subproof{\pline[7.]{A \land C}}{
+\ellipsesline \\
+  \pline[11.]{A \land (B \lor C)}}
+  \pline{A \land (B \lor C)}[\lore{1}{2--6}{7--11}]
+} 
+  &
+In the first subproof, we now set up the sub goals for proving line 6
+using $\land$Intro.
+\end{tabular}
+
+}
+\subsec{An Example}{
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{(A \land B) \lor (A \land C)}
+}{
+\subproof{\pline[2.]{A \land B}}{
+\ellipsesline \\
+  \pline[4.]{A}\\
+  \pline[5.]{B \lor C}\\
+  \pline[6.]{A \land (B \lor C)}[\landi{4}{5}]}\\[.5ex]
+\subproof{\pline[7.]{A \land C}}{
+  \ellipsesline \\
+  \pline[11.]{A \land (B \lor C)}}
+\pline{A \land (B \lor C)}[\lore{1}{2--6}{7--11}]
+} 
+  &
+We immediately see that we get line 4 from 2 by $\land$Elim; let's
+apply the strategy for proving disjunctions to line 5: look for a
+proof of $\sf B$.
+\end{tabular}
+
+
+}
+\subsec{An Example}{
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{(A \land B) \lor (A \land C)}
+}{
+\subproof{\pline[2.]{A \land B}}{
+  \pline[3.]{B}\\
+  \pline[4.]{A}[\lande{2}]\\
+  \pline[5.]{B \lor C}[\lori{3}]\\
+  \pline[6.]{A \land (B \lor C)}[\landi{4}{5}]}\\[.5ex]
+\subproof{\pline[7.]{A \land C}}{
+\ellipsesline \\
+  \pline[11.]{A \land (B \lor C)}}
+  \pline[12.]{A \land (B \lor C)}[\lore{1}{2--6}{7--11}]
+} 
+  &
+Like line 4 before, we get line 3 from 2 by $\land$Elim. That's it for
+the first subproof. The second subproof is exactly the same.
+\end{tabular}
+
+}
+\subsec{An Example}{
+
+\begin{tabular}{@{}l@{}p{13em}}
+\fitchprf{
+   \pline[1.]{(A \land B) \lor (A \land C)}
+}{
+\subproof{\pline[2.]{A \land B}}{
+  \pline[3.]{B}[\lande{2}]\\
+  \pline[4.]{A}[\lande{2}]\\
+  \pline[5.]{B \lor C}[\lori{3}]\\
+  \pline[6.]{A \land (B \lor C)}[\landi{4}{5}]}\\[.5ex]
+\subproof{\pline[7.]{A \land C}}{
+  \pline[8.]{C}[\lande{7}]\\
+  \pline[9.]{A}[\lande{7}]\\
+  \pline[10.]{B \lor C}[\lori{8}]\\
+  \pline[11.]{A \land (B \lor C)}[\landi{9}{10}]}
+  \pline[12.]{A \land (B \lor C)}[\lore{1}{2--6}{7--11}]
+} 
+  &
+\end{tabular}
+
+}
+\subsec{Example Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg (P \lor ~P)}}{
+\ellipsesline\\
+\pline[8.]{\bot}[\lfalsei{2}{7}]}
+\pline[9.]{P \lor \neg P}[\lnoti{2--8}]
+} 
+&
+Suppose we want to prove $\sf P \lor \neg P$.  A little reflection
+shows that this can only be done by indirect proof.  So we set up a subproof
+for use with $\neg$Intro.
+\end{tabular}
+
+}
+\subsec{Example Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg (P \lor ~P)}}{
+\ellipsesline\\
+\pline[7.]{P \lor \neg P}[?]\\
+\pline[8.]{\bot}[\lfalsei{2}{7}]}
+\pline[9.]{P \lor \neg P}[\lnoti{2--8}]
+} 
+&
+Our first candidate for a contradiction is the assumption of the
+subproof.  How should we get $\sf P \lor neg P$ inside that
+subproof?
+\end{tabular}
+
+}
+\subsec{Example Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg (P \lor ~P)}}{
+\subproof{\pline[3.]{P}}{
+\ellipsesline\\
+\pline[5.]{\bot}[?]
+}
+\pline[6.]{\neg P}[\lnoti{3--5}]\\
+\pline[7.]{P \lor \neg P}[\lori{6}]\\
+\pline[8.]{\bot}[\lfalsei{2}{7}]}
+\pline[9.]{P \lor \neg P}[\lnoti{2--8}]
+} 
+&
+Inside the subproof, we \emph{can} get $\sf P \lor \neg P$ by
+$\lor$Intro. So let's try to prove $\sf \neg P$; it's a negated
+sentence, so we'll use $\neg$Intro.
+\end{tabular}
+
+}
+\subsec{Example Indirect Proof}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg (P \lor ~P)}}{
+\subproof{\pline[3.]{P}}{
+\pline[4.]{P \lor \neg P}[\lori{3}]\\
+\pline[5.]{\bot}[\lfalsei{2}{4}]
+}
+\pline[6.]{\neg P}[\lnoti{3--5}]\\
+\pline[7.]{P \lor \neg P}[\lori{6}]\\
+\pline[8.]{\bot}[\lfalsei{2}{7}]}
+\pline[9.]{P \lor \neg P}[\lnoti{2--8}]
+} 
+&
+Here, the assumption of the subproof, $\sf P$, is not
+really a good candidate for a negation. But we can use the negated
+sentence on line 2 again, and it's easy to get in this situation.
+\end{tabular}
+
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\ellipsesline\\
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\hphantom{\lnoti{2--12}}]
+} 
+  &
+Here, we're proving that $\sf\neg \neg (P \lor Q) \lor \neg P$ is a
+tautology---that's why there are no premises.  Since neither P nor
+$\sf\neg\neg( P \lor Q)$ is a tautology, we won't be able to
+prove either of these, so the strategy for proving the conclusion
+using $\lor$Intro won't work. We have to use indirect proof.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg \neg (P \lor Q) \lor \neg P)}}{
+\ellipsesline\\
+\pline[12.]{\bot}[?]
+}
+\pline[13.]{\neg \neg (P \lor  Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+To use $\neg$Intro as the last step we need a subproof that proves
+a contradiction from the negation of the goal sentence.  What's a 
+good candidate for sentences from which we get $\bot$ using $\bot$Intro?
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg (P \lor Q) \lor \neg P)}}{
+\ellipsesline\\
+\pline[11.]{\neg\neg( P \lor  Q) \lor \neg P}[?] \\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+The only plausible candidate is the sentence $\sf \neg\neg (P \lor Q)
+\lor \neg P$ itself, since no other negated sentence is available.  So
+let's try to prove that inside the subproof.  We'll get $\bot$ by
+$\bot$Intro from lines 2 and 11. So how do we get line 11?
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\ellipsesline\\
+\pline[10.]{\neg\neg (P \lor  Q)}[?] \\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}]\\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+Line 11 is a disjunction, so the strategy for $\lor$Intro applies.  We
+have two choices: try to prove $\sf\neg\neg (P \lor Q)$, or prove $\sf \neg P$.
+Either would work, but lets try to prove $\sf \neg\neg (P \lor Q)$.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\subproof{\pline[3.]{\neg(P \lor Q)}}{
+\ellipsesline\\
+\pline[9.]{\bot}[?]}
+\pline[10.]{\neg\neg (P \lor  Q)}[\lnoti{3--9}]\\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}]\\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+Since $\sf\neg\neg(P \lor Q)$ starts with a $\neg$, we'll apply the
+strategy for proving negations: start a subproof with $\sf\neg(P \lor
+Q)$ as the assumption, and try to prove $\bot$.  We justify line 10
+using $\neg$Intro.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\subproof{\pline[3.]{\neg(P \lor Q)}}{
+\ellipsesline\\
+\pline[8.]{P \lor Q}[?]\\
+\pline[9.]{\bot}[\lfalsei{3}{8}]}
+\pline[10.]{\neg\neg (P \lor  Q)}[\lnoti{3--9}]\\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}]\\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+Now we need a candidate for a contradiction.  There are two negated
+lines in the avaliable assumptions. Let's pick line 3: try to prove
+$\sf P \lor Q$.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\subproof{\pline[3.]{\neg(P \lor Q)}}{
+\ellipsesline\\
+\pline[7.]{P}[?]\\
+\pline[8.]{P \lor Q}[\lori{7}]\\
+\pline[9.]{\bot}[\lfalsei{3}{8}]}
+\pline[10.]{\neg\neg (P \lor  Q)}[\lnoti{3--9}]\\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}] \\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+To get $\sf P \lor Q$, we'll use $\lor$Intro.  For this we have to
+prove one of the disjuncts, say, $\sf P$.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\subproof{\pline[3.]{\neg(P \lor Q)}}{
+\subproof{\pline[4.]{\neg P}}{
+\ellipsesline\\
+\pline[6.]{\bot}[?]
+}
+\pline[7.]{P}[\lnoti{4--6}]\\
+\pline[8.]{P \lor Q}[\lori{7}]\\
+\pline[9.]{\bot}[\lfalsei{3}{8}]
+}
+\pline[10.]{\neg\neg (P \lor  Q)}[\lnoti{3--9}]\\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}]\\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+& $\sf P$ is an atomic sentence, so no introduction rule can give us
+$\sf P$.  We'll have to do indirect proof: start a subproof using $\sf
+\neg P$ a the assumption, and prove another contradiction.
+\end{tabular}
+}
+\subsec{Another Example}{
+
+\begin{tabular}{@{}lp{13em}}
+\fitchprf{\pline[1.]{}}{
+\subproof{\pline[2.]{\neg(\neg\neg( P \lor Q) \lor \neg P)}}{
+\subproof{\pline[3.]{\neg(P \lor Q)}}{
+\subproof{\pline[4.]{\neg P}}{
+\pline[5.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{4}] \\
+\pline[6.]{\bot}[\lfalsei{2}{5}]
+}
+\pline[7.]{P}[\lnoti{4--6}] \\
+\pline[8.]{P \lor Q}[\lori{7}] \\
+\pline[9.]{\bot}[\lfalsei{3}{8}]}
+\pline[10.]{\neg\neg (P \lor  Q)}[\lnoti{3--9}]\\
+\pline[11.]{\neg \neg (P \lor Q) \lor \neg P}[\lori{10}]\\
+\pline[12.]{\bot}[\lfalsei{2}{11}]
+}
+\pline[13.]{\neg \neg (P \lor Q) \lor \neg P}[\lnoti{2--12}]
+} 
+  &
+How are we getting the contradiction now?  Note how since we have
+$\sf\neg P$ as an assumption, we can immediately get $\sf\neg\neg(P
+\lor Q) \lor \neg P$ by $\lor$Intro.  Everything's now in place.
+\end{tabular}
+}
+
+\end{document}
+
+
+\end{document}
+
+
+
+
+
+
+\end{document}

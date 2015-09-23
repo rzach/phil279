@@ -1,0 +1,277 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 5]{Logic I F13 Lecture 5}
+\date{September 24, 2013}
+% ====================
+
+\include{header}
+
+\section[Expressive Power]{Expressive Power of the Boolean Connectives}
+
+
+
+\subsec{Truth Tables for the Boolean Connectives}{
+
+\[
+\begin{array}{c|c}
+P & \lnot P\\
+\hline
+\T & \F \\
+\F & \T
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \land Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \F
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \lor Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \T\\
+\F & \T & \T\\
+\F & \F & \F
+\end{array}
+\]
+
+}
+
+
+
+
+\subsec{Neither \dots nor \dots}{
+
+\bits
+\item Neither a nor b is a cube
+\item $\sf \lnot Cube(a) \land \lnot Cube(b)$
+\item $\sf \lnot (Cube(a) \lor Cube(b))$
+\eit
+
+}
+
+\subsec{Not Both}{
+
+\bits
+\item a and b are not both large
+\item $\sf \lnot(Large(a) \land Large(b))$
+\item $\sf \lnot Large(a) \lor \lnot Large(b)$
+\eit
+
+}
+
+\subsec{Exclusive ``Or''}{
+
+\bits
+\item a or b is a cube (but not both)
+\item $\sf (Cube(a) \lor Cube(b)) \land \lnot(Cube(a) \land Cube(b))$
+\item $\sf (Cube(a) \land \lnot Cube(b)) \lor (\lnot Cube(a) \land Cube(b))$
+\eit
+}
+
+\subsec{At Least One Of}{
+
+\bits
+\item At least one of a, b, and c is small
+\item $\sf Small(a) \lor (Small(b) \lor Small(c))$
+\eit 
+
+}
+
+\subsec{At Least Two Of}{
+
+\bits
+\item At least two of a, b, and c are small
+\item $\sf (Small(a) \land Small(b)) \lor (Small(a) \land Small(c)) \lor (Small(b) \land Small(c))$
+\eit 
+
+}
+
+\subsec{At Least As Large As and $\le$}{
+
+\bits
+\item a is at least as large as b
+\bits
+\item $\sf Larger(a, b) \lor SameSize(a, b)$
+\item $\sf \lnot Smaller(a, b)$, $\sf\lnot Larger(b, a)$
+\eit
+\item $2 \le 3$
+\bits
+\item $(1+1) < (1+(1+1)) \lor (1+1) = (1+(1+1))$
+\item $\lnot (1 + (1+1)) < (1+1)$ 
+\eit\eit
+
+}
+\section{Step-by-Step Translations}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bit
+\item a and b are either left of c or right of d, \emph{but}\\ e is neither left of c nor right of d.
+\bit
+\item a and b are either left of c or right of d
+\item but
+\item e is neither left of c nor right of d
+\eit\eit
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bits
+\item a \emph{and} b are either left of c or right of d
+\bit
+\item a is left of c \emph{or} right of d
+\bit
+\item a is left of c or a is right of d\\
+$\sf LeftOf(a, c) \lor RightOf(a, d)$
+\eit
+\item b is left of c \emph{or} right of d
+\bit
+\item b is left of c or b is right of d\\
+$\sf LeftOf(b, c) \lor RightOf(b, d)$
+\eit
+\eit
+\eit
+\begin{align*}
+\sf (LeftOf(a, c) \lor {} & \sf RightOf(a, d)) \land {}\\
+\sf (LeftOf(b, c) \lor {} & \sf RightOf(b, d))
+\end{align*}
+
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bits
+\item e is neither left of c nor right of d
+\[\sf \lnot(LeftOf(e, c) \lor RightOf(e, d))\]
+\eit
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bit
+\item a and b are either left of c or right of d, but\\ e is neither left of c nor right of d.
+\bit
+\item a and b are either left of c or right of d
+\begin{align*}
+\sf (LeftOf(a, c) \lor {} & \sf RightOf(a, d)) \land {}\\
+\sf (LeftOf(b, c) \lor {} & \sf RightOf(b, d))
+\end{align*}
+\item but
+$\land$
+\item e is neither left of c nor right of d
+\[\sf \lnot(LeftOf(e, c) \lor RightOf(e, d))\]
+\eit\eit
+\begin{align*}
+\sf((LeftOf(a, c) \lor {} & \sf RightOf(a, d)) \land {} \\
+\sf (LeftOf(b, c) \lor {} & \sf RightOf(b, d))) \land {}\\
+\sf \lnot(LeftOf(e, c) \lor {} &\sf RightOf(e, d))
+\end{align*}
+
+}
+
+\section{Ambiguity}
+
+\subsec{Ambiguity in English}{
+
+\bit
+\item Lexical ambiguity: one word---many meanings \\
+e.g., ``bank'', ``crane''
+\item Syntactic ambiguity: one sentence---many readings\\
+e.g., 
+\bit
+\item ``Flying planes can be dangerous'' (Chomsky)
+\item ``One morning I shot an elephant in my pajamas.\\ How he got in my pajamas, I don't know.'' (Groucho Marx)
+\eit
+\eit
+
+}
+
+\subsec{Connectives and Ambiguity}{
+
+\bits
+\item a adjoins b and c or d
+\item a adjoins [[b and c] or d]\\
+$\sf (Adjoins(a, b) \land Adjoins(a, c)) \lor Adjoins(a, d)$
+\item a adjoins [b and [c or d]]\\
+$\sf Adjoins(a, b) \land (Adjoins(a, c) \lor Adjoins(a, d))$
+\eit
+
+}
+
+\subsec{The Man Who Was Hanged by a Comma}{
+
+\bit
+\item Sir Roger Casement (1864--1916)
+\item British consul to Congo and Peru
+\item Tried to recruit Irish revolutionaries in Germany during WWI
+\item Tried for treason
+\eit
+
+}
+
+\subsec{Treason Act of 1351}{
+
+\small 
+ITEM, Whereas divers Opinions have been before this Time in what Case
+Treason shall be said, and in what not; the King, at the Request of
+the Lords and of the Commons, hath made a Declaration in the Manner as
+hereafter followeth, that is to say; When a Man doth compass or
+imagine the Death of our Lord the King, or of our Lady his Queen or of
+their eldest Son and Heir; or if a Man do violate the King's
+Companion, or the King's eldest Daughter unmarried, or the Wife of the
+King's eldest Son and Heir; or \textbf{if a Man do levy War against our Lord
+the King in his Realm, or be adherent to the King's Enemies in his
+Realm, giving to them Aid and Comfort in the Realm\onslide<2>{\emph{,}} or elsewhere}, and
+thereof be probably attainted of open Deed by the People of their
+Condition: \dots And it is to be
+understood, that in the Cases above rehearsed, that ought to be judged
+Treason which extends to our Lord the King, and his Royal Majesty:
+\dots
+
+}
+
+\subsec{R v. Casement in the Blocks Language}{
+
+\bits
+\item a is a cube in front of b, or a tetrahedron in front of b[,] or in back of b.
+
+\item Without comma:
+\begin{align*}
+\sf(Cube(a) \land {} & \sf FrontOf(a, b)) \lor {}\\
+\sf(Tet(a) \land {} & \sf(FrontOf(a, b) \lor BackOf(a, b)))
+\end{align*}
+\item With comma:
+\begin{align*}
+\sf(Cube(a) \land {} & \sf(FrontOf(a, b) \lor BackOf(a, b))) \lor {}\\
+\sf(Tet(a) \land {} & \sf(FrontOf(a, b) \lor BackOf(a, b))
+\end{align*}
+\eit
+}
+
+\subsec{More Scope Ambiguity}{
+
+\bits
+\item a and b are left of c or right of d
+\item a is left of c or right of d, and so is b
+\begin{align*}
+\sf (LeftOf(a, c) \lor {} & \sf RightOf(a, d)) \land {}\\
+\sf (LeftOf(b, c) \lor {} & \sf RightOf(b, d))
+\end{align*}
+\item a and b are both left of c, or a and b are both right of d
+\begin{align*}
+\sf (LeftOf(a, c) \land {} & \sf LeftOf(b, c)) \lor {}\\
+\sf (RightOf(a, d) \land {} & \sf RightOf(b, d))
+\end{align*}
+\eit
+
+}
+
+\end{document}

@@ -1,0 +1,513 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 19]{Logic I F13 Lecture 19}
+\date{November 21, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{14em}
+
+\section{Numerical Quantification}
+
+\subsec{Numerical Quantification}{
+
+
+\bit
+\item Cardinal numbers can be determiners:
+\bit
+\item \emph{Three cubes} are left of \emph{two dodecahedra}
+\eit
+\item Not always clear if ``three cubes'' means \emph{exactly} or \emph{at least} three
+\item We'll assume the latter---the ``exactly'' is implicated, not implied
+\bit
+\item Do you have two dollars? Yes, I have two dollars. (Uncontroversially true even if you have more than 2\$)
+\item How much money do you have? I have two dollars. (True but misleading if you have more.)
+\eit
+\item FOL can express all of:
+\bit
+\item \emph{At least $n$} cubes are \dots 
+\item \emph{Exactly $n$} cubes are \dots
+\item \emph{At most $n$} cubes are \dots
+\eit
+\eit
+
+}
+
+\subsec{At least $n$}{
+
+\bit
+\item At least 1 cube is small:
+\[
+\exists x(Cube(x) \land Small(x))
+\]
+\item At least 2 cubes are small:
+\[
+\exists x\exists y(x \neq y \land Cube(x) \land Small(x) \land Cube(y) \land Small(y))
+\]
+\eit
+}
+
+
+\subsec{$\exists^{\ge n}x\, A(x)$}{
+
+\bit
+\item $\exists^{\ge n}x\, A(x)$:
+\begin{align*}
+\exists x_1\dots\exists x_n(x_1 \neq x_2 \land x_1 \neq x_3 \land \dots \land x_1 \neq x_n & {} \land {}\\
+x_2 \neq x_3 \land \dots \land x_2 \neq x_n & {} \land {}\\
+\ddots\qquad &\\
+x_{n-1} \neq x_n & {} \land {}\\
+ A(x_1) \land \dots \land A(x_n)) 
+\end{align*}
+\eit
+}
+
+\subsec{$\exists^{\ge n}x\, A(x)$}{
+
+
+\bit
+\item NB: must state that \emph{every pair} of variables is different, e.g.,
+\[\sf\exists x_1\exists x_2\exists x_3(x_1 \neq x_2 \land x_2 \neq x_3 \land Cube(x_1) \land Cube(x_2) \land Cube(x_3))\]
+only says ``There are at least two cubes''! 
+\item At least $n$ As are Bs:\[
+\exists^{\ge n} x(A(x) \land B(x))
+\]
+\eit
+}
+
+\subsec{Exactly One}{
+
+\bit
+\item There is exactly one cube:
+\[
+\exists x(Cube(x) \land \lnot \exists y(Cube(y) \land x \neq y))
+\]
+\item This is equivalent to:
+\[
+\exists x(Cube(x) \land \forall y(Cube(y) \to x = y))
+\]
+\item In general: ``x has property A \emph{uniquely}'':
+\begin{align*}
+A(x) \land & \forall y(A(y) \to x = y)\\
+\text{or just:\qquad} & \forall y(A(y) \liff x = y)
+\end{align*}
+\eit
+}
+
+\subsec{$\exists^{=n} x\, A(x)$}{
+
+\bit
+\item There are exactly $n$ things that satisfy A:
+\begin{align*}
+\exists x_1\dots\exists x_n(x_1 \neq x_2 \land x_1 \neq x_3 \land \dots \land x_1 \neq x_n & {} \land {}\\
+x_2 \neq x_3 \land \dots \land x_2 \neq x_n & {} \land {}\\
+\ddots\qquad &\\
+x_{n-1} \neq x_n & {} \land {}\\
+\only<1>{ A(x_1) \land \dots \land A(x_n) &{} \land {}}\\
+\forall y(A(y) \only<1>{\to}\only<2>{\leftrightarrow} (y = x_1 \lor \dots \lor y=x_n)))
+\end{align*}
+\item Exactly $n$ As are Bs:
+\[
+\exists^{=n}x (A(x) \land B(x))
+\]
+\eit
+
+}
+
+\subsec{At most $n$}{
+
+\bit
+\item There are \emph{at most $n$} As $\IFF$ There aren't \emph{at least $n+1$} As
+\[
+\exists^{\emph{\le n}}x\, A(x) \IFF \emph{\lnot}\exists^{\emph{\ge(n+1)}}x\, A(x)
+\]
+\item $\lnot\exists^{\ge(n+1)}x\, A(x)$ is equivalent to:
+\begin{align*}
+\forall x_1\dots\forall x_{n+1}((A(x_1) \land \dots \land A(x_{n+1})) & {} \to {}\\
+(x_1 = x_2 \lor x_1 = x_3 \lor \dots \lor x_1 = x_{n+1} & {} \lor {}\\
+x_2 = x_3 \lor \dots \lor x_2 = x_{n+1} & {} \lor {}\\
+\ddots\qquad &\\
+x_n = x_{n+1} & ))
+\end{align*}
+\eit
+}
+
+\subsec{Proofs With Numerical Claims}{
+
+\fitchprf{
+\pline{\exists x\, P(x)}\\
+\pline{\forall x\forall y ((P(x) \land P(y)) \to x = y)}}{
+\pline{\exists x(P(x) \land \forall y(P(y) \to x = y))}
+}
+}
+
+\section{``The'', ``Both'', ``Neither''}
+
+\subsec{Definite Descriptions}{
+
+\bit
+\item Definite description: \emph{the so-and-so}
+\item Russell's analysis of definite description: to say\\
+\bit
+\item ``The A is B''\\
+\eit
+is to say:
+\bit
+\item There is a unique A
+\item It is B
+\eit
+\item In FOL:
+\[
+\exists x(A(x) \land \forall y(A(y) \to x = y) \land B(x))
+\]
+\item or more succinctly:
+\[
+\exists x(\forall y(A(y) \liff x = y) \land B(x))
+\]
+\eit
+
+}
+
+\subsec{The vs. Exactly One}{
+
+\bit \item Compare:
+\ben
+\item The cube is small
+\[\exists x(Cube(x) \land \forall y(Cube(y) \to x = y) \land Small(x))\]
+\item There is exactly one small cube
+\[\exists x(Cube(x) \land \forall y((Cube(y) \emph{{}\land Small(y)}) \to x = y) \land Small(x))\]
+\een
+\item (2) can be true without (1), but not vice versa
+\item So (2) is a FO consequence of (1), but not vice versa
+\eit
+}
+
+\subsec{Strawson's Analysis}{
+
+\bit
+\item According to Russell, ``The cube is small'' is false if there is no cube, or if there is more than one
+\item Strawson disagrees
+\item ``There is a unique cube'' is not part of what is \emph{said}, but is only \emph{presupposed}
+\eit
+
+}
+
+\subsec{``Both'' and ``Neither''}{
+
+\bit
+\item ``Both cubes are small'': There are exactly 2 cubes, and each of them is small:
+\begin{align*}
+\exists x\exists y(x \neq y \land Cube(x) \land Cube(y) &{} \land {}\\
+\forall z(Cube(z) \to (z = x \lor z = y)) & {}\land {}\\
+\forall z(Cube(z) \to Small(z))&)
+\end{align*}
+\item NB: ``Both cubes are small'' implies ``There are exactly two small cubes'', but not vice versa!
+\item ``Neither cube is small'': There are exactly 2 cubes, and none of them are small:
+\begin{align*}
+\exists x\exists y(x \neq y \land Cube(x) \land Cube(y) & {}\land {}\\
+\forall z(Cube(z) \to (z = x \lor z = y)) &{} \land {}\\
+\forall z(Cube(z) \to \lnot Small(z))&)
+\end{align*} 
+\eit
+
+}
+
+\section{Truth-Functional Completeness}
+
+\subsec{Truth Functions}{
+
+\begin{block}{Definition}
+
+An ($n$-place) \emph{truth function} $t$ is a mapping of $n$-tuples of \T{} and \F\ to either \T\ or \F.
+\medskip
+
+$n$-place truth functions correspond to truth tables of sentence with $n$ atomic sentences.
+\medskip
+
+A sentence $S$ containing the atomic sentences $A_1$, \dots, $A_n$
+\emph{expresses} the truth function $t$ iff the truth value of $S$ on
+the truth-value assignment which assigns $v_i$ to $A_i$ is $t(v_1,
+\dots, v_n)$.
+\medskip
+
+An $n$-place truth function is \emph{expressible} if there is a
+sentence containing atomic sentences $A_1$, \dots, $A_n$ that
+expresses it.
+
+\end{block}
+}
+
+\subsec{Examples}{
+
+\begin{tabular}{cc@{\qquad}cc}
+$\begin{array}{cc|c}
+&& t_\land\\ \hline 
+\T & \T & \T \\
+\T & \F & \F \\
+\F & \T & \F \\
+\F & \F & \F
+\end{array}$
+&
+$A_1 \land A_2$ &
+$\begin{array}{cc|c}
+&& t_\lor \\ \hline
+\T & \T & \T \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}$
+& $A_1 \lor A_2$
+\end{tabular}
+}
+
+\subsec{Examples}{
+
+\begin{tabular}{cc@{\qquad}cc}
+$\begin{array}{cc|c}
+& & t_1\\ \hline
+\T & \T & \T \\
+\T & \F & \T \\
+\F & \T & \F \\
+\F & \F & \F
+\end{array}$
+& $A_1$ &
+$\begin{array}{cc|c}
+& & t_{XOR}\\ \hline
+\T & \T & \F \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}$
+&
+$(A_1 \lor A_2) \land \lnot(A_1 \land A_2)$ \\ \ \\
+$\begin{array}{cc|c}
+& & t_2\\ \hline
+\T & \T & \T \\
+\T & \F & \F \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}$
+& $A_2$ 
+\end{tabular}
+}
+
+
+
+\subsec{Truth-Functional Completeness}{
+
+\begin{block}{Definition}
+
+A set of connectives is \emph{truth-functionally complete} if every
+truth function is expressible by a sentence containing only those
+connectives.
+
+\end{block}
+
+}
+
+\subsec{$\{\land, \lor\}$ Not Truth-Functionally Complete}{
+
+\bit
+\item $\{\land, \lor\}$ is not truth-functionally complete
+\item Remember: To be truth functionally complete, \emph{every} truth
+  function would have to be expressible using only $\land$ and $\lor$
+\item Which 2-place truth-functions can be expressed using $\land$ and
+  $\lor$?
+\item Not this one:
+\[
+\begin{array}{cc|c}
+\T & \T & \F \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}
+\]
+  \eit
+
+}
+
+
+\subsec{Course Evaluation}{
+
+\bit
+\item Please fill out TWO TA evaluations, one for Jared and one for Dan.
+\item More TopHat instant feedback questions? Or is TopHat not worth the trouble?
+\item Three tests good, or would you prefer a midterm 
+and a final after classes end?
+\item Timing of homeworks---prefer Friday or Monday?
+\item PASS sessions: did you go? Was it useful?
+\eit
+}
+\end{document}
+
+\subsec{$\{\land, \lor, \lnot\}$ is Truth-functionally Complete}{
+\[
+\begin{array}{lll|l@{\qquad}l}
+A_1 & A_2 & A_3 & t_\mathrm{ODD} & S \\
+\hline
+\T & \T & \T & \T & \uncover<2->{(A_1 \land A_2 \land A_3)} \uncover<6->{{}\lor}\\
+\T & \T & \F & \F \\
+\T & \F & \T & \F \\
+\T & \F & \F & \T & \uncover<3->{(A_1 \land \lnot A_2 \land \lnot A_3)} \uncover<6->{{}\lor}\\
+\F & \T & \T & \F \\
+\F & \T & \F & \T & \uncover<4->{(\lnot A_1 \land A_2 \land \lnot A_3)} \uncover<6->{{}\lor}\\
+\F & \F & \T & \T & \uncover<5->{(\lnot A_1 \land \lnot A_2 \land A_3)} \uncover<6->{{}\lor}\\
+\F & \F & \F & \F
+\end{array}\]
+}
+
+\subsec{$\{\land, \lor, \lnot\}$ is Truth-Functionally Complete}{
+
+\bit
+\item $\lnot A_1 \land A_2 \land \lnot A_3$ is true in, and only in line \F\ \T\ \F
+\item Combine using $\lor$: make $S$ true in all (and only) the lines where it is supposed to be true
+\item NB: Procedure results in DNF!
+\eit
+
+}
+
+\subsec{The ``neither\dots nor \dots'' connective: $\downarrow$}{
+
+\[
+\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}
+\]
+
+}
+
+\subsec{$\{\downarrow\}$ is Truth-Functionally Complete}{
+
+\bit
+\item Already know that $\{\lnot, \land, \lor\}$ is truth-functionally
+  complete, i.e.,
+\item Every truth-function can be expressed using only $\lor$, $\land$, $\lnot$
+\item To show $\downarrow$ is truth-functionally complete, suffices to
+  show that \emph{every sentence containing only $\lnot$, $\lor$, $\land$ is
+  tautologically equivalent to one containing only $\downarrow$}
+\item For that, it suffices to show that any negated sentence,
+  conjunction, disjunction, can be expressed using only $\downarrow$
+\eit
+
+}
+
+\subsec{Expressing $\lnot$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item Note how $P \downarrow Q$ is \F{} in the first line and \T{} in the last (when $P$ and $Q$ have same truth value)
+\item So $P \downarrow P$ is \F{} if $P$ is \T, and \T{} if $P$ is \F, i.e., \[
+\lnot P \Leftrightarrow (P \downarrow P)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Expressing $\lor$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item $P \downarrow Q$ is the ``neither \dots nor'' connective, which can also
+be expressed as $\lnot(P \lor Q)$, i.e.,
+\[ \lnot(P \lor Q) \Leftrightarrow P \downarrow Q \] 
+\item Negate both sides:
+\[
+P \lor Q \Leftrightarrow \lnot(P \downarrow Q)
+\]
+\item Apply what we figured out in last slide:
+\[
+P \lor Q \Leftrightarrow (P \downarrow Q)\downarrow(P \downarrow Q)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Expressing $\land$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item $P \downarrow Q$ is the ``neither \dots nor'' connective, which can also
+be expressed as $\lnot P \land \lnot Q$, i.e.,
+\[ (\lnot P \land \lnot Q) \Leftrightarrow P \downarrow Q \] 
+\item Equivalence holds for \emph{all sentences} $P$, $Q$, so also if we replace $P$ by $\lnot R$ and $Q$ by $\lnot S$:
+\[
+\lnot\lnot R \land \lnot\lnot S \Leftrightarrow (\lnot R \downarrow \lnot S)
+\]
+\item Delete $\lnot\lnot$'s, and express $\lnot$ using $\downarrow$:
+\[
+R \land S \Leftrightarrow (R \downarrow R)\downarrow(S \downarrow S)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Truth-Functionally Complete Sets of Connectives}{
+
+\bit
+\item De Morgan's Law: $\land$ can be expressed by $\lor$ and $\lnot$
+\item Similarly: $\lor$ can be expressed by $\land$, $\lnot$
+\item So $\{\lor, \lnot\}$ and $\{\land, \lnot\}$ are
+  truth-functionally complete
+\item $\{\to, \bot\}$ is truth-functionally complete (HW)
+\item $\{\to, \lnot\}$ is truth-functionally complete 
+\item No other sets of connectives that don't contain one of these sets are complete 
+\item ``Neither \dots nor'' is truth-functionally complete by itself
+\item ``Not both'' connective is truth-functionally complete by itself (HW)
+\item No other 2-place connectives are complete by themselves
+\eit
+
+}
+
+\end{document}
+
+
+
+

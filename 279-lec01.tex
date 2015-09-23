@@ -1,0 +1,309 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 1]{Philosophy 279: Logic I}
+\date{September 10, 2013}
+% ====================
+
+\logo{\includegraphics[height=2cm]{UC-vert-phil}}
+\include{header}
+\beamertemplatenavigationsymbolsempty
+\frame{
+\titlepage
+}
+\logo{}
+\frame{\frametitle{\insertshorttitle\ (\insertdate)}
+\tableofcontents[hidesubsections]
+}
+
+
+\section{Course Info}
+\subsection{}
+
+\subsec{Instructors}{
+
+\bit
+\item Richard Zach (Prof)
+\item Jared Houston (TA)
+\item Dan Kary (TA)
+\item Samara Burns (PASS Leader)
+\bit
+\item Find us on 12th floor of Social Sciences
+\eit\eit
+}
+
+\subsec{Textbook and Software}{
+
+\bit
+\item John Barker-Plummer, Jon Barwise and John Etchemendy,\\
+ \textit{Language, Proof, and
+  Logic}, CSLI Press (2nd ed)
+\item OpenProof software (included)
+\bit
+\item Tarski's World
+\item Boole
+\item Fitch
+\eit
+\item GradeGrinder grading service
+\bit
+\item Must buy \emph{new} copy, but
+\item Electronic-only (cheaper) option available
+\item Textbook and software available on computers in AFCL (018 SS)
+\eit
+\eit
+}
+
+\subsec{Evaluation}{
+
+\bit
+\item 6 Homework Assignments (50\%)
+\bit
+\item Lowest mark dropped
+\item Must turn in all 6 within a week of due date
+\eit
+\item 3 Tests (45\%)
+\bit
+\item Thursday, Oct 17 (15\%)
+\item Thursday, Nov 14 (20\%)
+\item Thursday, Dec 5 (10\%)
+\item In class, 75 minutes, closed book
+\eit
+\item Participation (5\%)
+\bit
+\item 5 posts on BlackBoard discussion board or in lecture/tutorial/lab
+\eit
+\eit
+}
+
+
+\subsec{Course Components}{
+
+\bit
+\item Lectures
+\item Tutorials
+\item Lab Workshop (SS 018)
+\item PASS Sessions
+\bit
+\item Tutorials start next week
+\item You have choice between lab and tutorial starting third week
+\item Attendance not mandatory but strongly suggested
+\item PASS sessions start third week
+\eit
+\item BlackBoard website discussion forum
+\bit
+\item Be civil and behave like adults
+\item Don't give away answers
+\eit
+\eit
+}
+
+\subsec{Read the Outline and FAQ!}{
+
+\bit
+\item Official outline covers all policy questions
+\item Syllabus (in outline) has all the dates on it
+\item Outline is binding agreement and you are responsible for knowing policies
+\item FAQ on \href{http://ucalgary.ca/rzach/279}{Logic I website}
+will answer most of your questions, including:
+\bit
+\item Why do you make me take this course?
+\item Why is the grade scale set the way it is?
+\item How hard is this course?
+\item Why do CPSC and PHIL need at least a C--?
+\eit
+\eit
+
+}
+
+\section{What is Logic?}
+
+\subsec{What is Logic?}{
+
+\bit
+\item \emph{Logic is the science of what follows from what.}
+\item Valid and invalid inference
+\bit
+\item Socrates is human. All humans are mortal.\\ 
+Therefore, Socrates is mortal.
+\item Socrates is human. All Greeks are human.\\ 
+Therefore, Socrates is Greek.
+\eit
+\item Logic investigates what makes the first inference \emph{valid} and the
+  second \emph{invalid}.
+  \eit }
+
+
+
+\subsec{What is Formal Logic?}{
+
+\bit
+\item Studies logical properties of formal languages (not English)
+\bit
+\item Logical consequence (what follows from what?)
+\item Logical consistency (when do sentences contradict one another?)
+\eit
+\item Expressive power (what can be expressed in a given formal
+  language, and how?)
+\item Formal models (mathematical structures described by formal language)
+\item Inference and proof systems (how can it be proved that something
+  follows from something else?)
+\item (Metalogical properties of logical systems)
+\eit 
+}
+
+\subsec{What is Logic Good For? (Philosophy)}{
+
+\bit
+\item (Informal) logic originates in philosophy (Aristotle)
+\item Valid inference cornerstone of philosophical research
+\item Logic itself a subdiscipline of philosophy
+\item Formal tools of logic useful to make intuitive
+philosophical notions precise
+\bit
+\item Possibility and necessity
+\item Time
+\item Moral obligation and permissibility
+\item Belief and knowledge
+\eit
+\eit
+
+}
+
+\subsec{What is Logic Good For? (Mathematics)}{
+
+\bit
+\item Formal logic developed in the quest for foundations of mathematics (19th C.)
+\item Logical systems provide precise foundational framework for mathematics
+\bit
+\item Axiomatic systems (e.g, geometry)
+\item Algebraic structures (e.g., groups)
+\item Set theory (e.g, Zermelo-Fraenkel with Choice)
+\eit
+\item Formal methods make mathematics more precise
+\bit
+\item Formal language can make mathematical claims more precise
+\item Formal structures can point to alternatives, unveil gaps in proofs
+\item Formal proof systems make proofs rigorous
+\item Formal proofs make mechanical \emph{proof checking} and \emph{proof search} possible
+\eit
+\item Logical tools can be applied to mathematical problems
+\eit
+
+}
+
+
+\subsec{What is Logic Good For? (Computer Science)}{
+
+\bit
+\item Combinational logic circuits
+\item Database query languages
+\item Logic programming
+\item Knowledge representation
+\item Automated reasoning
+\item Formal specification and verification (of programs, of hardware designs)
+\item Theoretical computer science (theory of computational
+  complexity, semantics of programming languages)
+ \eit
+
+}
+
+\section{The Formal Language(s) of FOL}
+
+\subsec{Functions of Language}{
+
+\bit
+\item Pick out objects in the ``world'' 
+\item Say things about these objects
+\item Different categories of words play different roles
+\bit
+\item Names (``Alice''), pronouns (``she''), demonstratives
+  (``this''), certain phrases (``the Queen of England in 2011''):\\ pick
+  out things (``singular terms'')
+\item Verbs, adjectives, common nouns (in combination with other
+  words): \\ used to say things about the objects picked out by singular
+  terms
+ \eit 
+\item \emph{Predicating:} ascribing a property or relation to object(s)
+\eit
+
+}
+
+\subsec{Simple Examples of Predication}{
+
+\bit
+\item Name + ``is'' + adjective\\
+``Mars is red''\\
+``Jupiter is large''
+\item Name + ``is'' + comparative + ``than'' + Name\\
+``Mars is smaller than Jupiter'' 
+\item Name + ``is a''  + common noun\\
+``Venus is a planet''
+\item Name + verb (+ Name)
+``The Earth moves''\\
+``Phobos orbits Mars''\\
+\eit
+
+}
+
+\subsec{First-order Languages}{
+
+\bit
+\item \emph{Individual constants} pick out things
+\[
+\sf a, b, c, \dots, mars, jupiter, \dots
+\]
+\item \emph{Predicate symbols} express properties and relations
+\[
+\sf Red, Large, Larger, Planet, Orbits, \le, =, \dots
+\]
+\item To say something about something, combine predicate symbols
+  andindividual constants
+\[
+\sf Red(mars), Planet(mars),
+Orbits(phobos, mars),
+a = b
+\]
+(atomic sentences)
+\eit
+}
+
+\section{The Blocks Language}
+
+\subsec{The Blocks Language}{
+
+\begin{tabular}{@{}ll@{}}
+Tet(a) & a is a tetrahedron \\
+Cube(a) & a is a cube \\
+Dodec(a) & a is a dodecahedron \\
+Small(a) & a is small \\
+Medium(a) & a is medium \\
+Large(a) & a is large \\[2ex]
+SameSize(a, b) & a is the same size as b \\
+SameShape(a, b) & a is the same shape as b\\
+Larger(a, b) & a is larger than b \\
+Smaller(a, b) & a is smaller than b\\
+\end{tabular}
+
+}
+
+\subsec{The Blocks Language}{
+
+\begin{tabular}{@{}ll@{}}
+SameCol(a, b) & a is in the same column as b \\
+SameRow(a, b) & a is in the same row as b\\
+Adjoins(a, b) & a and b are located on adjacent\\ 
+& (but not diagonally) squares \\
+LeftOf(a, b) & a is located nearer to the left edge\\ & of the grid than b \\
+RightOf(a, b) & a is located nearer to the right edge\\ & of the grid than b\\
+FrontOf(a, b) & a is located nearer to the front\\ & of the grid than b\\
+BackOf(a, b) & a is located nearer to the back\\ & of the grid than b\\
+Between(a, b, c) & a, b and c are in the same row, column,\\ 
+& or diagonal, and a is between b and c
+\end{tabular}
+
+}
+
+
+\end{document}

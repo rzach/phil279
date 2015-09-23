@@ -1,0 +1,272 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 17]{Logic I F13 Lecture 17}
+\date{November 7, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{14em}
+
+\section{Rules for $\forall$}
+
+\subsec{Rules for Fitch}{
+
+\bit
+\item Need rules for $\forall$ and $\exists$ for formal proofs
+\item Formal proofs now more important, because no alternative
+  (truth-table method)
+\item Intro and Elim rules should be
+\bit
+\item simple
+\item elegant (not involve other connectives or quantifiers)
+\item yield only valid arguments
+\eit 
+\eit
+
+}
+
+\subsec{Candidates for Rules}{
+
+\bit
+\item Only simple sentence close to $\sf \forall x\, A(x)$ is $\sf A(c)$
+\item Gives simple, elegant $\forall$Elim rule:
+
+\fitchctx{
+\nline[$k.$]{\forall x\, A(x)}\\
+\fpline{\quad A(c)}[\lalle{}]
+}
+\item Problem: corresponding ``intro rule'' isn't valid:
+\fitchctx{
+\nline[$k.$]{A(c)}\\
+\fpline{\quad\forall x\,A(x)}[\emph{doesn't follow!}]
+}
+\eit
+
+}
+
+\subsec{Names for Arbitrary Objects}{
+
+\bit
+\item Diagnosis: the c in A(c) is a name for a \emph{specific object}
+We need a name for an \emph{arbitrary, unspecified object}
+\item Then, if A(c) is true for whatever c could name, then A(x) is satisfied by \emph{every} object 
+\item In fact, this is what we do when we give proofs of general claims, e.g.,
+
+\fitchprf{\tline{All cubes adjoin a}\\
+\tline{Only small things adjoin a}}{
+\tline{All cubes are small}}
+
+\pauses
+Proof: Let Carl be any cube.  Since all cubes adjoin a, Carl adjoins
+a. Since only small things adjoin a, Carl is small. But ``Carl''
+stands for \emph{any} cube. So all cubes are small.
+  \eit
+
+}
+
+\subsec{Arbitrary Objects in Fitch}{
+
+\bit 
+\item Every special constant with stands for an arbitrary object is
+  introduced only pro tem
+\item In particular, they never appear in the premises or conclusion of an argument
+\item In Fitch, this is enforced by requiring that special constants only appear in subproofs
+\item To indicate that a constant names an arbitrary object, it is put in a box at the beginning of this subproof
+\eit
+
+}
+
+\subsec{General Conditional Proof}{
+
+\setlength{\fitchctxwidth}{10em}
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B(c)}}
+\fpline{\quad \forall x(A(x) \to B(x))}[\lalli{$m$--$n$}]}
+
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Universal Generalization}{
+
+\fitchctx{
+\boxedsubproof[$m$.]{c}{}{\ellipsesline \\ \nline[$n.$]{A(c)}}
+\fpline{\quad \forall x\,A(x)}[\lalli{$m$--$n$}]}
+\bit
+\item c is special: c must not appear anywhere outside the subproof
+\eit
+}
+
+\subsec{Example}{
+
+\fitchprf{\tline{All cubes adjoin a}\\
+\tline{Only small things adjoin a}}{
+\tline{All cubes are small}}
+
+\bigskip
+
+\fitchprf{\pline{\forall x\, (Cube(x) \to Adjoins(x, a))}\\
+\pline{\forall x(Adjoins(x, a) \to Small(x))}}{
+\pline{\forall x(Cube(x) \to Small(x))}}
+
+}
+
+\subsec{Example}{
+
+\fitchprf{\pline[1.]{\forall x\, (Cube(x) \to Adjoins(x, a))}\\
+\pline[2.]{\forall x(Adjoins(x, a) \to Small(x))}}{
+\boxedsubproof[3.]{c}{Cube(c)}{\pline[4.]{Cube(c) \to Adjoins(c, a)}[\lalle{1}] \\
+\pline[5.]{Adjoins(c, a)}[\life{3}{4}]\\
+\pline[6.]{Adjoins(c, a) \to Small(c)}[\lalle{2}] \\
+\pline[7.]{Small(c)}[\life{5}{6}]}
+\pline[8.]{\forall x(Cube(x) \to Small(x))}[\lalli{3--7}]}
+
+}
+
+\section{Rules for $\exists$}
+
+\subsec{Intro Rule for $\exists$}{
+
+\bit
+\item If we know of a specific object that it satisfies A(x), we know that at least one object satisfies A(x)
+\item So this rule is valid:
+
+\fitchctx{\pline[$m.$]{A(c)}\\
+\fpline{\quad \exists x\, A(x)}[\lexii{$m$}]}
+\item Problem: corresponding ``elim rule'' isn't valid:
+\fitchctx{
+\nline{\exists x\, A(x)}\\
+\fpline{\quad A(c)}[\emph{doesn't follow!}]
+}
+
+
+\eit
+
+}
+
+\subsec{Arbitrary Objects Again}{
+
+\bit
+\item If we know that $\sf\exists x\, A(x)$ is true, we know that \emph{some} objects satisfy A(x), but not which ones
+\item To use this information, we have to introduce a temporary name that stands for any one of the objects that satisfy A(x)
+\item This is what we'd do if we reason informally from existential information, e.g.,
+
+\fitchprf{\tline{There are small cubes}\\
+\tline{Anything small adjoins a}}{
+\tline{Some cubes adjoin a}}
+
+\pause
+Proof: We know there are small cubes. Let Cate be an arbitrary one of them.  So
+Cate is small. Since all small things adjoins a, Cate adjoins a. Since
+Cate is a cube adjoining a, some cubes adjoin a.
+\eit 
+
+}
+
+\subsec{Existential Instantiation}{
+
+\bit
+\item If \bit \item we know that some object satisfies A(x), \item we
+  assume for the time being that c is one of them (i.e., assume A(c)),
+  and \item we can prove that B follows from this
+  assumption, 
+\eit
+then B follows already from $\sf\exists x\, A(x)$.
+\item Rule for existential elimination:
+
+\fitchctx{
+\pline[$k$.]{\exists x\, A(x)}\\
+\boxedsubproof[$m$.]{c}{A(c)}{\ellipsesline \\ \nline[$n.$]{B}}
+\fpline{\quad B}[\lexie{k}{$m$--$n$}]}
+\item c is special: c must not appear outside subproof
+\eit
+}
+
+\subsec{Example}{
+
+\fitchprf{\tline{There are small cubes}\\
+\tline{Anything small adjoins a}}{
+\tline{Some cubes adjoin a}}
+
+\bigskip
+
+\fitchprf{\pline{\exists x(Small(x) \land Cube(x))}\\
+\pline{\forall x(Small(x) \to Adjoins(x, a))}}{
+\pline{\exists x(Cube(x) \land Adjoins(x, a)}}
+}
+
+\subsec{Example}{
+
+\fitchprf{\pline[1.]{\exists x(Small(x) \land Cube(x))}\\
+\pline[2.]{\forall x(Small(x) \to Adjoins(x, a))}}{
+\boxedsubproof[3.]{c}{Small(c) \land Cube(c)}{
+\pline[4.]{Small(c)}[\lande{3}] \\
+\pline[5.]{Small(c) \to Adjoins(c, a)}[\lalle{2}] \\
+\pline[6.]{Adjoins(c, a)}[\life{4}{5}]\\
+\pline[7.]{Cube(c)}[\lande{3}] \\
+\pline[8.]{Cube(c) \land Adjoins(c, a)}[\landi{6}{7}]\\
+\pline[9.]{\exists x(Cube(x) \land Adjoins(x, a)}[\lexii{8}]
+}
+\pline[10.]{\exists x(Cube(x) \land Adjoins(x, a)}[\lexie{1}{3--9}]
+}
+
+}
+
+\section{Proofs with Alternating Quantifiers}
+
+\subsec{Haters and Hatees}{
+
+\fitchprf{\tline{Someone is hated by everyone}}{
+\tline{Everyone hates someone}}
+
+\bigskip
+
+\fitchprf{\pline{\exists y\forall x\, Hates(x, y)}}{
+\pline{\forall x\exists y\, Hates(x, y)}}
+}
+
+\subsec{Queen Anne Superior}{
+
+\setlength{\fitchprfwidth}{20em}
+
+\fitchprf{\tline{Some woman is superior to every man}}{
+\tline{Every man is inferior to some woman}}
+
+\bigskip
+
+\fitchprf{\pline{\exists y(W(y) \land \forall x(M(x) \to S(y, x)))}}{
+\pline{\forall x(M(x) \to \exists y(W(y) \land S(y, x)))}}
+}
+
+\subsec{Everybody Loves my Baby}{
+
+\href{http://www.dailymotion.com/swf/video/x3qmw4_brigitte-bardot-everybody-loves-my_music?additionalInfos=0}{Brigitte Bardot singing ``Everybody Loves my Baby''}
+
+\pause
+\bigskip
+
+\fitchprf{\tline{Everybody loves my baby}\\
+\tline{My baby loves noone but me}}{
+\tline{My baby is me}}
+
+\bigskip
+
+\fitchprf{\pline{\forall x\, Loves(x, b)}\\
+\pline{\forall x(Loves(b, x) \liff b = i)}}{
+\pline{b = i}}
+}
+
+
+
+\end{document} 
+
+
+
+
+

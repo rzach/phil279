@@ -1,0 +1,411 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 4]{Logic I F13 Lecture 4}
+\date{September 19, 2013}
+% ====================
+
+\include{header}
+
+\section[Boolean Connectives]{The Boolean Connectives}
+
+\subsec{The Boolean Connectives}{
+
+\bit
+\item Negation (``not''): $\lnot$
+\item Conjunction (``and''): $\land$
+\item Disjunction (inclusive ``or''): $\lor$
+\eit
+
+}
+
+\subsec{Sentences of FOL}{
+
+\bit
+\item Every atomic sentence is a sentence (duh!)
+\item If $P$ is a sentence, then $\lnot P$ is a sentence as well.
+\bit
+\item Note: no parentheses
+\item Instead of $\lnot a = b$ we write $a \neq b$
+\eit
+\item If $P$ and $Q$ are sentences, then so are\\
+$(P \land Q)$ and $(P \lor Q)$
+\bit
+\item Note parentheses
+\item But: we will leave off the outermost parentheses
+\eit
+\eit
+}
+
+\subsec{Constructing Sentences}{
+
+\bits
+\item $\sf Large(a)$, $\sf Cube(a)$, $\sf a = b$
+\item $\sf \lnot Large(a)$, $\sf \lnot Cube(a)$, $\sf a \neq b$
+\item $\sf \lnot\lnot Large(a)$, $\sf \lnot\lnot\lnot Large(a)$, \dots
+\item $\sf (Cube(a) \land \lnot Large(a))$
+\item $\sf ((Cube(a) \lor Tet(a)) \land \lnot(Large(a) \lor Medium(a)))$\\
+\dots
+\eit
+}
+
+\subsec{Ill-formed Expressions}{
+
+Examples of expressions that are \emph{not} sentences:
+\bit
+\item $\sf \lnot (a = b)$
+\item $\sf Cube(a \land b)$
+\item $\sf Cube(\lnot a)$
+\item $\sf Large(Cube(a))$
+\item $\sf Cube(a) \lor Small(a) \land LeftOf(a, c)$
+\item $\sf (Large \land Cube)(a)$
+\item 
+\eit
+
+}
+
+\subsec{Semantics of the Boolean Connectives}{
+
+\bit
+\item Atomic sentences $P(a)$ are true or false according to whether the object named by $a$ has the determinate property assigned to $P$
+\item Non-atomic sentences are true or false according to 
+\bit
+\item what the \emph{main connective} is (*)
+\item the truth values of the \emph{immediate subsentences} ($P$, $Q$)
+\item the \emph{truth table} for the main connective
+\eit
+\eit
+\begin{align*}
+\underbrace{(Cube(a) \lor Tet(a))}_P \underbrace{\land}_\text{*} \underbrace{\lnot(Large(a) \lor Medium(a))}_Q \\
+\underbrace{\lnot}_*\underbrace{(Large(a) \lor Medium(a))}_P
+\end{align*}
+
+}
+
+\subsec{Truth Tables for the Boolean Connectives}{
+
+\[
+\begin{array}{c|c}
+P & \lnot P\\
+\hline
+\T & \F \\
+\F & \T
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \land Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \F
+\end{array}
+\qquad
+\begin{array}{cc|c}
+P & Q & (P \lor Q)\\
+\hline
+\T & \T & \T\\
+\T & \F & \T\\
+\F & \T & \T\\
+\F & \F & \F
+\end{array}
+\]
+
+}
+
+\subsec{Truth Conditions of Sentences}{
+
+\bit
+\item $\lnot P$ is 
+\bit 
+\item true iff $P$ is false
+\item false iff $P$ is true
+\eit
+\item $P \land Q$ is 
+\bit
+\item true iff $P$ and $Q$ are both true
+\item false iff at least one of $P$, $Q$ is false
+\eit
+\item $P \lor Q$ is 
+\bit
+\item true iff at least one of $P$, $Q$ is true
+\item false iff $P$ and $Q$ are both false
+\eit
+\eit
+}
+
+\section{English and FOL}
+
+\subsec{Negation}{
+
+\bit
+\item To negate a sentence, you use ``isn't'' or ``doesn't'':
+\bit
+\item b is a cube --- b \emph{isn't} a cube
+\item a adjoins b --- a \emph{doesn't} adjoin b
+\eit
+\item You can prefix a sentence by ``it isn't the case that'':
+\bit
+\item a adjoins b --- \emph{it isn't the case that} a adjoins b
+\eit
+\item ``neither \dots nor \dots''
+\bit
+\item \emph{Neither a nor b} is a cube.
+\eit
+\eit
+}
+
+\subsec{Coordination}{
+
+\bit
+\item Can combine names, verbs, adjectives, nouns, even whole clauses using ``conjunctions'' (and, or, yet, but, neither, \dots)
+\bit
+\item \emph{a and b} are cubes.
+\item a \emph{equals and adjoins} b.
+\item a is \emph{large or small}.
+\item a is a \emph{tetrahedron or dodecahedron}.
+\item a is a cube \emph{and} b is a tetrahedron.
+\item a and b are left of c and d, but e is not left of c or not left of d.
+\item a and b are large cubes both of which adjoin c.
+\eit
+\eit
+
+}
+
+
+\subsec{English into FOL}{
+
+\bit
+\item a adjoins b --- a \emph{doesn't} adjoin b\\
+$\sf Adjoins(a, b)$ --- $\sf\lnot Adjoins(a, b)$
+\item \emph{a and b} are cubes.\\
+$\sf Cube(a) \land Cube(b)$
+\item a \emph{is left of and adjoins} b.\\
+$\sf LeftOf(a, b) \land Adjoins(a, b)$ 
+\item a is \emph{large or small}.\\
+$\sf Large(a) \lor Small(a)$
+\item a is a \emph{tetrahedron or dodecahedron}.\\
+$\sf Tet(a) \lor Dodec(a)$
+\item a is a cube \emph{but} b is a tetrahedron.\\
+$\sf Cube(a) \land Tet(b)$
+\eit
+}
+
+
+
+\section[Expressive Power]{Expressive Power of the Boolean Connectives}
+
+\subsec{Neither \dots nor \dots}{
+
+\bits
+\item Neither a nor b is a cube
+\item $\sf \lnot Cube(a) \land \lnot Cube(b)$
+\item $\sf \lnot (Cube(a) \lor Cube(b))$
+\eit
+
+}
+
+\subsec{Not Both}{
+
+\bits
+\item a and b are not both large
+\item $\sf \lnot(Large(a) \land Large(b))$
+\item $\sf \lnot Large(a) \lor \lnot Large(b)$
+\eit
+
+}
+
+\subsec{Exclusive ``Or''}{
+
+\bits
+\item a or b is a cube (but not both)
+\item $\sf (Cube(a) \lor Cube(b)) \land \lnot(Cube(a) \land Cube(b))$
+\item $\sf (Cube(a) \land \lnot Cube(b)) \lor (\lnot Cube(a) \land Cube(b))$
+\eit
+}
+
+\subsec{At Least One Of}{
+
+\bits
+\item At least one of a, b, and c is small
+\item $\sf Small(a) \lor Small(b) \lor Small(c)$
+\eit 
+
+}
+
+\subsec{At Least One Of}{
+
+\bits
+\item At least two of a, b, and c are small
+\item $\sf (Small(a) \land Small(b)) \lor (Small(a) \land Small(c)) \lor (Small(b) \land Small(c))$
+\eit 
+
+}
+
+\subsec{At Least As Large As and $\le$}{
+
+\bits
+\item a is at least as large as b
+\item $\sf Larger(a, b) \lor SameSize(a, b)$
+\item $\sf \lnot Smaller(a, b)$, $\sf\lnot Larger(b, a)$
+\item $2 \le 3$
+\item $(1+1) < (1+(1+1)) \lor (1+1) = (1+(1+1))$
+\item $\lnot (1 + (1+1)) < (1+1)$ 
+\eit
+
+}
+
+\end{document} %got to here
+
+\section{Step-by-Step Translations}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bit
+\item a and b are left of c or right of d, \emph{but}\\ e is neither left of c nor right of d.
+\bit
+\item a and b are left of c or right of d
+\item but
+\item e is neither left of c nor right of d
+\eit\eit
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bits
+\item a \emph{and} b are left of c or right of d
+\bit
+\item a is left of c \emph{or} right of d
+\bit
+\item a is left of c or a is right of d\\
+$\sf LeftOf(a, c) \lor RightOf(a, d)$
+\eit
+\item b is left of c \emph{or} right of d
+\bit
+\item b is left of c or b is right of d\\
+$\sf LeftOf(b, c) \lor RightOf(b, d)$
+\eit
+\eit
+\eit
+\begin{align*}
+(LeftOf(a, c) \lor {} & RightOf(a, d)) \land {}\\
+(LeftOf(b, c) \lor {} & RightOf(b, d))
+\end{align*}
+
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bits
+\item e is neither left of c nor right of d
+\[\sf \lnot(LeftOf(e, c) \lor RightOf(e, d))\]
+\eit
+}
+
+\subsec{Step-by-Step Method of Translation}{
+
+\bit
+\item a and b are left of c or right of d, but\\ e is neither left of c nor right of d.
+\bit
+\item a and b are left of c or right of d
+\begin{align*}
+(LeftOf(a, c) \lor {} & RightOf(a, d)) \land {}\\
+(LeftOf(b, c) \lor {} & RightOf(b, d))
+\end{align*}
+\item but
+$\land$
+\item e is neither left of c nor right of d
+\[\sf \lnot(LeftOf(e, c) \lor RightOf(e, d))\]
+\eit\eit
+\begin{multline*}
+((LeftOf(a, c) \lor RightOf(a, d)) \land {} \\
+(LeftOf(b, c) \lor RightOf(b, d))) \land {}\\
+\lnot(LeftOf(e, c) \lor RightOf(e, d))
+\end{multline*}
+
+}
+
+
+
+\section{Ambiguity}
+
+\subsec{Ambiguity in English}{
+
+\bit
+\item Lexical ambiguity: one word---many meanings \\
+e.g., ``bank'', ``crane''
+\item Syntactic ambiguity: one sentence---many readings\\
+e.g., ``Flying planes can be dangerous''
+\eit
+
+}
+
+\subsec{Connectives and Ambiguity}{
+
+\bits
+\item a adjoins b and c or d
+\item a adjoins [[b and c] or d]\\
+$\sf (Adjoins(a, b) \land Adjoins(a, c)) \lor Adjoins(a, d)$
+\item a adjoins [b and [c or d]]\\
+$\sf Adjoins(a, b) \land (Adjoins(a, c) \lor Adjoins(a, d))$
+\eit
+
+}
+
+\subsec{The Man Who Was Hanged by a Comma}{
+
+\bit
+\item Sir Roger Casement (1864--1916)
+\item British consul to Congo and Peru
+\item Tried to recruit Irish revolutionaries in Germany during WWI
+\item Tried for treason
+\eit
+
+}
+
+\subsec{Treason Act of 1351}{
+
+\small 
+ITEM, Whereas divers Opinions have been before this Time in what Case
+Treason shall be said, and in what not; the King, at the Request of
+the Lords and of the Commons, hath made a Declaration in the Manner as
+hereafter followeth, that is to say; When a Man doth compass or
+imagine the Death of our Lord the King, or of our Lady his Queen or of
+their eldest Son and Heir; or if a Man do violate the King’s
+Companion, or the King’s eldest Daughter unmarried, or the Wife of the
+King’s eldest Son and Heir; or \textbf{if a Man do levy War against our Lord
+the King in his Realm, or be adherent to the King’s Enemies in his
+Realm, giving to them Aid and Comfort in the Realm, or elsewhere}, and
+thereof be probably attainted of open Deed by the People of their
+Condition: \dots And it is to be
+understood, that in the Cases above rehearsed, that ought to be judged
+Treason which extends to our Lord the King, and his Royal Majesty:
+\dots
+
+}
+
+\subsec{R v. Casement in the Blocks Language}{
+
+\bits
+\item a is a cube in front of b, or a tetrahedron in front of b[,] or in back of b.
+
+\item Without comma:
+\begin{align*}
+(Cube(a) \land {} & FrontOf(a, b)) \lor {}\\
+(Tet(a) \land {} & (FrontOf(a,
+b) \lor BackOf(a, b)))
+\end{align*}
+\item With comma:
+\begin{align*}
+(Cube(a) \land {} & (FrontOf(a, b) \lor BackOf(a, b))) \lor {}\\
+(Tet(a) \land {} & (FrontOf(a, b) \lor BackOf(a, b))
+\end{align*}
+\eit
+}
+
+
+
+
+\end{document}

@@ -1,0 +1,345 @@
+\documentclass[bigger]{beamer}
+
+\input{header-beam} % change to header-handout for handouts
+
+% ====================
+\title[Lecture 20]{Logic I F13 Lecture 20}
+\date{November 26, 2013}
+% ====================
+
+\include{header}
+
+\setlength{\fitchprfwidth}{5em}
+
+\section{Truth Functions}
+
+\subsec{Truth Functions}{
+
+\begin{block}{Definition}
+
+An ($n$-place) \emph{truth function} $t$ is a mapping of $n$-tuples of \T{} and \F\ to either \T\ or \F.
+\medskip
+
+$n$-place truth functions correspond to truth tables of sentence with $n$ atomic sentences.
+\end{block}
+
+\begin{tabular}{cc@{\qquad}cc}
+$\begin{array}{cc|c}
+&& t_\land\\ \hline 
+\T & \T & \T \\
+\T & \F & \F \\
+\F & \T & \F \\
+\F & \F & \F
+\end{array}$
+&
+$A_1 \land A_2$ &
+$\begin{array}{cc|c}
+&& t_\lor \\ \hline
+\T & \T & \T \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}$
+& $A_1 \lor A_2$
+\end{tabular}
+
+}
+
+
+\subsec{Truth Functions}{
+
+\begin{block}{Definition}
+A sentence $S$ containing the atomic sentences $A_1$, \dots, $A_n$
+\emph{expresses} the truth function $t$ iff the truth value of $S$ on
+the truth-value assignment which assigns $v_i$ to $A_i$ is $t(v_1,
+\dots, v_n)$.
+\medskip
+
+An $n$-place truth function is \emph{expressible} if there is a
+sentence containing atomic sentences $A_1$, \dots, $A_n$ that
+expresses it.
+
+\end{block}
+}
+
+
+\subsec{Examples}{
+
+\begin{tabular}{cc}
+$\begin{array}{cc|c}
+& & t_1\\ \hline
+\T & \T & \T \\
+\T & \F & \T \\
+\F & \T & \F \\
+\F & \F & \F
+\end{array}$
+& $A_1 \quad\text{or:}\quad A_1 \land (A_2 \lor \lnot A_2)$ \\ \ \\
+$\begin{array}{cc|c}
+& & t_{XOR}\\ \hline
+\T & \T & \F \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}$
+&
+$(A_1 \lor A_2) \land \lnot(A_1 \land A_2)$ 
+\end{tabular}
+}
+
+\section{Truth-Functional Completeness}
+
+\subsec{Truth-Functional Completeness}{
+
+\begin{block}{Definition}
+
+A set of connectives is \emph{truth-functionally complete} if every
+truth function is expressible by a sentence containing only those
+connectives.
+
+\end{block}
+
+}
+
+\subsec{$\{\land, \lor\}$ Not Truth-Functionally Complete}{
+
+\bit
+\item $\{\land, \lor\}$ is not truth-functionally complete
+\item Remember: To be truth functionally complete, \emph{every} truth
+  function would have to be expressible using only $\land$ and $\lor$
+\item Which 2-place truth-functions can be expressed using $\land$ and
+  $\lor$?
+\item Not this one:
+\[
+\begin{array}{cc|c}
+\T & \T & \F \\
+\T & \F & \T \\
+\F & \T & \T \\
+\F & \F & \F
+\end{array}
+\]
+  \eit
+
+}
+
+\subsec{Proof by Induction}{
+
+\bit
+\item Sometimes need to prove something for all sentences
+\item E.g., ``every sentence containing only $\land$ and $\lor$ expresses a truth function \emph{other than} $t_\mathit{XOR}$''
+\item Proof by Induction
+\bit
+\item Show that it holds for atomic sentences
+\item Suppose sentences $\sf P$, $\sf Q$ have the property and
+\item Show that it then also holds for $\sf\lnot P$, $\sf P \land Q$, $\sf P \lor Q$, etc.
+\eit
+\eit
+
+}
+
+\subsec{Example: Proof by Induction}{
+
+\bit
+
+\item Claim: every sentence contains an even number of parentheses
+\item Proof strategy:
+\bit
+\item Show that every atomic sentence contains an even number of parentheses
+\bit
+\item $\sf B(a, b, c)$, $\bot$
+\eit
+\item Show that if $\sf P$ contains an even number of parentheses, so does $\sf\lnot P$
+\item Show that if $\sf P$ and $\sf Q$ contain an even number of parentheses, so do 
+\[\sf (P \land Q), (P \lor Q), (P \to Q), (P \leftrightarrow Q) \]
+\eit
+\eit
+
+}
+
+\subsec{$\{\land, \lor\}$ Not Truth-Functionally Complete}{
+
+\bits
+\item Any sentence containing only $A_1$, $A_2$, $\land$, $\lor$
+  expresses a truth function $t$ with $t(\T, \T) = \T$.
+
+\item Proof. 
+
+\bits
+\item Atomic sentences: $A_1$, $A_2$: express $t_1$, $t_2$.
+\item Suppose $P$, $Q$ are sentences which 
+  contain only $A_1$, $A_2$, $\land$, $\lor$ and express truth
+  functions $t$, $t'$ with $t(\T, \T) = t'(\T, \T) = \T$
+\item $P \land Q$ expresses truth function $s$ with $s(\T, \T) = t_\land(t(\T, \T), t'(\T, \T)) = \T$
+\item $P \lor Q$ expresses truth function $s$ with $s(\T, \T) = t_\lor(t(\T, \T), t'(\T, \T)) = \T$
+\eit
+\item Hence, no sentence containing only $\land$, $\lor$ can express a
+  truth function $t$ with $t(\T, \T) = \F$.
+  \eit 
+}
+
+\subsec{$\{\land, \lor, \lnot\}$ is Truth-functionally Complete}{
+\[
+\begin{array}{lll|l@{\qquad}l}
+A_1 & A_2 & A_3 & t_\mathit{ODD} & S \\
+\hline
+\T & \T & \T & \T & \uncovers{2-}{(A_1 \land A_2 \land A_3)} \uncovers{6-}{{}\lor{}}\\
+\T & \T & \F & \F \\
+\T & \F & \T & \F \\
+\T & \F & \F & \T & \uncovers{3-}{(A_1 \land \lnot A_2 \land \lnot A_3)} \uncovers{6-}{{}\lor{}}\\
+\F & \T & \T & \F \\
+\F & \T & \F & \T & \uncovers{4-}{(\lnot A_1 \land A_2 \land \lnot A_3)} \uncovers{6-}{{}\lor{}}\\
+\F & \F & \T & \T & \uncovers{5-}{(\lnot A_1 \land \lnot A_2 \land A_3)} \uncovers{6-}{{}\lor{}}\\
+\F & \F & \F & \F
+\end{array}\]
+}
+
+\subsec{$\{\land, \lor, \lnot\}$ is Truth-Functionally Complete}{
+
+\bit
+\item Each line makes one, and only one, conjunction true, e.g.,
+\item $\lnot A_1 \land A_2 \land \lnot A_3$ is true in, and only in, line \F\ \T\ \F
+\item Combine using $\lor$: make $S$ true in all (and only) the lines where it is supposed to be true
+\eit
+
+}
+
+\subsec{The ``neither\dots nor \dots'' connective: $\downarrow$}{
+
+\[
+\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}
+\]
+
+}
+
+\subsec{$\{\downarrow\}$ is Truth-Functionally Complete}{
+
+\bit
+\item Already know that $\{\lnot, \land, \lor\}$ is truth-functionally
+  complete, i.e.,
+\item Every truth-function can be expressed using only $\lor$, $\land$, $\lnot$
+\item To show $\downarrow$ is truth-functionally complete, suffices to
+  show that \emph{every sentence containing only $\lnot$, $\lor$, $\land$ is
+  tautologically equivalent to one containing only $\downarrow$}
+\item For that, it suffices to show that any negated sentence,
+  conjunction, disjunction, can be expressed using only $\downarrow$
+\eit
+
+}
+
+\subsec{Expressing $\lnot$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item Note how $P \downarrow Q$ is \F{} in the first line and \T{} in the last (when $P$ and $Q$ have same truth value)
+\item So $P \downarrow P$ is \F{} if $P$ is \T, and \T{} if $P$ is \F, i.e., \[
+\lnot P \Leftrightarrow (P \downarrow P)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Expressing $\lor$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item $P \downarrow Q$ is the ``neither \dots nor'' connective, which can also
+be expressed as $\lnot(P \lor Q)$, i.e.,
+\[ \lnot(P \lor Q) \Leftrightarrow P \downarrow Q \] 
+\item Negate both sides:
+\[
+P \lor Q \Leftrightarrow \lnot(P \downarrow Q)
+\]
+\item Apply what we figured out in last slide:
+\[
+P \lor Q \Leftrightarrow (P \downarrow Q)\downarrow(P \downarrow Q)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Expressing $\land$ Using $\downarrow$}{
+
+\begin{columns}
+\begin{column}{3cm}
+\[\begin{array}{cc|c}
+P & Q & (P \downarrow Q)\\
+\hline
+\T & \T & \F\\
+\T & \F & \F\\
+\F & \T & \F\\
+\F & \F & \T
+\end{array}\]
+\end{column}
+\begin{column}{7cm}
+\bits
+\item $P \downarrow Q$ is the ``neither \dots nor'' connective, which can also
+be expressed as $\lnot P \land \lnot Q$, i.e.,
+\[ (\lnot P \land \lnot Q) \Leftrightarrow P \downarrow Q \] 
+\item Equivalence holds for \emph{all sentences} $P$, $Q$, so also if we replace $P$ by $\lnot R$ and $Q$ by $\lnot S$:
+\[
+\lnot\lnot R \land \lnot\lnot S \Leftrightarrow (\lnot R \downarrow \lnot S)
+\]
+\item Delete $\lnot\lnot$'s, and express $\lnot$ using $\downarrow$:
+\[
+R \land S \Leftrightarrow (R \downarrow R)\downarrow(S \downarrow S)
+\]
+\eit
+\end{column}
+\end{columns}
+
+}
+
+\subsec{Truth-Functionally Complete Sets of Connectives}{
+
+\bit
+\item De Morgan's Law: $\land$ can be expressed by $\lor$ and $\lnot$
+\item Similarly: $\lor$ can be expressed by $\land$, $\lnot$
+\item So $\{\lor, \lnot\}$ and $\{\land, \lnot\}$ are
+  truth-functionally complete
+\item $\{\to, \bot\}$ is truth-functionally complete (HW)
+\item $\{\to, \lnot\}$ is truth-functionally complete 
+\item No other sets of connectives that don't contain one of these sets are complete 
+\item ``Neither \dots nor'' is truth-functionally complete by itself
+\item ``Not both'' connective is truth-functionally complete by itself (HW)
+\item No other 2-place connectives are complete by themselves
+\eit
+
+}
+
+\end{document}
+
+
+
+

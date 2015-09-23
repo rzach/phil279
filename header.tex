@@ -1,0 +1,77 @@
+% lecture header include
+
+\usepackage{lplfitch,amsmath}
+\usepackage{qtree,hyperref}
+\usepackage{pgf,amssymb}
+
+\author{Richard Zach}
+\institute{Department of Philosophy\\
+University of Calgary\\
+  \href{http://ucalgary.ca/rzach/279}{ucalgary.ca/rzach/279}}
+
+\definecolor{uofcred}{RGB}{227,39,38}
+\definecolor{uofcyellow}{RGB}{255,210,0}
+
+\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
+\DeclareMathSymbol{\strictif}{\mathrel}{symbolsC}{74}
+\DeclareMathSymbol{\boxright}{\mathrel}{symbolsC}{128}
+
+\let\IFF\Leftrightarrow
+\let\iff\leftrightarrow
+\let\impl\to
+
+\def\T{{\color{green}\begin{colormixin}{25!black}\text{T}\end{colormixin}}}
+\def\F{{\color{red}\begin{colormixin}{25!black}\text{F}\end{colormixin}}}
+
+\long\def\subsec#1#2{\subsection{#1}\frame{\frametitle{#1} #2}}
+\def\bit{\begin{itemize}[<1->]}
+\def\eit{\end{itemize}}
+\def\ben{\begin{enumerate}[<1->]}
+\def\een{\end{enumerate}}
+
+\makeatletter\let\@makefnmark\noindent\makeatother
+
+%\setbeamercolor{footnote}{fg=black!70}
+
+\def\foot#1{\footnotetext{\color{black!70}#1}}
+\def\deemph#1{{\color{black!70}#1}}
+\let\phi\varphi
+
+\setbeamertemplate{theorems}[numbered]
+%\useinnertheme{circles}
+\setbeamertemplate{itemize subitems}[triangle]
+
+\renewcommand{\beamertemplatetransparentcovereddynamic}{
+  \beamersetuncovermixins
+  {\opaqueness<1>{50}\opaqueness<2>{30}\opaqueness<3>{15}\opaqueness<4->{5}}%
+  {\opaqueness<1>{50}\opaqueness<2>{30}\opaqueness<3>{15}\opaqueness<4->{5}}}
+                                                                                
+%\beamertemplatetransparentcovereddynamic
+
+\defbeamertemplate*{footline}{my theme}
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm]{author in head/foot}%
+    \insertframenumber/\inserttotalframenumber \hfil \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}Logic I F13---\insertshorttitle---\insertdate
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\begin{document}
+\setlength{\fitchargwidth}{7em}
+\setlength{\fitchprfwidth}{7em}
+
+\frame{\frametitle{\insertshorttitle\ (\insertdate)}
+\tableofcontents[hidesubsections]
+}
+
+
+
+
+
+
+
+
